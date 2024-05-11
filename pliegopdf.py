@@ -3,6 +3,19 @@ from bs4 import BeautifulSoup
 import re
 import pdfplumber
 import io
+from support_regex import (
+    paragraphs_pattern,
+    rusticas_ref_catastral_pattern,
+    urbanas_ref_catastral_pattern,
+    price_pattern,
+)
+
+
+def pliego_definitive(url_pdf):
+    text = read_pdf(url_pdf)
+    paragraphs = get_desired_paragraphs(text)
+    final_data = [get_desired_information(paragraph) for paragraph in paragraphs]
+    return final_data
 
 
 def read_pdf(url_pdf):
@@ -19,8 +32,31 @@ url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subas
 
 
 def get_desired_paragraphs(all_text_pdf):
-    pass
+    return re.findall(paragraphs_pattern, all_text_pdf)
 
 
 def get_desired_information(paragraph):
-    pass
+    return (get_ref_catastral(paragraph), get_precio(paragraph))
+
+
+def get_ref_catastral(paragraph):
+    ref_catastral = re.search(rusticas_ref_catastral_pattern, paragraph)
+    if ref_catastral:
+        return ref_catastral.group()
+    else:
+        ref_catastral = re.search(urbanas_ref_catastral_pattern, paragraph)
+        return ref_catastral.group()
+
+
+def get_precio(paragraph):
+    price = re.search(price_pattern, paragraph)
+    return format_price(price.group())
+
+
+def format_price(price):
+    return float(
+        price.replace(".", "").replace(",", ".").replace(" ", "").replace("€", "")
+    )
+
+
+print(pliego_definitive(url))
