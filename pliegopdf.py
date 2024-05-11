@@ -11,11 +11,16 @@ def read_pdf(url_pdf):
     pdf_file = io.BytesIO(pdf_content)
     with pdfplumber.open(pdf_file) as pdf:
         text_pages = [page.extract_text() for page in pdf.pages]
-    return text_pages[10]
+    all_text_file = " ".join(text_pages)
+    return all_text_file
 
 
-print(
-    read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf"
-    )
-)
+url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf"
+
+
+def get_desired_paragraphs(all_text_pdf):
+    pass
+
+
+def get_desired_information(paragraph):
+    pass
