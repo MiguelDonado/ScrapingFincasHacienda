@@ -1,6 +1,13 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+# When doing a request to the catastro web it gaves me an error because of SSL certificate. So i have to make a request without SSL certificate verification, and because of that
+# i also have to deactivate a warning message that's displayed because of making a request without SSL certificate.
+requests.packages.urllib3.disable_warnings(
+    InsecureRequestWarning
+)  # Disable SSL warning
 
 ref_catastral_url = "https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del={provincia}&mun={municipio}&RefC={ref_catastral}"
 
@@ -18,13 +25,55 @@ def get_url_ref_catastral(ref_catastral):
 
 
 def get_info_about_url_ref_catastral(url):
-    html_text = requests.get(url)
-    # soup = BeautifulSoup(html_text.text, "lxml")
-    # anchors = soup.find_all("a")
+    html_text = requests.get(url, verify=False)
+    soup = BeautifulSoup(html_text.text, "lxml")
+    datosinmueble = soup.find("div", id="datosinmueble")
+    municipio, provincia = (
+        datosinmueble.find("span", string="Localización")
+        .find_next_sibling()
+        .find("label")
+        .get_text()
+        .rsplit(". ")[1]
+        .replace(")", "")
+        .split(" (")
+    )
+    uso = (
+        datosinmueble.find("span", string="Uso principal")
+        .find_next_sibling()
+        .find("label")
+        .get_text()
+    )
+    metros_cuadrados = (
+        datosinmueble.find("span", string="Superficie gráfica")
+        .find_next_sibling()
+        .find("label")
+        .get_text()
+    )
+    cultivo_aprovechamiento = (
+        datosinmueble.find("div", id="ctl00_Contenido_divtblCultivos")
+        .find("table", id="ctl00_Contenido_tblCultivos")
+        .find_all("tr")[-1]
+        .find_all("td")[1]
+        .get_text()
+    )
+
+    google_maps_url = (
+        "https://www1.sedecatastro.gob.es/Cartografia/BuscarParcelaInternet.aspx?refcat="
+        + url.rsplit("=", 1)[1]
+    )
+
+    return (
+        municipio,
+        provincia,
+        uso,
+        metros_cuadrados,
+        cultivo_aprovechamiento,
+        google_maps_url,
+    )
 
 
 print(
     get_info_about_url_ref_catastral(
-        "https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=090&RefC=15090A507018480000AY"
+        "http://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=090&RefC=15090A507018480000AY"
     )
 )
