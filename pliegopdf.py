@@ -11,7 +11,7 @@ from support_regex import (
 )
 
 
-def pliego_definitive(url_pdf):
+def get_pliego_relevant_info(url_pdf):
     text = read_pdf(url_pdf)
     paragraphs = get_desired_paragraphs(text)
     final_data = [get_desired_information(paragraph) for paragraph in paragraphs]
@@ -57,6 +57,3 @@ def format_price(price):
     return float(
         price.replace(".", "").replace(",", ".").replace(" ", "").replace("€", "")
     )
-
-
-print(pliego_definitive(url))

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_pliego_pdf(href):
+def get_url_pliego_pdf(href):
     html_text = requests.get(href)
     soup = BeautifulSoup(html_text.text, "lxml")
     anchors = soup.find_all("a")
