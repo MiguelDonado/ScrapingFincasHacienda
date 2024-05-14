@@ -1,7 +1,7 @@
 import re
 import requests
 from bs4 import BeautifulSoup
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from requests.packages.urllib3.exceptions import InsecureRequestWarning  # type: ignore
 
 # When doing a request to the catastro web it gaves me an error because of SSL certificate. So i have to make a request without SSL certificate verification, and because of that
 # i also have to deactivate a warning message that's displayed because of making a request without SSL certificate.
@@ -19,6 +19,7 @@ def get_whole_info_land(ref_catastral, price):
 
 
 def get_url_ref_catastral(ref_catastral):
+
     provincia = ref_catastral[0:2]
     municipio = ref_catastral[2:5]
 

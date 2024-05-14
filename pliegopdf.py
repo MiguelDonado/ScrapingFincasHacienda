@@ -5,8 +5,7 @@ import pdfplumber
 import io
 from support_regex import (
     paragraphs_pattern,
-    rusticas_ref_catastral_pattern,
-    urbanas_ref_catastral_pattern,
+    ref_catastral_pattern,
     price_pattern,
 )
 
@@ -40,12 +39,8 @@ def get_desired_information(paragraph):
 
 
 def get_ref_catastral(paragraph):
-    ref_catastral = re.search(rusticas_ref_catastral_pattern, paragraph)
-    if ref_catastral:
-        return ref_catastral.group()
-    else:
-        ref_catastral = re.search(urbanas_ref_catastral_pattern, paragraph)
-        return ref_catastral.group()
+    ref_catastral = re.search(ref_catastral_pattern, paragraph)
+    return ref_catastral
 
 
 def get_precio(paragraph):
