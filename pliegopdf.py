@@ -4,17 +4,28 @@ import re
 import pdfplumber
 import io
 from support_regex import (
+    checker_second_structure_pattern,
     first_paragraphs_pattern,
     second_paragraphs_pattern,
     ref_catastral_pattern,
-    price_pattern,
+    price_first_structure_pdf_pattern,
+    checker_garantia_in_paragraph_pattern,
+    price_second_structure_pdf_with_garantia_pattern,
+    price_second_structure_pdf_without_garantia_pattern,
 )
 
 
 def get_pliego_relevant_info(url_pdf):
     text = read_pdf(url_pdf)
     paragraphs = get_desired_paragraphs(text)
-    final_data = [get_desired_information(paragraph) for paragraph in paragraphs]
+    if paragraphs[0] == "first_structure":
+        final_data = [
+            get_desired_information("first", paragraph) for paragraph in paragraphs[1]
+        ]
+    elif paragraphs[0] == "second_structure":
+        final_data = [
+            get_desired_information("second", paragraph) for paragraph in paragraphs[1]
+        ]
     return final_data
 
 
@@ -32,22 +43,39 @@ url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subas
 
 
 def get_desired_paragraphs(all_text_pdf):
-    return re.findall(second_paragraphs_pattern, all_text_pdf)
-    # TO DO I've to handle different pliego pdf structure right here.
+    if re.search(checker_second_structure_pattern, all_text_pdf):
+        return "second_structure", re.findall(second_paragraphs_pattern, all_text_pdf)
+    else:
+        return "first_structure", re.findall(first_paragraphs_pattern, all_text_pdf)
 
 
-def get_desired_information(paragraph):
-    return (get_ref_catastral(paragraph), get_precio(paragraph))
+def get_desired_information(type_structure, paragraph):
+    try:
+        return (get_ref_catastral(paragraph), get_precio(type_structure, paragraph))
+    except AttributeError:
+        return ("ERROR", "ERROR")
 
 
 def get_ref_catastral(paragraph):
     ref_catastral = re.search(ref_catastral_pattern, paragraph)
-    return ref_catastral
+    return ref_catastral.group()
 
 
-def get_precio(paragraph):
-    price = re.search(price_pattern, paragraph)
-    return format_price(price.group())
+def get_precio(type_structure, paragraph):
+    if type_structure == "first":
+        price = re.search(price_first_structure_pdf_pattern, paragraph)
+        return format_price(price.group())
+    elif type_structure == "second":
+        if re.search(checker_garantia_in_paragraph_pattern, paragraph):
+            price = re.search(
+                price_second_structure_pdf_with_garantia_pattern, paragraph
+            )
+            return format_price(price.group(1))
+        else:
+            price = re.search(
+                price_second_structure_pdf_without_garantia_pattern, paragraph
+            )
+            return format_price(price.group(1))
 
 
 def format_price(price):
@@ -56,10 +84,8 @@ def format_price(price):
     )
 
 
-paragraphs = get_desired_paragraphs(
-    read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf"
-    )
+list_of_lands = get_pliego_relevant_info(
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_JAEN/PLIEGO%20DE%20CONDICIONES%20SUBASTA%20%202024%20Informe%20_copia.pdf"
 )
-for counter, paragraph in enumerate(paragraphs):
-    print(f"{counter}. {get_desired_information(paragraph)}")
+for counter, info in enumerate(list_of_lands):
+    print(f"The {counter+1} has the next info: {info}")
