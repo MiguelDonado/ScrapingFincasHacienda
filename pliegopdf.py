@@ -4,7 +4,8 @@ import re
 import pdfplumber
 import io
 from support_regex import (
-    paragraphs_pattern,
+    first_paragraphs_pattern,
+    second_paragraphs_pattern,
     ref_catastral_pattern,
     price_pattern,
 )
@@ -31,7 +32,8 @@ url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subas
 
 
 def get_desired_paragraphs(all_text_pdf):
-    return re.findall(paragraphs_pattern, all_text_pdf)
+    return re.findall(second_paragraphs_pattern, all_text_pdf)
+    # TO DO I've to handle different pliego pdf structure right here.
 
 
 def get_desired_information(paragraph):
@@ -52,3 +54,12 @@ def format_price(price):
     return float(
         price.replace(".", "").replace(",", ".").replace(" ", "").replace("€", "")
     )
+
+
+paragraphs = get_desired_paragraphs(
+    read_pdf(
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf"
+    )
+)
+for counter, paragraph in enumerate(paragraphs):
+    print(f"{counter}. {get_desired_information(paragraph)}")
