@@ -57,8 +57,13 @@ def get_desired_information(type_structure, paragraph):
 
 
 def get_ref_catastral(paragraph):
-    ref_catastral = re.search(ref_catastral_pattern, paragraph)
-    return ref_catastral.group()
+    ref_catastrales = re.findall(ref_catastral_pattern, paragraph)
+    if len(ref_catastrales) == 1:
+        return ref_catastrales
+    elif len(ref_catastrales) > 1:
+        return ref_catastrales
+    else:
+        raise AttributeError("There is not a valid referencia catastral")
 
 
 def get_precio(type_structure, paragraph):
@@ -85,7 +90,7 @@ def format_price(price):
 
 
 list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_JAEN/PLIEGO%20DE%20CONDICIONES%20SUBASTA%20%202024%20Informe%20_copia.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_LEON/Pliego-subasta-rusticas-julio-2024.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}")
