@@ -17,9 +17,6 @@ from support_regex import (
 
 def get_pliego_relevant_info(url_pdf):
     text = read_pdf(url_pdf)
-    has_ref_catastrales = re.search(ref_catastral_pattern, text)
-    if not has_ref_catastrales:
-        return "No tiene fincas"
     paragraphs = get_desired_paragraphs(text)
     if paragraphs[0] == "first_structure":
         final_data = [
@@ -92,8 +89,8 @@ def format_price(price):
     )
 
 
-"""list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_Segovia/RUSTICOS-14-JUN2024/Pliego-fincas-%20rusticas-%202024.pdf"
+list_of_lands = get_pliego_relevant_info(
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_Segovia/RUSTICOS-14-JUN2024/Anexo-I-Relacion-fincas-14-junio.pdf"
 )
 for counter, info in enumerate(list_of_lands):
-    print(f"The {counter+1} has the next info: {info}")"""
+    print(f"The {counter+1} has the next info: {info}")
