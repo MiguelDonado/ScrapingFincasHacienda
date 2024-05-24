@@ -9,37 +9,49 @@ ref_catastral_pattern = re.compile(
 
 # Checkers to know the type of pdf we are analyzing
 checker_second_structure_pattern = re.compile(
-    "^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+\s*(?::|\.)",
+    r"^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d",
     flags=re.MULTILINE,
 )
 
 checker_garantia_in_paragraph_pattern = re.compile(
-    "^.*(?:G|g)arant.a",
+    r"^.*(?:G|g)arant.a",
     flags=re.MULTILINE,
+)
+
+checker_second_structure_price_in_table_format = re.compile(
+    r"^Subasta\sPrimera\sSegunda\sTercera\sCuarta",
+    flags=re.MULTILINE | re.IGNORECASE,
 )
 
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (tables)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf
 first_paragraphs_pattern = re.compile(
-    "^(?:Rústica|Urbana).*?Referencia\sCatastral:[\w ]+$",
+    r"^(?:Rústica|Urbana).*?Referencia\sCatastral:[\w ]+$",
     flags=re.DOTALL | re.MULTILINE,
 )
 price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
-    "^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+\s*(?::|\.)(?:.|\n)*?(?=(?:^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+\s*(?::|\.)|^Segunda:\s|^SEGUNDA:\s))",
+    r"^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+(?:.|\n)*?(?=(?:(?:^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+|^Segunda[:\.]\s|^SEGUNDA[:\.]\s)|DELEGACI.N\sDE\sECONOM))",
     flags=re.MULTILINE,
 )
 
 ###### (On the second pdf structure). If have "garantia" on the paragraph:
 price_second_structure_pdf_with_garantia_pattern = re.compile(
-    "^.*(?:licitaci.n|salida).*?subasta.*:\s*?([\d\.,]+)\s*?(?:euros|€)",
+    r"^.*(?:licitaci.n|salida).*?subasta.*:\s*?([\d\.,]+)\s*?(?:euros|€)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
+
+###### (On the second pdf structure). If have "garantia" on the paragraph and the price is on table format:
+price_second_structure_pdf_with_garantia_pattern_and_table_format = re.compile(
+    r"^.*(?:licitaci.n)\s+([\d\.,]+)\s", flags=re.MULTILINE
+)
+
+
 ###### (On the second pdf structure). If doesn't have "garantia" on the paragraph:
 price_second_structure_pdf_without_garantia_pattern = re.compile(
-    "^.*Subasta:\s+([\d\.,]+)\s+Euros", flags=re.MULTILINE | re.IGNORECASE
+    r"^.*Subasta:\s+([\d\.,]+)\s+Euros", flags=re.MULTILINE | re.IGNORECASE
 )
 
 

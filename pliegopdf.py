@@ -12,6 +12,8 @@ from support_regex import (
     checker_garantia_in_paragraph_pattern,
     price_second_structure_pdf_with_garantia_pattern,
     price_second_structure_pdf_without_garantia_pattern,
+    checker_second_structure_price_in_table_format,
+    price_second_structure_pdf_with_garantia_pattern_and_table_format,
 )
 
 
@@ -72,10 +74,17 @@ def get_precio(type_structure, paragraph):
         return format_price(price.group())
     elif type_structure == "second":
         if re.search(checker_garantia_in_paragraph_pattern, paragraph):
-            price = re.search(
-                price_second_structure_pdf_with_garantia_pattern, paragraph
-            )
-            return format_price(price.group(1))
+            if re.search(checker_second_structure_price_in_table_format, paragraph):
+                price = re.search(
+                    price_second_structure_pdf_with_garantia_pattern_and_table_format,
+                    paragraph,
+                )
+                return format_price(price.group(1))
+            else:
+                price = re.search(
+                    price_second_structure_pdf_with_garantia_pattern, paragraph
+                )
+                return format_price(price.group(1))
         else:
             price = re.search(
                 price_second_structure_pdf_without_garantia_pattern, paragraph
@@ -90,7 +99,13 @@ def format_price(price):
 
 
 list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_Segovia/RUSTICOS-14-JUN2024/Anexo-I-Relacion-fincas-14-junio.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_MADRID/pliego_condiciones.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}")
+
+""" print(
+    read_pdf(
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_MADRID/pliego_condiciones.pdf"
+    )
+) """
