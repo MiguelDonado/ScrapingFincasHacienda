@@ -3,23 +3,23 @@ import re
 auction_href_pattern = re.compile("^https://.+Estado/Paginas/Subastas/.+")
 # The first segment of the regex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
 ref_catastral_pattern = re.compile(
-    r"^.*Referen\s?cias?\s+(?:C|c)atastral(?:es)?:?\s+(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
-    flags=re.MULTILINE,
+    r"^.*Referen\s?cias?\s+Catastral(?:es)?:?\s+(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
+    flags=re.MULTILINE | re.IGNORECASE,
 )
 
 # Checkers to know the type of pdf we are analyzing
 checker_second_structure_pattern = re.compile(
     r"^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d",
-    flags=re.MULTILINE,
+    flags=re.MULTILINE | re.IGNORECASE,
 )
 
 checker_garantia_in_paragraph_pattern = re.compile(
-    r"^.*(?:G|g)arant.a",
-    flags=re.MULTILINE,
+    r"^.*garant.a",
+    flags=re.MULTILINE | re.IGNORECASE,
 )
 
 checker_second_structure_price_in_table_format = re.compile(
-    r"^Subasta\sPrimera\sSegunda\sTercera\sCuarta",
+    r"^(Subasta\sPrimera\sSegunda\sTercera\sCuarta|SUBASTA 1ª 2ª 3ª 4ª)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -34,7 +34,7 @@ price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
     r"^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+(?:.|\n)*?(?=(?:(?:^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+|^Segunda[:\.]\s|^SEGUNDA[:\.]\s)|DELEGACI.N\sDE\sECONOM))",
-    flags=re.MULTILINE,
+    flags=re.MULTILINE | re.IGNORECASE,
 )
 
 ###### (On the second pdf structure). If have "garantia" on the paragraph:
@@ -45,7 +45,8 @@ price_second_structure_pdf_with_garantia_pattern = re.compile(
 
 ###### (On the second pdf structure). If have "garantia" on the paragraph and the price is on table format:
 price_second_structure_pdf_with_garantia_pattern_and_table_format = re.compile(
-    r"^.*(?:licitaci.n)\s+([\d\.,]+)\s", flags=re.MULTILINE
+    r"^.*(?:licitaci.n)\s+.*?([\d\.,]+)\s",
+    flags=re.MULTILINE | re.IGNORECASE,
 )
 
 
