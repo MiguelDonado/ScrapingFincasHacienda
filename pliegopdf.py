@@ -115,13 +115,13 @@ def is_price_on_paragraph(paragraph):
 
 
 list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20SORIA/PLIEGO_CONDICIONES_Subasta_25_%20Abril+ANEXOS.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}")
 
 """ print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20CIUDAD%20REAL/Aprobaci%C3%B3n%20pliego%20subasta%20(96%20lotes)%204%20y%205%20de%20junio.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-GRANADA/Pliego-condiciones-subasta-2024-MAYO.pdf"
     )
 ) """
