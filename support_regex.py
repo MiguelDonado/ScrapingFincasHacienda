@@ -9,7 +9,7 @@ ref_catastral_pattern = re.compile(
 
 # Checkers to know the type of pdf we are analyzing
 checker_second_structure_pattern = re.compile(
-    r"^(?!.*c.digo).*(?:LOTE|BIEN)\s+.*\d+(?!%)",
+    r"^(?!.*c.digo|.*€|.*euro).*(?:LOTE|BIEN)\s+.*\d+(?!%)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -35,31 +35,31 @@ price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
-    r"^(?!.*c.digo).*(?:LOTE|BIEN)\s+.*\d+(?!%)(?:.|\n)*?(?=(?:(?:^(?!.*c.digo).*(?:LOTE|BIEN)\s+.*\d+(?!%)|^Segunda[:\.]\s)|DELEGACI.N\sDE\sECONOM))",
+    r"^(?!.*c.digo|.*€|.*euro).*(?:LOTE|BIEN)\s+.*\d+(?!%)(?:.|\n)*?(?=^(?!.*c.digo|.*€|.*euro).*(?:LOTE|BIEN)\s+.*\d+(?!%)|^Segunda[:\.]\s)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
 ###### (On the second pdf structure). If have "garantia" on the paragraph:
 price_second_structure_pdf_with_garantia_pattern = re.compile(
-    r"^.*(?:licitaci.n|salida).*?(\d+[\d\.]*,\d\d)\s*?(?:euros|€)",
+    r"^.*(?:licitaci.n|salida).*?(\d+[\d\.,]*)\s*?(?:euros|€)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
 ###### (On the second pdf structure). If have "garantia" on the paragraph and the price is on table format:
 price_second_structure_pdf_with_garantia_pattern_and_table_format = re.compile(
-    r"^.*(?:licitaci.n)\s+.*?(\d+[\d\.]*,\d\d)\s",
+    r"^.*(?:licitaci.n)\s+.*?(\d+[\d\.,]*)\s",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
 
 ###### (On the second pdf structure). If doesn't have "garantia" on the paragraph:
 price_second_structure_pdf_without_garantia_pattern = re.compile(
-    r"^.*Subasta:\s+(\d+[\d\.]*,\d\d)\s+Euros", flags=re.MULTILINE | re.IGNORECASE
+    r"^.*Subasta:\s+(\d+[\d\.,]*)\s+Euros", flags=re.MULTILINE | re.IGNORECASE
 )
 
 #### (On the second pdf structure). If price is not included on the paragraph but at the end of the file.
 price_when_is_not_in_paragraph = re.compile(
-    r"^\d+\s.*subasta.*?(\d+[\d\.]*,\d\d)", flags=re.MULTILINE | re.IGNORECASE
+    r"^\d+\s.*subasta.*?(\d+[\d\.,]*)", flags=re.MULTILINE | re.IGNORECASE
 )
 
 # https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=90&RefC=15090A507018480000AY
