@@ -9,7 +9,7 @@ ref_catastral_pattern = re.compile(
 
 # Checkers to know the type of pdf we are analyzing
 checker_second_structure_pattern = re.compile(
-    r"^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d",
+    r"^.*(?:LOTE|BIEN)\s+.*\d+(?!%)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -23,6 +23,8 @@ checker_second_structure_price_in_table_format = re.compile(
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
+checker_second_structure_price_not_in_the_paragraph = re.compile(r"\d+[\d\.]*,\d\d")
+
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (tables)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf
 first_paragraphs_pattern = re.compile(
@@ -33,7 +35,7 @@ price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
-    r"^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+(?:.|\n)*?(?=(?:(?:^.*(?:LOTE|BIEN)\s+(?:Nº\s+)?\d+|^Segunda[:\.]\s|^SEGUNDA[:\.]\s)|DELEGACI.N\sDE\sECONOM))",
+    r"^.*(?:LOTE|BIEN)\s+.*\d+(?!%)(?:.|\n)*?(?=(?:(?:^.*(?:LOTE|BIEN)\s+.*\d+(?!%)|^Segunda[:\.]\s)|DELEGACI.N\sDE\sECONOM))",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -55,5 +57,9 @@ price_second_structure_pdf_without_garantia_pattern = re.compile(
     r"^.*Subasta:\s+([\d\.,]+)\s+Euros", flags=re.MULTILINE | re.IGNORECASE
 )
 
+#### (On the second pdf structure). If price is not included on the paragraph but at the end of the file.
+price_when_is_not_in_paragraph = re.compile(
+    r"^\d+\s.*subasta.*?(\d+[\d\.]*,\d\d)", flags=re.MULTILINE | re.IGNORECASE
+)
 
 # https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=90&RefC=15090A507018480000AY

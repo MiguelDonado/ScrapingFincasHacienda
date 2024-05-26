@@ -14,12 +14,15 @@ from support_regex import (
     price_second_structure_pdf_without_garantia_pattern,
     checker_second_structure_price_in_table_format,
     price_second_structure_pdf_with_garantia_pattern_and_table_format,
+    checker_second_structure_price_not_in_the_paragraph,
+    price_when_is_not_in_paragraph,
 )
 
 
 def get_pliego_relevant_info(url_pdf):
     text = read_pdf(url_pdf)
     paragraphs = get_desired_paragraphs(text)
+
     if paragraphs[0] == "first_structure":
         final_data = [
             get_desired_information("first", paragraph) for paragraph in paragraphs[1]
@@ -28,6 +31,11 @@ def get_pliego_relevant_info(url_pdf):
         final_data = [
             get_desired_information("second", paragraph) for paragraph in paragraphs[1]
         ]
+    # If the prices are not included on the same paragraph, but all together at the end.
+    if final_data[0][1] == "0":
+        prices = re.findall(price_when_is_not_in_paragraph, text)
+        ref_catastrales = [item[0] for item in final_data]
+        final_data = zip(ref_catastrales, prices)
     return final_data
 
 
@@ -73,6 +81,9 @@ def get_precio(type_structure, paragraph):
         price = re.search(price_first_structure_pdf_pattern, paragraph)
         return format_price(price.group())
     elif type_structure == "second":
+        # If the price is not included on the same paragraph
+        if not is_price_on_paragraph(paragraph):
+            return "0"
         if re.search(checker_garantia_in_paragraph_pattern, paragraph):
             if re.search(checker_second_structure_price_in_table_format, paragraph):
                 price = re.search(
@@ -98,8 +109,13 @@ def format_price(price):
     )
 
 
+def is_price_on_paragraph(paragraph):
+    result = re.search(checker_second_structure_price_not_in_the_paragraph, paragraph)
+    return result
+
+
 list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20CIUDAD%20REAL/Aprobaci%C3%B3n%20pliego%20subasta%20(96%20lotes)%204%20y%205%20de%20junio.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}")
