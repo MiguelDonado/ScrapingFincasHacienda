@@ -3,7 +3,7 @@ import re
 auction_href_pattern = re.compile("^https://.+Estado/Paginas/Subastas/.+")
 # The first segment of the regex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
 ref_catastral_pattern = re.compile(
-    r"^.*Referen\s?cias?\s+Catastral(?:es)?:?\s+(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
+    r"^(?!.*(?:sur|norte|oeste|este|;6)).*Referen\s?cias?\s+Catastral(?:es)?:?\s+(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -35,7 +35,7 @@ price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
-    r"^(?!.*c.digo|.*€|.*euro).*(?:LOTE|BIEN|FINCA\sNº)\s+.*\d+(?!%)(?:.|\n)*?(?=^(?!.*c.digo|.*€|.*euro).*(?:LOTE|BIEN|FINCA\sNº)\s+.*\d+(?!%)|^Segunda[:\.]\s)",
+    r"^(?!.*c.digo|.*€|.*euro|.*con finca).*(?:LOTE|BIEN|FINCA\sNº)\s+.*\d+(?!%)(?:.|\n)*?(?=^(?!.*c.digo|.*€|.*euro|.*(?:con|,) finca).*(?:LOTE|BIEN|FINCA\sNº)\s+.*\d+(?!%)|^Segunda[:\.]\s)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 

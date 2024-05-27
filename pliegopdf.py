@@ -45,7 +45,7 @@ def read_pdf(url_pdf):
     pdf_file = io.BytesIO(pdf_content)
     with pdfplumber.open(pdf_file) as pdf:
         text_pages = [page.extract_text() for page in pdf.pages]
-    all_text_file = " ".join(text_pages)
+    all_text_file = " ".join(text_pages[0:6])
     return all_text_file
 
 
@@ -115,13 +115,13 @@ def is_price_on_paragraph(paragraph):
 
 
 list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_LEON/Pliego-subasta-rusticas-2024.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}")
 
 """ print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_LEON/Pliego-subasta-rusticas-2024.pdf"
     )
 ) """
