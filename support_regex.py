@@ -9,7 +9,7 @@ ref_catastral_pattern = re.compile(
 
 # Checkers to know the type of pdf we are analyzing
 checker_second_structure_pattern = re.compile(
-    r"^(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|FINCA)\s(?:Nº)?.{0,10}?\d+(?!%)",
+    r"^(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?.{0,10}?\d+(?!%)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -35,7 +35,7 @@ price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
-    r"^(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|FINCA)\s(?:Nº)?.{0,10}?\d+(?!%)(?:.|\n)*?(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|FINCA)\s(?:Nº)?.{0,10}?\d+(?!%)|^Segunda[:\.]\s)",
+    r"^(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?.{0,10}?\d+(?!%)(?:.|\n)*?(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?.{0,10}?\d+(?!%)|^Segunda[:\.]\s)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -54,7 +54,7 @@ price_second_structure_pdf_with_garantia_pattern_and_table_format = re.compile(
 
 ###### (On the second pdf structure). If doesn't have "garantia" on the paragraph:
 price_second_structure_pdf_without_garantia_pattern = re.compile(
-    r"^.*(?:subasta|precio).{0,10}?(\d+[\d\.,]*)\s+(Euros|€)",
+    r"^.*(?:subasta|precio|precio\sde\ssalida).{0,10}?(\d+[\d\.,]*)\s+(?:Euros|€)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
