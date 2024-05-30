@@ -3,7 +3,7 @@ import re
 auction_href_pattern = re.compile("^https://.+Estado/Paginas/Subastas/.+")
 # The first segment of the regex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
 ref_catastral_pattern = re.compile(
-    r"^(?!.*(?:sur|norte|oeste|este)).*(?:Referen\s?cias?\s+Catastral(?:es)?(?:\ses\sla)?:?\s+|Datos\sCatastrales:\s.*?).*?(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
+    r"^(?!.*(?:sur|norte|oeste|este|;6)).*Referen\s?cias?\s+Catastral(?:es)?(?:\ses\sla)?:?\s+(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -23,9 +23,7 @@ checker_second_structure_price_in_table_format = re.compile(
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
-checker_second_structure_price_in_the_paragraph = re.compile(
-    r"\d+[\d\.,]*\s*(?:euro|€)"
-)
+checker_second_structure_price_in_the_paragraph = re.compile(r"\d+[\d\.]*,\d\d")
 
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (tables)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf
@@ -37,13 +35,21 @@ price_first_structure_pdf_pattern = re.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
 second_paragraphs_pattern = re.compile(
-    r"^(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?.{0,10}?\d+(?!%)(?:.|\n)*?(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?.{0,10}?\d+(?!%)|^Segunda[:\.]\s|Anexo II\nModelo de declaraci.n)",
+    (
+        r"^"
+        r"(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca)"
+        r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
+        r"(?:.|\n)*?"
+        r"(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca)"
+        r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
+        r"|^Segunda[:\.]\s)"
+    ),
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
 ###### (On the second pdf structure). If have "garantia" on the paragraph:
 price_second_structure_pdf_with_garantia_pattern = re.compile(
-    r"^.*(?:licitaci.n|salida)(?:.|\n)*?(\d+[\d\.,]*)\s*?(?:euros|€)",
+    r"^.*(?:licitaci.n|salida).*?(\d+[\d\.,]*)\s*?(?:euros|€)",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
