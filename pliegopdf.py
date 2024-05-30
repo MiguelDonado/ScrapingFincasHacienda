@@ -49,7 +49,7 @@ def read_pdf(url_pdf):
     return all_text_file
 
 
-url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf"
+url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
 
 
 def get_desired_paragraphs(all_text_pdf):
@@ -114,14 +114,14 @@ def is_price_on_paragraph(paragraph):
     return result
 
 
-list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20BARCELONA/PLIEGODECONDICIONES.pdf.xsig.pdf"
+""" list_of_lands = get_pliego_relevant_info(
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
 )
 for counter, info in enumerate(list_of_lands):
-    print(f"The {counter+1} has the next info: {info}")
+    print(f"The {counter+1} has the next info: {info}") """
 
-""" print(
+print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20BARCELONA/PLIEGODECONDICIONES.pdf.xsig.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
     )
-) """
+)
