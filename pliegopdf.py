@@ -14,7 +14,7 @@ from support_regex import (
     price_second_structure_pdf_without_garantia_pattern,
     checker_second_structure_price_in_table_format,
     price_second_structure_pdf_with_garantia_pattern_and_table_format,
-    checker_second_structure_price_not_in_the_paragraph,
+    checker_second_structure_price_in_the_paragraph,
     price_when_is_not_in_paragraph,
 )
 
@@ -45,7 +45,7 @@ def read_pdf(url_pdf):
     pdf_file = io.BytesIO(pdf_content)
     with pdfplumber.open(pdf_file) as pdf:
         text_pages = [page.extract_text() for page in pdf.pages]
-    all_text_file = " ".join(text_pages[8:15])
+    all_text_file = " ".join(text_pages)
     return all_text_file
 
 
@@ -110,18 +110,18 @@ def format_price(price):
 
 
 def is_price_on_paragraph(paragraph):
-    result = re.search(checker_second_structure_price_not_in_the_paragraph, paragraph)
+    result = re.search(checker_second_structure_price_in_the_paragraph, paragraph)
     return result
 
 
-""" list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf"
+list_of_lands = get_pliego_relevant_info(
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20BARCELONA/PLIEGODECONDICIONES.pdf.xsig.pdf"
 )
 for counter, info in enumerate(list_of_lands):
-    print(f"The {counter+1} has the next info: {info}") """
+    print(f"The {counter+1} has the next info: {info}")
 
-print(
+""" print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-GRANADA/pliego%20condiciones%20subasta%202023%20DICIEMBRE_signed_signed.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20BARCELONA/PLIEGODECONDICIONES.pdf.xsig.pdf"
     )
-)
+) """
