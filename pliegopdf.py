@@ -45,7 +45,7 @@ def read_pdf(url_pdf):
     pdf_file = io.BytesIO(pdf_content)
     with pdfplumber.open(pdf_file) as pdf:
         text_pages = [page.extract_text() for page in pdf.pages]
-    all_text_file = " ".join(text_pages[5:10])
+    all_text_file = " ".join(text_pages[8:15])
     return all_text_file
 
 
@@ -122,6 +122,6 @@ for counter, info in enumerate(list_of_lands):
 
 print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-GRANADA/pliego%20condiciones%20subasta%202023%20DICIEMBRE_signed_signed.pdf"
     )
 )
