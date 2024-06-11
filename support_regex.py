@@ -3,7 +3,18 @@ import re
 auction_href_pattern = re.compile("^https://.+Estado/Paginas/Subastas/.+")
 # The first segment of the regex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
 ref_catastral_pattern = re.compile(
-    r"^(?!.*(?:sur|norte|oeste|este)).*Referen\s?cias?\s+(?:Catastral)?(?:es)?(?:\ses\sla)?:?\s*(\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|\d{7}[A-Z]{2}\d{4}[A-Z])",
+    r"^"
+    r"(?!.*(?:sur|norte|oeste|este))"
+    r".*Referen\s?cias?\s+"
+    r"(?:Catastral)?"
+    r"(?:es)?"
+    r"(?:\sde\sla\sfinca\srústica)?"
+    r"(?:\ses\sla)?:?\s*"
+    r"("
+    r"\d{2}\d{3}[A-Z]\d{3}\d{5}\d{4}[A-Z]{2}|"
+    r"\d{7}[A-Z]{2}\d{4}[A-Z]\d{4}[A-Z]{2}|"
+    r"\d{7}[A-Z]{2}\d{4}[A-Z]"
+    r")",
     flags=re.MULTILINE | re.IGNORECASE,
 )
 
@@ -38,8 +49,10 @@ second_paragraphs_pattern = re.compile(
     (
         r"^"
         r"(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca)"
+        r"(?!.*(?:sur|norte|oeste|este))"
         r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
         r"(?:.|\n){30,}?"  # This is all that is in the middle of the paragraph
+        r"(?!.*(?:sur|norte|oeste|este))"
         r"(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca)"
         r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
         r"|^Segunda[:\.]\s)"

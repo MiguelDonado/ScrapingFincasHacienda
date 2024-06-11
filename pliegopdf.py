@@ -45,7 +45,7 @@ def read_pdf(url_pdf):
     pdf_file = io.BytesIO(pdf_content)
     with pdfplumber.open(pdf_file) as pdf:
         text_pages = [page.extract_text() for page in pdf.pages]
-    all_text_file = " ".join(text_pages)
+    all_text_file = " ".join(text_pages[32:35])
     return all_text_file
 
 
@@ -115,14 +115,14 @@ def is_price_on_paragraph(paragraph):
     return result
 
 
-list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
+""" list_of_lands = get_pliego_relevant_info(
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_Segovia/RUSTICOS-14-JUN2024/Anexo-I-Relacion-fincas-14-junio.pdf"
 )
 for counter, info in enumerate(list_of_lands):
-    print(f"The {counter+1} has the next info: {info}")
+    print(f"The {counter+1} has the next info: {info}") """
 
-""" print(
+print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_Segovia/RUSTICOS-14-JUN2024/Anexo-I-Relacion-fincas-14-junio.pdf"
     )
-) """
+)
