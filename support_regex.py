@@ -39,7 +39,7 @@ second_paragraphs_pattern = re.compile(
         r"^"
         r"(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca)"
         r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
-        r"(?:.|\n)*?"
+        r"(?:.|\n){30,}?"  # This is all that is in the middle of the paragraph
         r"(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca)"
         r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
         r"|^Segunda[:\.]\s)"
