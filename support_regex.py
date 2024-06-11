@@ -46,10 +46,14 @@ second_paragraphs_pattern = re.compile(
     ),
     flags=re.MULTILINE | re.IGNORECASE,
 )
-
+# """"
 ###### (On the second pdf structure). If have "garantia" on the paragraph:
 price_second_structure_pdf_with_garantia_pattern = re.compile(
-    r"^.*(?:licitaci.n|salida).*?(\d+[\d\.,]*)\s*?(?:euros|€)",
+    (
+        r"^"
+        r".*(?:licitaci.n|salida).*?"
+        r"(?:(\d+[\d\.,]*)\s*?(?:euros|€)|\n.*?(\d+[\d\.,]*)\s*?(?:euros|€))"
+    ),
     flags=re.MULTILINE | re.IGNORECASE,
 )
 

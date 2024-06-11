@@ -95,7 +95,8 @@ def get_precio(type_structure, paragraph):
                 price = re.search(
                     price_second_structure_pdf_with_garantia_pattern, paragraph
                 )
-                return format_price(price.group(1))
+                final_price = price.group(1) or price.group(2)
+                return format_price(final_price)
         else:
             price = re.search(
                 price_second_structure_pdf_without_garantia_pattern, paragraph
@@ -115,13 +116,13 @@ def is_price_on_paragraph(paragraph):
 
 
 list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20TARRAGONA/PLIEGO%20DE%20CONDICIONES.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}")
 
 """ print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20TARRAGONA/PLIEGO%20DE%20CONDICIONES.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
     )
 ) """
