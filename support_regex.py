@@ -45,21 +45,18 @@ first_paragraphs_pattern = regex.compile(
 price_first_structure_pdf_pattern = regex.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
+common_regex = (
+    r"(?<!.*(?:sur|norte|oeste|este|folio|linderos|c.digo|Propiedad Horizontal|(?:con|,|la) finca).*\n?.*)"
+    r"(?:LOTE|BIEN|FINCA)\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
+)
 second_paragraphs_pattern = regex.compile(
     (
-        r"^"
-        r"(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca)"
-        r"(?!.*(?:sur|norte|oeste|este))"
-        r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
-        r"(?:.|\n){30,}?"  # This is all that is in the middle of the paragraph
-        r"(?!.*(?:sur|norte|oeste|este))"
-        r"(?=^(?!.*c.digo|.*€|.*Propiedad Horizontal|.*euro|.*(?:con|,|la) finca)"
-        r".*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
-        r"|^Segunda[:\.]\s)"
+        common_regex
+        + r"(?:.|\n){30,}?"  # This is all that is in the middle of the paragraph
+        + rf"(?:{common_regex}|^Segunda[:\.]\s)"
     ),
     flags=regex.MULTILINE | regex.IGNORECASE,
 )
-# """"
 ###### (On the second pdf structure). If have "garantia" on the paragraph:
 price_second_structure_pdf_with_garantia_pattern = regex.compile(
     (

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from support_regex import auction_href_pattern
-import re
+import regex
 
 NUMBER_OF_DELEGATIONS = 57
 delegation_url = (
@@ -21,7 +21,7 @@ def get_all_auctions_urls():
         auctions_anchors_delegation = [
             anchor.get("href")
             for anchor in anchors_delegation
-            if re.search(auction_href_pattern, anchor.get("href"))
+            if regex.search(auction_href_pattern, anchor.get("href"))
         ]
         all_auction_anchors.extend(auctions_anchors_delegation)
     return all_auction_anchors

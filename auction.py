@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from support_regex import ref_catastral_pattern
 from pliegopdf import read_pdf
-import re
+import regex
 
 
 def get_url_pliego_pdf(href):
@@ -26,5 +26,5 @@ def get_url_pliego_pdf(href):
 
 def check_has_ref_catastral(url_pdf):
     text_pliego_pdf = read_pdf(url_pdf)
-    has_ref_catastral_pliego = re.search(ref_catastral_pattern, text_pliego_pdf)
+    has_ref_catastral_pliego = regex.search(ref_catastral_pattern, text_pliego_pdf)
     return has_ref_catastral_pliego
