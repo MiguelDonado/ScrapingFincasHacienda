@@ -1,10 +1,15 @@
 import regex
 
+common_regex = (
+    r"(?<!.*(?:sur|norte|registr|situad|calle|rústica|urbana|oeste|este|folio|linderos|c.digo|Propiedad Horizontal|(?:con|,|la) finca).*\n?.*)"
+    r"(?:LOTE|BIEN|FINCA)\s(?:Nº)?\D{0,10}?\d{1,3}\D(?!%)"
+)
+
 auction_href_pattern = regex.compile("^https://.+Estado/Paginas/Subastas/.+")
 # The first segment of the regexgex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
 ref_catastral_pattern = regex.compile(
     r"^"
-    r"(?!.*(?:sur|norte|oeste|este))"
+    r"(?<!.*(?:sur|norte|oeste|este|calle).*\n?.*)"
     r".*Referen\s?cias?\s+"
     r"(?:Catastral)?"
     r"(?:es)?"
@@ -19,10 +24,7 @@ ref_catastral_pattern = regex.compile(
 )
 
 # Checkers to know the type of pdf we are analyzing
-checker_second_structure_pattern = regex.compile(
-    r"^(?!.*c.digo|.*Propiedad Horizontal|.*€|.*euro|.*(?:con|,|la) finca).*(?:LOTE|BIEN|(?-i:Finca)|(?-i:FINCA))\s(?:Nº)?.{0,10}?\d+(?!%)",
-    flags=regex.MULTILINE | regex.IGNORECASE,
-)
+checker_second_structure_pattern = regex.compile(common_regex)
 
 checker_garantia_in_paragraph_pattern = regex.compile(
     r"^.*(garant.a|fianza)",
@@ -39,21 +41,17 @@ checker_second_structure_price_in_the_paragraph = regex.compile(r"\d+[\d\.]*,\d\
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (tables)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf
 first_paragraphs_pattern = regex.compile(
-    r"^(?:Rústica|Urbana).*?Referencia\sCatastral:[\w ]+$",
+    """ """ """ """ r"^(?:Rústica|Urbana).*?Referencia\sCatastral:[\w ]+$",
     flags=regex.DOTALL | regex.MULTILINE,
 )
 price_first_structure_pdf_pattern = regex.compile(r"(?<=\s)[\d\.,]+\s€")
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (paragraphs)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_TERUEL/Pliego%20de%20condiciones%20subasta.pdf
-common_regex = (
-    r"(?<!.*(?:sur|norte|oeste|este|folio|linderos|c.digo|Propiedad Horizontal|(?:con|,|la) finca).*\n?.*)"
-    r"(?:LOTE|BIEN|FINCA)\s(?:Nº)?\D{0,10}?\d{1,2}\D(?!%)"
-)
 second_paragraphs_pattern = regex.compile(
     (
         common_regex
         + r"(?:.|\n){30,}?"  # This is all that is in the middle of the paragraph
-        + rf"(?:{common_regex}|^Segunda[:\.]\s)"
+        + rf"(?={common_regex}|^Segunda[:\.]\s)"
     ),
     flags=regex.MULTILINE | regex.IGNORECASE,
 )
@@ -62,7 +60,7 @@ price_second_structure_pdf_with_garantia_pattern = regex.compile(
     (
         r"^"
         r".*(?:licitaci.n|salida).*?"
-        r"(?:(\d+[\d\.,]*)\s*?(?:euros|€)|\n.*?(\d+[\d\.,]*)\s*?(?:euros|€))"
+        r"(?:(\d+[\d\.,]*)\s*?(?:euros|€|\d)|\n(?!.*tasación).*?(\d+[\d\.,]*)\s*?(?:euros|€))"
     ),
     flags=regex.MULTILINE | regex.IGNORECASE,
 )
