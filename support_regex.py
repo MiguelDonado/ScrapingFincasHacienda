@@ -2,11 +2,11 @@ import regex
 
 common_regex = (
     r"(?<!.*(?:sur|norte|registr|situad|calle|rústica|urbana|oeste|este|folio|linderos|c.digo|Propiedad Horizontal|(?:con|,|la) finca).*\n?.*)"
-    r"(?:LOTE|BIEN|FINCA)\s(?:Nº)?\D{0,10}?\d{1,3}\D(?!%)"
+    r"(?:LOTE|BIEN|FINCA)\s(?!registral)(?:Nº)?\D{0,10}?\d{1,3}\D(?!%)(?!.*(?:Propiedad\sHorizontal|escalera))"
 )
 
 auction_href_pattern = regex.compile("^https://.+Estado/Paginas/Subastas/.+")
-# The first segment of the regexgex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
+# The first segment of the regex is for "fincas rusticas", the second for "fincas urbanas", the third is for a strange case
 ref_catastral_pattern = regex.compile(
     r"^"
     r"(?<!.*(?:sur|norte|oeste|este|calle).*\n?.*)"
@@ -24,7 +24,9 @@ ref_catastral_pattern = regex.compile(
 )
 
 # Checkers to know the type of pdf we are analyzing
-checker_second_structure_pattern = regex.compile(common_regex)
+checker_second_structure_pattern = regex.compile(
+    common_regex, flags=regex.MULTILINE | regex.IGNORECASE
+)
 
 checker_garantia_in_paragraph_pattern = regex.compile(
     r"^.*(garant.a|fianza)",
@@ -36,12 +38,14 @@ checker_second_structure_price_in_table_format = regex.compile(
     flags=regex.MULTILINE | regex.IGNORECASE,
 )
 
-checker_second_structure_price_in_the_paragraph = regex.compile(r"\d+[\d\.]*,\d\d")
+checker_second_structure_price_in_the_paragraph = regex.compile(
+    r"\d+[\d\.]*(,\d\d|\seuro)"
+)
 
 # This is the regular expression that is able to handle the pliego pdf that has the next structure (tables)
 # Example: https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH%20OURENSE/Pliego_Sub.30_abril_2024.pdf
 first_paragraphs_pattern = regex.compile(
-    """ """ """ """ r"^(?:Rústica|Urbana).*?Referencia\sCatastral:[\w ]+$",
+    r"^(?:Rústica|Urbana).*?Referencia\sCatastral:[\w ]+$",
     flags=regex.DOTALL | regex.MULTILINE,
 )
 price_first_structure_pdf_pattern = regex.compile(r"(?<=\s)[\d\.,]+\s€")
