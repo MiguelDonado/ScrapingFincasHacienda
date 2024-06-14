@@ -84,7 +84,7 @@ price_second_structure_pdf_without_garantia_pattern = regex.compile(
 
 #### (On the second pdf structure). If price is not included on the paragraph but at the end of the file.
 price_when_is_not_in_paragraph = regex.compile(
-    r"^\d+\s.*subasta.*?(\d+[\d\.,]*)", flags=regex.MULTILINE | regex.IGNORECASE
+    r"^\d+\s.*subasta.*?(\d+[\d\.,]*\d)", flags=regex.MULTILINE | regex.IGNORECASE
 )
 
 # https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=90&RefC=15090A507018480000AY

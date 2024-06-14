@@ -115,7 +115,7 @@ def is_price_on_paragraph(paragraph):
 
 
 """ list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_ZARAGOZA/Pliego%20condiciones%20subasta%202023_signed.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}") """

@@ -45,7 +45,6 @@ def get_whole_info_land(ref_catastral, price):
             whole_info_lands.insert(10, price_per_m2)
             return whole_info_lands
     except:
-        print(traceback.format_exc())
         return [ref_catastral, price] + [""] * 8
 
 
