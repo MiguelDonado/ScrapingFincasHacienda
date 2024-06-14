@@ -4,25 +4,26 @@ from support_regex import ref_catastral_pattern
 from pliegopdf import read_pdf
 import regex
 
+pliego_pattern = regex.compile(".*liego.*", flags=regex.IGNORECASE)
+anexo_pattern = regex.compile(".*nexo.*", flags=regex.IGNORECASE)
+
 
 def get_url_pliego_pdf(href):
     html_text = requests.get(href)
     soup = BeautifulSoup(html_text.text, "lxml")
-    anchors = soup.find_all("a")
-    pliego_pdf = [
-        anchor.get("href")
-        for anchor in anchors
-        if "liego" in anchor.get("href").lower()
-    ]
-    url_pliego_pdf = "https://www.hacienda.gob.es" + pliego_pdf[0]
-    right_document = check_has_ref_catastral(url_pliego_pdf)
-    if right_document:
+    pliego_pdf = soup.find("a", href=pliego_pattern).get("href")
+    url_pliego_pdf = "https://www.hacienda.gob.es" + pliego_pdf
+    if check_has_ref_catastral(url_pliego_pdf):
+        print(
+            f"\no The following document will be used to extract the data: {url_pliego_pdf}"
+        )
         return url_pliego_pdf
     else:
-        anexo_pdf = [
-            anchor.get("href") for anchor in anchors if "nexo" in anchor.get("href")
-        ]
-        url_anexo_pdf = "https://www.hacienda.gob.es" + anexo_pdf[0]
+        anexo_pdf = soup.find("a", href=anexo_pattern).get("href")
+        url_anexo_pdf = "https://www.hacienda.gob.es" + anexo_pdf
+        print(
+            f"\no The following document will be used to extract data: {url_anexo_pdf}"
+        )
         return url_anexo_pdf
 
 

@@ -25,6 +25,9 @@ def get_whole_info_land(ref_catastral, price):
                 + additional_info
                 + [m2, ref_catastral_url, price, price_per_m2]
             )
+            print(
+                f"The following info has been extracted from {ref_catastral}\n{whole_info_land}"
+            )
             return whole_info_land
         # Si el lote contiene mas de una referencia catastral
         elif len(ref_catastral) > 1:
@@ -43,8 +46,12 @@ def get_whole_info_land(ref_catastral, price):
             whole_info_lands = ["; ".join(field) for field in whole_info_lands]
             whole_info_lands.insert(7, total_m2)
             whole_info_lands.insert(10, price_per_m2)
+            print(
+                f"The following info has been extracted from {ref_catastral}\n{whole_info_lands}"
+            )
             return whole_info_lands
     except:
+        print(f"We can extract any additional info from {ref_catastral}")
         return [ref_catastral, price] + [""] * 8
 
 

@@ -20,6 +20,7 @@ from support_regex import (
 
 
 def get_pliego_relevant_info(url_pdf):
+    print(f"\no The following document is being used to extract data {url_pdf}")
     text = read_pdf(url_pdf)
     paragraphs = get_desired_paragraphs(text)
 
@@ -34,8 +35,12 @@ def get_pliego_relevant_info(url_pdf):
     # If the prices are not included on the same paragraph, but all together at the end.
     if final_data[0][1] == "0":
         prices = regex.findall(price_when_is_not_in_paragraph, text)
+        prices = [format_price(price) for price in prices]
         ref_catastrales = [item[0] for item in final_data]
-        final_data = zip(ref_catastrales, prices)
+        final_data = list(zip(ref_catastrales, prices))
+    print(
+        f"\no The following information has been extracted from {url_pdf}\n{final_data}"
+    )
     return final_data
 
 
@@ -115,7 +120,7 @@ def is_price_on_paragraph(paragraph):
 
 
 """ list_of_lands = get_pliego_relevant_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
+    "https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
 )
 for counter, info in enumerate(list_of_lands):
     print(f"The {counter+1} has the next info: {info}") """
