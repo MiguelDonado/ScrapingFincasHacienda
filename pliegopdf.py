@@ -49,9 +49,6 @@ def read_pdf(url_pdf):
     return all_text_file
 
 
-url = "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
-
-
 def get_desired_paragraphs(all_text_pdf):
     if regex.search(checker_second_structure_pattern, all_text_pdf):
         return "second_structure", regex.findall(
@@ -117,11 +114,11 @@ def is_price_on_paragraph(paragraph):
     return result
 
 
-list_of_lands = get_pliego_relevant_info(
+""" list_of_lands = get_pliego_relevant_info(
     "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_ZARAGOZA/Pliego%20condiciones%20subasta%202023_signed.pdf"
 )
 for counter, info in enumerate(list_of_lands):
-    print(f"The {counter+1} has the next info: {info}")
+    print(f"The {counter+1} has the next info: {info}") """
 
 """ print(
     read_pdf(

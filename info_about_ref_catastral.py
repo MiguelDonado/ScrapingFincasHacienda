@@ -1,4 +1,5 @@
 import re
+import traceback
 import requests
 from bs4 import BeautifulSoup
 from requests.packages.urllib3.exceptions import InsecureRequestWarning  # type: ignore
@@ -9,13 +10,43 @@ requests.packages.urllib3.disable_warnings(
     InsecureRequestWarning
 )  # Disable SSL warning
 
-ref_catastral_url = "https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del={provincia}&mun={municipio}&RefC={ref_catastral}"
+base_ref_catastral_url = "https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del={provincia}&mun={municipio}&RefC={ref_catastral}"
 
 
 def get_whole_info_land(ref_catastral, price):
-    catastro_url = get_url_ref_catastral(ref_catastral)
-    additional_info = get_info_about_url_ref_catastral(catastro_url)
-    return [ref_catastral, price] + additional_info
+    try:
+        # Si el lote solo contiene una referencia catastral
+        if len(ref_catastral) == 1:
+            ref_catastral_url = get_url_ref_catastral(ref_catastral[0])
+            m2, *additional_info = get_info_about_url_ref_catastral(ref_catastral_url)
+            price_per_m2 = round(price / m2, 3)
+            whole_info_land = (
+                [ref_catastral[0]]
+                + additional_info
+                + [m2, ref_catastral_url, price, price_per_m2]
+            )
+            return whole_info_land
+        # Si el lote contiene mas de una referencia catastral
+        elif len(ref_catastral) > 1:
+            whole_info_lands = []
+            total_m2 = 0
+            for ref in ref_catastral:
+                ref_catastral_url = get_url_ref_catastral(ref)
+                m2, *additional_info = get_info_about_url_ref_catastral(
+                    ref_catastral_url
+                )
+                temp = [ref] + additional_info + [ref_catastral_url]
+                whole_info_lands.append(temp)
+                total_m2 += m2
+            price_per_m2 = round(price / total_m2, 3)
+            whole_info_lands = list(zip(*whole_info_lands))
+            whole_info_lands = ["; ".join(field) for field in whole_info_lands]
+            whole_info_lands.insert(7, total_m2)
+            whole_info_lands.insert(10, price_per_m2)
+            return whole_info_lands
+    except:
+        print(traceback.format_exc())
+        return [ref_catastral, price] + [""] * 8
 
 
 def get_url_ref_catastral(ref_catastral):
@@ -23,12 +54,12 @@ def get_url_ref_catastral(ref_catastral):
     provincia = ref_catastral[0:2]
     municipio = ref_catastral[2:5]
 
-    final_ref_catastral_url = ref_catastral_url.format(
+    ref_catastral_url = base_ref_catastral_url.format(
         provincia=provincia,
         municipio=municipio,
         ref_catastral=ref_catastral,
     )
-    return final_ref_catastral_url
+    return ref_catastral_url
 
 
 def get_info_about_url_ref_catastral(url):
@@ -50,11 +81,15 @@ def get_info_about_url_ref_catastral(url):
         .find("label")
         .get_text()
     )
-    metros_cuadrados = (
-        datosinmueble.find("span", string="Superficie gráfica")
-        .find_next_sibling()
-        .find("label")
-        .get_text()
+    metros_cuadrados = float(
+        (
+            datosinmueble.find("span", string="Superficie gráfica")
+            .find_next_sibling()
+            .find("label")
+            .get_text()
+        )
+        .replace(" m2", "")
+        .replace(".", "")
     )
     cultivo_aprovechamiento = (
         datosinmueble.find("div", id="ctl00_Contenido_divtblCultivos")
@@ -68,7 +103,6 @@ def get_info_about_url_ref_catastral(url):
         "https://www1.sedecatastro.gob.es/Cartografia/BuscarParcelaInternet.aspx?refcat="
         + url.rsplit("=", 1)[1]
     )
-
     return [
         metros_cuadrados,
         municipio,

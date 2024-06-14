@@ -10,7 +10,9 @@ def get_url_pliego_pdf(href):
     soup = BeautifulSoup(html_text.text, "lxml")
     anchors = soup.find_all("a")
     pliego_pdf = [
-        anchor.get("href") for anchor in anchors if "liego" in anchor.get("href")
+        anchor.get("href")
+        for anchor in anchors
+        if "liego" in anchor.get("href").lower()
     ]
     url_pliego_pdf = "https://www.hacienda.gob.es" + pliego_pdf[0]
     right_document = check_has_ref_catastral(url_pliego_pdf)

@@ -12,8 +12,10 @@ def main():
         get_pliego_relevant_info(pliego_url) for pliego_url in auctions_pliegos_urlpdf
     ]
     final_info_lands = [
-        get_whole_info_land(auction_pliego_relevant_info)
+        get_whole_info_land(ref_catastral, float(price))
         for auction_pliego_relevant_info in auctions_pliegos_relevant_info
+        for ref_catastral, price in auction_pliego_relevant_info
+        if price != "ERROR"
     ]
 
 

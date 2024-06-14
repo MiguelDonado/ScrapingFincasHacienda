@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from support_regex import auction_href_pattern
 import regex
 
-NUMBER_OF_DELEGATIONS = 57
+NUMBER_OF_DELEGATIONS = 8
 delegation_url = (
     "https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/"
     "Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/ListadoSubastasConcursos.aspx?"
