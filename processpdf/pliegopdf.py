@@ -1,22 +1,8 @@
 import requests
-from bs4 import BeautifulSoup
 import regex
 import pdfplumber
 import io
-from support_regex import (
-    checker_second_structure_pattern,
-    first_paragraphs_pattern,
-    second_paragraphs_pattern,
-    ref_catastral_pattern,
-    price_first_structure_pdf_pattern,
-    checker_garantia_in_paragraph_pattern,
-    price_second_structure_pdf_with_garantia_pattern,
-    price_second_structure_pdf_without_garantia_pattern,
-    checker_second_structure_price_in_table_format,
-    price_second_structure_pdf_with_garantia_pattern_and_table_format,
-    checker_second_structure_price_in_the_paragraph,
-    price_when_is_not_in_paragraph,
-)
+from processpdf.constants import *
 
 
 def get_pliego_info(url_pdf):

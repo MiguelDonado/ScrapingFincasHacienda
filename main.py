@@ -1,7 +1,7 @@
-from auctions import get_all_auctions_urls
-from auction import get_url_pliego_pdf
-from pliegopdf import get_pliego_info
-from get_info_land import get_whole_info_land
+from scrape.auctions import get_all_auctions_urls
+from scrape.auction import get_url_pliego_pdf
+from processpdf.pliegopdf import get_pliego_info
+from scrape.get_info_land import get_whole_info_land
 
 
 def main():
@@ -48,6 +48,7 @@ def main():
         get_whole_info_land(*auction_info)
         for auction_info in filtered_auctions_pliegos_info
     ]
+    print(lands_info)
 
 
 if __name__ == "__main__":

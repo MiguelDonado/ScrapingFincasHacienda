@@ -1,6 +1,7 @@
-import re
+import regex
 import traceback
 import requests
+from scrape.constants import *
 from bs4 import BeautifulSoup
 from requests.packages.urllib3.exceptions import InsecureRequestWarning  # type: ignore
 
@@ -9,8 +10,6 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning  # type:
 requests.packages.urllib3.disable_warnings(
     InsecureRequestWarning
 )  # Disable SSL warning
-
-base_ref_catastral_url = "https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del={provincia}&mun={municipio}&RefC={ref_catastral}"
 
 
 def get_whole_info_land(ref_catastral, price):
@@ -60,7 +59,7 @@ def get_url_ref_catastral(ref_catastral):
     provincia = ref_catastral[0:2]
     municipio = ref_catastral[2:5]
 
-    ref_catastral_url = base_ref_catastral_url.format(
+    ref_catastral_url = BASE_REF_CATASTRAL_URL.format(
         provincia=provincia,
         municipio=municipio,
         ref_catastral=ref_catastral,

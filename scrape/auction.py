@@ -1,11 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-from support_regex import ref_catastral_pattern
-from pliegopdf import read_pdf
+from processpdf.constants import ref_catastral_pattern
+from processpdf.pliegopdf import read_pdf
 import regex
-
-pliego_pattern = regex.compile(".*liego.*", flags=regex.IGNORECASE)
-anexo_pattern = regex.compile(".*nexo.*", flags=regex.IGNORECASE)
+from scrape.constants import *
 
 
 def get_url_pliego_pdf(href):
