@@ -19,7 +19,7 @@ from support_regex import (
 )
 
 
-def get_pliego_relevant_info(url_pdf):
+def get_pliego_info(url_pdf):
     print(f"\no The following document is being used to extract data {url_pdf}")
     text = read_pdf(url_pdf)
     paragraphs = get_desired_paragraphs(text)
@@ -119,7 +119,7 @@ def is_price_on_paragraph(paragraph):
     return result
 
 
-""" list_of_lands = get_pliego_relevant_info(
+""" list_of_lands = get_pliego_info(
     "https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
 )
 for counter, info in enumerate(list_of_lands):
