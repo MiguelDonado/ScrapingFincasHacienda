@@ -1,18 +1,21 @@
+# Function used to extract all the url of the available auctions.
+
 import requests
 from bs4 import BeautifulSoup
-from processpdf.constants import auction_href_pattern
+import processpdf.constants as processpdf_const
 import regex
-from scrape.constants import *
+import scrape.constants as const
 
 
 def get_all_auctions_urls():
     all_auction_anchors = []
-    for number in range(1, NUMBER_OF_DELEGATIONS):
-        final_delegation_url = DELEGATION_URL.format(code=number)
+    for number in range(1, const.NUMBER_OF_DELEGATIONS):
+        final_delegation_url = const.DELEGATION_URL.format(code=number)
         html_text = requests.get(final_delegation_url)
         soup = BeautifulSoup(html_text.text, "lxml")
         auction_anchors_delegation = [
-            a.get("href") for a in soup.find_all("a", href=auction_href_pattern)
+            a.get("href")
+            for a in soup.find_all("a", href=processpdf_const.AUCTION_HREF_PATTERN)
         ]
         if auction_anchors_delegation:
             print(

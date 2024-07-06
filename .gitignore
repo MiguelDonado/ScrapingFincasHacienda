@@ -3,3 +3,4 @@ __pycache__/
 AuctionsExamples/
 *.txt
 *test*.py
+*.code-workspace
