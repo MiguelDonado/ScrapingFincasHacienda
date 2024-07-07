@@ -4,3 +4,6 @@ AuctionsExamples/
 *.txt
 *test*.py
 *.code-workspace
+*.env
+assets/
+BUGS.md
