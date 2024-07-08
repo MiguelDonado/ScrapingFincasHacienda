@@ -19,9 +19,9 @@ getting and processing the PDF that contains the info about the lands in auction
 - [x] Get and process the PDF that list the lands in auction for each auction announcement.
 - [x] Get an array with all the lands in auction (referencia catastral and his price)
 - [x] Given a reference catastral scrape multiple websites to get relevant data.
-- [] Handle errors
-- [] Save the retrieved data to a database.
-- [] Check if the land in auction (referencia catastral) is already on the database, if so don't do anything else and jump to the next one.
+- [ ] Handle errors
+- [ ] Save the retrieved data to a database.
+- [ ] Check if the land in auction (referencia catastral) is already on the database, if so don't do anything else and jump to the next one.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
