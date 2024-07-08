@@ -1,5 +1,19 @@
 import regex
 
+# Number of delegations are 57 in total
+NUMBER_OF_DELEGATIONS = (
+    12  # This number is for testing purposes, so it only run on a few provinces.
+)
+BASE_URL_HACIENDA = "https://www.hacienda.gob.es"
+DELEGATION_URL = (
+    "https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/"
+    "Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/ListadoSubastasConcursos.aspx?"
+    "den=&nat=&dels={code}%3B"
+)
+PLIEGO_PATTERN = regex.compile(".*liego.*", flags=regex.IGNORECASE)
+ANEXO_PATTERN = regex.compile(".*nexo.*", flags=regex.IGNORECASE)
+
+###################################### REGEX PROCESS PLIEGO PDF ##############################################################
 COMMON_REGEX = (
     r"(?<!.*(?:sur|norte|registr|situad|calle|rústica|urbana|oeste|este|folio|linderos|c.digo|Propiedad Horizontal|(?:con|,|la) finca).*\n?.*)"
     r"(?:LOTE|BIEN|FINCA)\s(?!registral)(?:Nº)?\D{0,10}?\d{1,3}\D(?!%)(?!.*(?:Propiedad\sHorizontal|escalera))"

@@ -2,7 +2,7 @@
 # the province and the locality
 
 from selenium import webdriver
-import scrape.constants as const
+import Correos.constants as const
 from selenium.webdriver.common.by import By
 
 

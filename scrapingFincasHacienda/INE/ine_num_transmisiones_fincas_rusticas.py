@@ -1,3 +1,5 @@
+# Class that extract the number of rural lands trades that's been on a province now, years before and get the porcentual variation
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select

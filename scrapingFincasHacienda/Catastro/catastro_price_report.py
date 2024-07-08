@@ -1,3 +1,5 @@
+# Class that uses Selenium to extract the reference value and downloads the price report PDF for a land
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select

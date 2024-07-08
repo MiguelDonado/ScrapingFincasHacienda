@@ -1,3 +1,5 @@
+# Class that inhetirs from a Selenium Class, given a "municipio" it extracts the population now, the population five years ago and the porcentual variation
+
 import regex
 
 

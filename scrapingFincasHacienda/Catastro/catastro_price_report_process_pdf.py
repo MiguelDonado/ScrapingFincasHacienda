@@ -1,3 +1,5 @@
+# Function that given the price report pdf for a land, it extract multiple data using pdfplumber library
+
 import pdfplumber
 
 

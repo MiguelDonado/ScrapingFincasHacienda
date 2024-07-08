@@ -2,10 +2,9 @@
 
 import requests
 from bs4 import BeautifulSoup
-import processpdf.constants as processpdf_const
-from processpdf.pliegopdf import read_pdf
+from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import read_pdf
 import regex
-import scrape.constants as const
+import Hacienda.constants as const
 
 
 def get_url_pliego_pdf(href):
@@ -34,6 +33,6 @@ def check_has_ref_catastral(url_pdf):
     # and so the list of properties is detailed on another anchor tag
     text_pliego_pdf = read_pdf(url_pdf)
     has_ref_catastral_pliego = regex.search(
-        processpdf_const.REF_CATASTRAL_PATTERN, text_pliego_pdf
+        const.REF_CATASTRAL_PATTERN, text_pliego_pdf
     )
     return has_ref_catastral_pliego

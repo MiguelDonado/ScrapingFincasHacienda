@@ -1,3 +1,5 @@
+# Class that inherits from a Selenium Class, given a postal code, scrape some interesting data from the Sabi database website
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import os

@@ -1,8 +1,11 @@
+# Contains several functions, that are all used when calling the function get_pliego_pdf. Given the PDF that contains the list of lands in auction, it extracts
+# the ref_catastral and the price
+
 import requests
 import regex
 import pdfplumber
 import io
-from processpdf.constants import *
+import Hacienda.constants as const
 
 
 def get_pliego_info(url_pdf):
@@ -20,7 +23,7 @@ def get_pliego_info(url_pdf):
         ]
     # If the prices are not included on the same paragraph, but all together at the end.
     if final_data[0][1] == "0":
-        prices = regex.findall(price_when_is_not_in_paragraph, text)
+        prices = regex.findall(const.PRICE_WHEN_IS_NOT_IN_PARAGRAPH, text)
         prices = [format_price(price) for price in prices]
         ref_catastrales = [item[0] for item in final_data]
         final_data = list(zip(ref_catastrales, prices))
@@ -41,12 +44,14 @@ def read_pdf(url_pdf):
 
 
 def get_desired_paragraphs(all_text_pdf):
-    if regex.search(checker_second_structure_pattern, all_text_pdf):
+    if regex.search(const.CHECKER_SECOND_STRUCTURE_PATTERN, all_text_pdf):
         return "second_structure", regex.findall(
-            second_paragraphs_pattern, all_text_pdf
+            const.SECOND_PARAGRAPHS_PATTERN, all_text_pdf
         )
     else:
-        return "first_structure", regex.findall(first_paragraphs_pattern, all_text_pdf)
+        return "first_structure", regex.findall(
+            const.FIRST_PARAGRAPHS_PATTERN, all_text_pdf
+        )
 
 
 def get_desired_information(type_structure, paragraph):
@@ -57,7 +62,7 @@ def get_desired_information(type_structure, paragraph):
 
 
 def get_ref_catastral(paragraph):
-    ref_catastrales = regex.findall(ref_catastral_pattern, paragraph)
+    ref_catastrales = regex.findall(const.REF_CATASTRAL_PATTERN, paragraph)
     if len(ref_catastrales) == 1:
         return ref_catastrales
     elif len(ref_catastrales) > 1:
@@ -68,28 +73,30 @@ def get_ref_catastral(paragraph):
 
 def get_precio(type_structure, paragraph):
     if type_structure == "first":
-        price = regex.search(price_first_structure_pdf_pattern, paragraph)
+        price = regex.search(const.PRICE_FIRST_STRUCTURE_PDF_PATTERN, paragraph)
         return format_price(price.group())
     elif type_structure == "second":
         # If the price is not included on the same paragraph
         if not is_price_on_paragraph(paragraph):
             return "0"
-        if regex.search(checker_garantia_in_paragraph_pattern, paragraph):
-            if regex.search(checker_second_structure_price_in_table_format, paragraph):
+        if regex.search(const.CHECKER_GARANTIA_IN_PARAGRAPH_PATTERN, paragraph):
+            if regex.search(
+                const.CHECKER_SECOND_STRUCTURE_PRICE_IN_TABLE_FORMAT, paragraph
+            ):
                 price = regex.search(
-                    price_second_structure_pdf_with_garantia_pattern_and_table_format,
+                    const.PRICE_SECOND_STRUCTURE_PDF_WITH_GARANTIA_PATTERN_AND_TABLE_FORMAT,
                     paragraph,
                 )
                 return format_price(price.group(1))
             else:
                 price = regex.search(
-                    price_second_structure_pdf_with_garantia_pattern, paragraph
+                    const.PRICE_SECOND_STRUCTURE_PDF_WITH_GARANTIA_PATTERN, paragraph
                 )
                 final_price = price.group(1) or price.group(2)
                 return format_price(final_price)
         else:
             price = regex.search(
-                price_second_structure_pdf_without_garantia_pattern, paragraph
+                const.PRICE_SECOND_STRUCTURE_PDF_WITHOUT_GARANTIA_PATTERN, paragraph
             )
             return format_price(price.group(1))
 
@@ -101,7 +108,9 @@ def format_price(price):
 
 
 def is_price_on_paragraph(paragraph):
-    result = regex.search(checker_second_structure_price_in_the_paragraph, paragraph)
+    result = regex.search(
+        const.CHECKER_SECOND_STRUCTURE_PRICE_IN_THE_PARAGRAPH, paragraph
+    )
     return result
 
 
