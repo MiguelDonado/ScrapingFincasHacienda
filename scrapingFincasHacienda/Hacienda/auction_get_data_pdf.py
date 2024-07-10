@@ -6,31 +6,36 @@ import regex
 import pdfplumber
 import io
 import Hacienda.constants as const
+import logging
 
 
-def get_pliego_info(url_pdf):
-    print(f"\no The following document is being used to extract data {url_pdf}")
-    text = read_pdf(url_pdf)
-    paragraphs = get_desired_paragraphs(text)
-
-    if paragraphs[0] == "first_structure":
-        final_data = [
-            get_desired_information("first", paragraph) for paragraph in paragraphs[1]
-        ]
-    elif paragraphs[0] == "second_structure":
-        final_data = [
-            get_desired_information("second", paragraph) for paragraph in paragraphs[1]
-        ]
-    # If the prices are not included on the same paragraph, but all together at the end.
-    if final_data[0][1] == "0":
-        prices = regex.findall(const.PRICE_WHEN_IS_NOT_IN_PARAGRAPH, text)
-        prices = [format_price(price) for price in prices]
-        ref_catastrales = [item[0] for item in final_data]
-        final_data = list(zip(ref_catastrales, prices))
-    print(
-        f"\no The following information has been extracted from {url_pdf}\n{final_data}"
-    )
-    return final_data
+def get_pliego_info(url_pdf, i):
+    try:
+        text = read_pdf(url_pdf)
+        paragraphs = get_desired_paragraphs(text)
+        if paragraphs[0] == "first_structure":
+            final_data = [
+                get_desired_information("first", paragraph)
+                for paragraph in paragraphs[1]
+            ]
+        elif paragraphs[0] == "second_structure":
+            final_data = [
+                get_desired_information("second", paragraph)
+                for paragraph in paragraphs[1]
+            ]
+        # If the prices are not included on the same paragraph, but all together at the end.
+        if final_data[0][1] == "0":
+            prices = regex.findall(const.PRICE_WHEN_IS_NOT_IN_PARAGRAPH, text)
+            prices = [format_price(price) for price in prices]
+            ref_catastrales = [item[0] for item in final_data]
+            final_data = list(zip(ref_catastrales, prices))
+        # Write in a user-friendly way to the log
+        for index, land in enumerate(final_data):
+            logging.info(f"{i}.\t\t{index}: {''.join(land[0])}, {land[1]}")
+        return final_data
+    except Exception as e:
+        logging.error(f"{i}. An error occurred on the get_pliego_pdf function: {e}")
+        return None
 
 
 def read_pdf(url_pdf):
@@ -122,6 +127,6 @@ for counter, info in enumerate(list_of_lands):
 
 """ print(
     read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH_ZARAGOZA/Pliego%20condiciones%20subasta%202023_signed.pdf"
+        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
     )
 ) """

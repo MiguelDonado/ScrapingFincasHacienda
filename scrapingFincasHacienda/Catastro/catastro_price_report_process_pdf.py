@@ -11,7 +11,7 @@ def get_data_pdf_report(file):
             text_file[1][1]
         )
         two, three, four, number_buildings, slope, fls, *five = text_file[2][2]
-
+        print(pdf.pages[0].extract_text())
     return [
         ath,
         denominacion_ath,
@@ -21,3 +21,6 @@ def get_data_pdf_report(file):
         slope,
         fls,
     ]
+
+
+print(get_data_pdf_report("../../data/pdf/InformePrecioCatastro.pdf"))
