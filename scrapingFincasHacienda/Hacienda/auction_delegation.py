@@ -15,15 +15,19 @@ import logging
 # they would be already on the database.
 # The downside of this solution, is when it's run for the first time. The database is empty, so if there's more than one anchor and it's only selecting the last one,
 # we'd be losing information for those links.
-def has_auction_url(i):
-    f_delegation_url = const.DELEGATION_URL.format(code=i)  # f_: Means formatted
+def has_auction_url(i_delegation):
+    f_delegation_url = const.DELEGATION_URL.format(
+        code=i_delegation
+    )  # f_: Means formatted
     html_text = requests.get(f_delegation_url)
     soup = BeautifulSoup(html_text.text, "lxml")
     # Using the walrus operator. Initializes the variable, and checks if it's True
     if auction_anchor_delegation := soup.find("a", href=const.AUCTION_HREF_PATTERN):
         auction_href_delegation = auction_anchor_delegation.get("href")
-        logging.info(f"{i}. The auction has been retrieved: {auction_href_delegation}")
+        logging.info(
+            f"{i_delegation}. The auction has been retrieved: {auction_href_delegation}"
+        )
         return auction_href_delegation
     else:
-        logging.info(f"{i}. There are no auctions available")
+        logging.info(f"{i_delegation}. There are no auctions available")
         return None

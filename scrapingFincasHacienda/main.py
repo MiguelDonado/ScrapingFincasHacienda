@@ -20,37 +20,40 @@ logging.basicConfig(
 
 def main():
     # In total there are 57 delegations. So for each one of them we're going to do the next:
-    for index_delegation in range(1, const.NUMBER_OF_DELEGATIONS + 1):
+    for i_delegation in range(1, const.NUMBER_OF_DELEGATIONS + 1):
         #      1) Search on hacienda website if there's any auction.
-        auction = has_auction_url(index_delegation)
+        auction = has_auction_url(i_delegation)
         if not auction:
             continue
         #      2) Get the pdf that contains the list of lands.
-        auction_pdf = get_url_pliego_pdf(auction, index_delegation)
+        auction_pdf = get_url_pliego_pdf(auction, i_delegation)
+        if not auction_pdf:
+            continue
         #      3) Get the ref_catastral and price from the lands
-        auction_pdf_info = get_pliego_info(auction_pdf, index_delegation)
+        #      auction_pdf_info is a list of dictionaries,
+        #      each dictionary represents a lote, and it has two keys,
+        #      the first refs_catastrales that holds a list of refs,
+        #      and the second price that holds the price for the lote.
+        auction_pdf_info = get_pliego_info(auction_pdf, i_delegation)
         if not auction_pdf_info:
             continue
         #      4) For each lote in auction
-        for index_lote, lote in enumerate(auction_pdf_info):
-            # lote[0] = ref catastrales
-            # lote[1] = price
+        for i_lote, lote in enumerate(auction_pdf_info, 1):
             #      5) For each land on the lote
-            for index_land, land in enumerate(lote[0]):
+            for i_land, ref in enumerate(lote["refs_catastrales"], 1):
+                msg_header = f"{i_delegation}.\t\t{i_lote} - {i_land}:"
                 try:
                     #   5.1) Scrape data from Catastro
-                    catastro_land = Catastro(land)
+                    catastro_land = Catastro(ref)
                     catastro_land.land_first_page()
                     catastro_land.search()
                     #       5.1.1) The variable data_land will hold data scraped from the Catastro web:
                     #           {localizacion, clase, uso, cultivo_aprovechamiento}
                     data_land = catastro_land.get_info_about_search()
-                    logging.info(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}: {data_land}"
-                    )
+                    logging.info(f"{msg_header}: {data_land}")
                 except Exception as e:
                     logging.error(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}. An error occurred while scraping data with Catastro: {e}"
+                        f"{msg_header}. An error occurred while scraping data with Catastro: {e}"
                     )
 
                 try:
@@ -58,16 +61,16 @@ def main():
                     catastro_land.go_to_otros_visores()
                     catastro_land.download_kml()
                     logging.info(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}: The kml has been downloaded successfully"
+                        f"{msg_header}: The kml has been downloaded successfully"
                     )
                 except Exception as e:
                     logging.error(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}. An error occurred while downloading KML: {e}"
+                        f"{msg_header}. An error occurred while downloading KML: {e}"
                     )
 
                 try:
                     #   5.2) Download PDF report from a different Catastro webpage and scrape reference_value
-                    catastro_land_report = CatastroReport(land, data_land["clase"])
+                    catastro_land_report = CatastroReport(ref, data_land["clase"])
                     catastro_land_report.land_first_page()
                     catastro_land_report.close_cookies()
                     catastro_land_report.land_query_value_page()
@@ -75,12 +78,10 @@ def main():
                     catastro_land_report.select_date_and_property()
                     #   5.2.1) Get the reference_value
                     reference_value = catastro_land_report.get_reference_value_amount()
-                    logging.info(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}: Reference_value = {reference_value}"
-                    )
+                    logging.info(f"{msg_header}: Reference_value = {reference_value}")
                 except Exception as e:
                     logging.error(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}. An error occurred while scraping the reference_value using the CatastroReport class: {e}"
+                        f"{msg_header}. An error occurred while scraping the reference_value using the CatastroReport class: {e}"
                     )
 
                 try:
@@ -92,28 +93,24 @@ def main():
                         msg = "The pdf is not relevant in this case."
                     else:
                         msg = "The pdf has been downloaded successfully"
-                        logging.info(
-                            f"{index_delegation}.\t\t{index_lote} - {index_land}: {msg}"
-                        )
+                        logging.info(f"{msg_header}: {msg}")
                 except Exception as e:
                     logging.error(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}. An error occurred while downloading the reference_value using the CatastroReport class: {e}"
+                        f"{msg_header}. An error occurred while downloading the reference_value using the CatastroReport class: {e}"
                     )
 
                 try:
                     #   5.2.3) Process the PDF report
                     if report_path:
                         report_data = catastro_land_report.process_report(report_path)
-                        logging.info(
-                            f"{index_delegation}.\t\t{index_lote} - {index_land}: {report_data}"
-                        )
+                        logging.info(f"{msg_header}: {report_data}")
                     else:
                         logging.info(
-                            f"{index_delegation}.\t\t{index_lote} - {index_land}: Since no PDF, no PDF has been processed"
+                            f"{msg_header}: Since there's no PDF, no PDF has been processed"
                         )
                 except Exception as e:
                     logging.error(
-                        f"{index_delegation}.\t\t{index_lote} - {index_land}. An error occurred while processing the reference_value using the CatastroReport class: {e}"
+                        f"{msg_header}. An error occurred while processing the reference_value using the CatastroReport class: {e}"
                     )
 
     '''auctions = get_all_auctions_urls()

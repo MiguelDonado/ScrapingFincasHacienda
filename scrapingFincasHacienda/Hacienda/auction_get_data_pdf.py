@@ -9,7 +9,7 @@ import Hacienda.constants as const
 import logging
 
 
-def get_pliego_info(url_pdf, i):
+def get_pliego_info(url_pdf, i_delegation):
     try:
         text = read_pdf(url_pdf)
         paragraphs = get_desired_paragraphs(text)
@@ -29,12 +29,20 @@ def get_pliego_info(url_pdf, i):
             prices = [format_price(price) for price in prices]
             ref_catastrales = [item[0] for item in final_data]
             final_data = list(zip(ref_catastrales, prices))
+
+        final_data = [
+            {"refs_catastrales": refs, "precio": price} for refs, price in final_data
+        ]
         # Write in a user-friendly way to the log
-        for index, land in enumerate(final_data):
-            logging.info(f"{i}.\t\t{index}: {''.join(land[0])}, {land[1]}")
+        for i_lote, lote in enumerate(final_data, 1):
+            logging.info(
+                f"{i_delegation}.\t\t{i_lote}: {''.join(lote['refs_catastrales'])}, {lote['precio']}"
+            )
         return final_data
     except Exception as e:
-        logging.error(f"{i}. An error occurred on the get_pliego_pdf function: {e}")
+        logging.error(
+            f"{i_delegation}. An error occurred while processing the Pliego PDF: {e}"
+        )
         return None
 
 

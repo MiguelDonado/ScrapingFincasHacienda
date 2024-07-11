@@ -1,12 +1,7 @@
-from Catastro.catastro_report import CatastroReport
-
-land = "8878009FE0087N0001HJ"
-
-catastro_land_report = CatastroReport(land, "Rústica")
-catastro_land_report.land_first_page()
-catastro_land_report.close_cookies()
-catastro_land_report.land_query_value_page()
-catastro_land_report.access_with_dni()
-catastro_land_report.select_date_and_property()
-reference_value = catastro_land_report.get_reference_value_amount()
-catastro_land_report.get_reference_value_report()
+x = [
+    (["8878009FE0087N0001HJ", "3982302CD6038SQ"], 94683.45),
+    (["8198006ED1789N0001MQ"], 59530.03),
+    (["3982302CD6038S0008LQ"], 139645.44),
+]
+y = [{"referencias_catastrales": refs, "precio": price} for refs, price in x]
+print(y)
