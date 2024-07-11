@@ -1,4 +1,5 @@
-# Class that inherits from a Selenium class. Given the catastro url for a property, it downloads the KML, and scrapes some data
+# Class that inherits from a Selenium class. Given the catastro url for a property,
+# it downloads the KML, and scrapes some data
 
 from selenium import webdriver
 import Catastro.constants as const
@@ -8,7 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 
-download_dir = "/home/miguel/coding-projects/ScrapingFincasHacienda/data/kml"
+# Directory where the KML file would be saved
+download_dir_kml = "/home/miguel/coding-projects/ScrapingFincasHacienda/data/kml"
 
 
 class Catastro(webdriver.Chrome):
@@ -19,7 +21,7 @@ class Catastro(webdriver.Chrome):
         options.add_experimental_option(
             "prefs",
             {
-                "download.default_directory": download_dir,
+                "download.default_directory": download_dir_kml,
                 "download.prompt_for_download": False,  # To automatically save files to the specified directory without asking
                 "download.directory_upgrade": True,
                 "safebrowsing.enabled": True,
@@ -118,13 +120,20 @@ class Catastro(webdriver.Chrome):
             By.XPATH, "//img[@id='ctl00_Contenido_btnGoogleEarth']"
         )
         google_earth_kml.click()
+        # Give time to the KML to be downloaded, before trying
+        # to rename it, or do something with the file
         time.sleep(5)
+        self.rename_kml(self.referencia_catastral)
 
+    # We use static methods when we want to do something that is not unique per instance,
+    # but it should do something that has a relationship with the class
     @staticmethod
     def rename_kml(ref_catastral):
+        # Get the most recent file from the kml destination directory
         most_recent_file = max(
-            [os.path.join(download_dir, f) for f in os.listdir(download_dir)],
+            [os.path.join(download_dir_kml, f) for f in os.listdir(download_dir_kml)],
             key=os.path.getctime,
         )
-        new_file_path = os.path.join(download_dir, ref_catastral, ".kml")
+        # Establish the variable that helds the new path
+        new_file_path = os.path.join(download_dir_kml, ref_catastral + ".kml")
         os.rename(most_recent_file, new_file_path)
