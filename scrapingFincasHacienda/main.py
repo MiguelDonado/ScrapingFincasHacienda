@@ -11,8 +11,9 @@ from Catastro.catastro_report import CatastroReport
 # CORREOS
 from Correos.correos import Correos
 
-# SABI
-from Sabi.sabi import Sabi
+# INE
+from INE.ine_population import InePopulation
+from INE.ine_num_transmisiones_fincas_rusticas import IneNumTransmisionesFincasRusticas
 
 # from scrapingFincasHacienda.Hacienda.to_rename import get_url_pliego_pdf
 # from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info
@@ -121,7 +122,7 @@ def main():
                         report_data = catastro_land_report.process_report(report_path)
                         logging.info(f"{msg_header} {report_data}")
                     else:
-                        info_msg = f"Because it has the class {catastro_data['clase']}, no PDF has been processed"
+                        info_msg = f"Because it has the class '{catastro_data['clase']}', no PDF has been processed"
                         logging.info(f"{msg_header} {info_msg}")
                 except Exception as e:
                     error_msg = "Failed to process the reference_value report using the CatastroReport class:"
@@ -139,12 +140,42 @@ def main():
                     logging.error(f"{msg_header} {error_msg} {e}")
                     continue
 
-                    #   5.4) Scrape data from Sabi
+                    #   5.4) Scrape data from INE (using InePopulation class)
                 try:
-                    sabi_land = Sabi()
-                except:
-                    pass
+                    ine_population_land = InePopulation(
+                        catastro_data["localizacion"], correos_data["locality"]
+                    )
+                    ine_population_land.land_first_page()
+                    ine_population_land.search_population()
+                    #       5.4.1) The variable ine_population_data will hold data scraped from the Ine web:
+                    #           {population_now, population_before, porcentual_variation}
+                    ine_population_data = ine_population_land.get_population()
+                    logging.info(f"{msg_header} {ine_population_data}")
+                except Exception as e:
+                    error_msg = "Failed to scrape data 'population_now, population_before, variation' using InePopulation class"
+                    logging.error(f"{msg_header} {error_msg} {e}")
 
+                    #   5.5) Scrape data from INE (using IneNumTransmisionesFincasRusticas)
+                    #   This scraping'll be done only if the finca is 'rustica'
+                if catastro_data["clase"] == "Rústica":
+                    cp_first_two_digits = correos_data["cp"][0:2]
+                    try:
+                        ine_num_transm = IneNumTransmisionesFincasRusticas(
+                            cp_first_two_digits
+                        )
+                        ine_num_transm.land_first_page()
+                        ine_num_transm.close_cookies()
+                        ine_num_transm.choose_province()
+                        ine_num_transm.choose_transaction_type()
+                        ine_num_transm.choose_year()
+                        ine_num_transm_data = ine_num_transm.get_results()
+                        logging.info(f"{msg_header} {ine_num_transm_data}")
+                    except:
+                        error_msg = "Failed to scrape data 'transactions_now, transactions_before, variation' using IneNumTransmisionesFincasRusticas class"
+                        logging.error(f"{msg_header} {error_msg} {e}")
+                else:
+                    info_msg = f"Because it has the class '{catastro_data['clase']}', no scraping has been performed using IneNumTransmisionesFincasRusticas class"
+                    logging.info(f"{msg_header} {info_msg}")
     '''auctions = get_all_auctions_urls()
     auctions_pliegos_urlpdf = [get_url_pliego_pdf(auction) for auction in auctions]
     # The relevant info extracted from the pliego is (ref_catastral, price)
