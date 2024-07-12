@@ -25,9 +25,9 @@ def has_auction_url(i_delegation):
     if auction_anchor_delegation := soup.find("a", href=const.AUCTION_HREF_PATTERN):
         auction_href_delegation = auction_anchor_delegation.get("href")
         logging.info(
-            f"{i_delegation}. The auction has been retrieved: {auction_href_delegation}"
+            f"{i_delegation} - X - X The auction has been retrieved: {auction_href_delegation}"
         )
         return auction_href_delegation
     else:
-        logging.info(f"{i_delegation}. There are no auctions available")
+        logging.info(f"{i_delegation} - X - X No auctions available")
         return None

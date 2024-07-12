@@ -7,13 +7,14 @@ from selenium.webdriver.common.by import By
 
 
 class Correos(webdriver.Chrome):
-    def __init__(self):
+    def __init__(self, direction):
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         super().__init__(options=options)
         self.implicitly_wait(15)
         self.maximize_window()
+        self.direction = direction
 
     def land_first_page(self):
         self.get(const.BASE_URL_CORREOS)
@@ -24,13 +25,13 @@ class Correos(webdriver.Chrome):
         )
         reject_cookies_btn.click()
 
-    def search(self, direction):
+    def search(self):
         self.close_cookies()
         search_input = self.find_element(
             By.XPATH,
             "//input[contains(@id, 'correos-ui-input') and @type='text']",
         )
-        search_input.send_keys(direction)
+        search_input.send_keys(self.direction)
         submit_btn = self.find_element(By.XPATH, "//button[@aria-label='BUSCAR']")
         submit_btn.click()
 
@@ -39,4 +40,4 @@ class Correos(webdriver.Chrome):
             By.XPATH,
             "//div[@slot='container-scroll']/div[contains(@class,'ui-list-result')][1]/following-sibling::div[1]//dd",
         )
-        return cp, province, locality
+        return {"cp": cp.text, "province": province.text, "locality": locality.text}

@@ -1,18 +1,28 @@
+# HACIENDA
 from Hacienda.auction_delegation import has_auction_url
 from Hacienda.auction_pliego_url import get_url_pliego_pdf
 from Hacienda.auction_get_data_pdf import get_pliego_info
+import Hacienda.constants as const
+
+# CATASTRO
 from Catastro.catastro import Catastro
 from Catastro.catastro_report import CatastroReport
 
+# CORREOS
+from Correos.correos import Correos
+
+# SABI
+from Sabi.sabi import Sabi
+
 # from scrapingFincasHacienda.Hacienda.to_rename import get_url_pliego_pdf
 # from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info
-import Hacienda.constants as const
+
 import logging
 
 # Set up basic configuration for logging
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)-8s - %(message)s",
     filename="app.log",
     filemode="a",
 )
@@ -34,55 +44,62 @@ def main():
         #      each dictionary represents a lote, and it has two keys,
         #      the first refs_catastrales that holds a list of refs,
         #      and the second price that holds the price for the lote.
-        auction_pdf_info = get_pliego_info(auction_pdf, i_delegation)
+
+        #      The function get_pliego_info returns only the lotes that
+        #      doesn't give an error
+        auction_pdf_info = get_pliego_info(auction_pdf, i_delegation)  # Filtered
         if not auction_pdf_info:
             continue
         #      4) For each lote in auction
         for i_lote, lote in enumerate(auction_pdf_info, 1):
             #      5) For each land on the lote
             for i_land, ref in enumerate(lote["refs_catastrales"], 1):
-                msg_header = f"{i_delegation}.\t\t{i_lote} - {i_land}:"
+                msg_header = f"{i_delegation} - {i_lote} - {i_land}"
                 try:
                     #   5.1) Scrape data from Catastro
                     catastro_land = Catastro(ref)
                     catastro_land.land_first_page()
                     catastro_land.search()
-                    #       5.1.1) The variable data_land will hold data scraped from the Catastro web:
+                    #       5.1.1) The variable catastro_data will hold data scraped from the Catastro web:
                     #           {localizacion, clase, uso, cultivo_aprovechamiento}
-                    data_land = catastro_land.get_info_about_search()
-                    logging.info(f"{msg_header}: {data_land}")
+                    catastro_data = catastro_land.get_info_about_search()
+                    logging.info(f"{msg_header} {catastro_data}")
                 except Exception as e:
-                    logging.error(
-                        f"{msg_header}. An error occurred while scraping data with Catastro: {e}"
-                    )
+                    error_msg = "Failed to scrape data '{localizacion, clase, uso, cultivo_aprovechamiento}' using Catastro class:"
+                    logging.error(f"{msg_header} {error_msg} {e}")
+                    continue
 
                 try:
                     #       5.1.2) Download the KML file
                     catastro_land.go_to_otros_visores()
                     catastro_land.download_kml()
                     logging.info(
-                        f"{msg_header}: The kml has been downloaded successfully"
+                        f"{msg_header} The kml has been downloaded successfully"
                     )
                 except Exception as e:
-                    logging.error(
-                        f"{msg_header}. An error occurred while downloading KML: {e}"
-                    )
+                    error_msg = "Failed to download KML file using Catastro class:"
+                    logging.error(f"{msg_header} {error_msg} {e}")
+                    continue
 
                 try:
                     #   5.2) Download PDF report from a different Catastro webpage and scrape reference_value
-                    catastro_land_report = CatastroReport(ref, data_land["clase"])
+                    catastro_land_report = CatastroReport(ref, catastro_data["clase"])
                     catastro_land_report.land_first_page()
                     catastro_land_report.close_cookies()
                     catastro_land_report.land_query_value_page()
                     catastro_land_report.access_with_dni()
                     catastro_land_report.select_date_and_property()
                     #   5.2.1) Get the reference_value
-                    reference_value = catastro_land_report.get_reference_value_amount()
-                    logging.info(f"{msg_header}: Reference_value = {reference_value}")
-                except Exception as e:
-                    logging.error(
-                        f"{msg_header}. An error occurred while scraping the reference_value using the CatastroReport class: {e}"
+                    catastro_land_value = (
+                        catastro_land_report.get_reference_value_amount()
                     )
+                    logging.info(
+                        f"{msg_header} Reference_value = {catastro_land_value}"
+                    )
+                except Exception as e:
+                    error_msg = "Failed to scrape data 'reference_value' using CatastroReport class:"
+                    logging.error(f"{msg_header} {error_msg} {e}")
+                    continue
 
                 try:
                     #   5.2.2) Get the PDF report, only when the land is "Rústico", in the rest of the cases
@@ -93,25 +110,40 @@ def main():
                         msg = "The pdf is not relevant in this case."
                     else:
                         msg = "The pdf has been downloaded successfully"
-                        logging.info(f"{msg_header}: {msg}")
+                    logging.info(f"{msg_header} {msg}")
                 except Exception as e:
-                    logging.error(
-                        f"{msg_header}. An error occurred while downloading the reference_value using the CatastroReport class: {e}"
-                    )
+                    error_msg = "Failed to download 'reference_value' report using CatastroReport class:"
+                    logging.error(f"{msg_header}  {e}")
 
                 try:
                     #   5.2.3) Process the PDF report
                     if report_path:
                         report_data = catastro_land_report.process_report(report_path)
-                        logging.info(f"{msg_header}: {report_data}")
+                        logging.info(f"{msg_header} {report_data}")
                     else:
-                        logging.info(
-                            f"{msg_header}: Since there's no PDF, no PDF has been processed"
-                        )
+                        info_msg = f"Because it has the class {catastro_data['clase']}, no PDF has been processed"
+                        logging.info(f"{msg_header} {info_msg}")
                 except Exception as e:
-                    logging.error(
-                        f"{msg_header}. An error occurred while processing the reference_value using the CatastroReport class: {e}"
-                    )
+                    error_msg = "Failed to process the reference_value report using the CatastroReport class:"
+                    logging.error(f"{msg_header} {error_msg} {e}")
+
+                    #   5.3) Scrape data from Correos
+                try:
+                    correos_land = Correos(catastro_data["localizacion"])
+                    correos_land.land_first_page()
+                    correos_land.search()
+                    correos_data = correos_land.get_info_about_search()
+                    logging.info(f"{msg_header} {correos_data}")
+                except Exception as e:
+                    error_msg = "Failed to scrape data 'cp, province, locality' using Correos class"
+                    logging.error(f"{msg_header} {error_msg} {e}")
+                    continue
+
+                    #   5.4) Scrape data from Sabi
+                try:
+                    sabi_land = Sabi()
+                except:
+                    pass
 
     '''auctions = get_all_auctions_urls()
     auctions_pliegos_urlpdf = [get_url_pliego_pdf(auction) for auction in auctions]

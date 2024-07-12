@@ -21,15 +21,17 @@ def get_url_pliego_pdf(href, i_delegation):
             anexo_pdf = soup.find("a", href=const.ANEXO_PATTERN).get("href")
             url_pliego_pdf = const.BASE_URL_HACIENDA + anexo_pdf
             logging.info(
-                f"{i_delegation}. Lands will be extracted from the anexo: {url_pliego_pdf}"
+                f"{i_delegation} - X - X Lands'll be extracted from the anexo: {url_pliego_pdf}"
             )
         except Exception as e:
             logging.error(
-                f"{i_delegation}. Lands were not found neither in the pliego nor anexo."
+                f"{i_delegation} - X - X Failed to find lands on PDF pliego or PDF anexo"
             )
             return None
     else:
-        logging.info(f"{i_delegation}. Lands will be extracted from the pliego:")
+        logging.info(
+            f"{i_delegation} - X - X Lands'll be extracted from the pliego: {url_pliego_pdf}"
+        )
     return url_pliego_pdf
 
 

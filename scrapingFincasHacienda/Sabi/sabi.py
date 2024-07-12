@@ -9,13 +9,14 @@ config = dotenv_values()
 
 
 class Sabi(webdriver.Chrome):
-    def __init__(self):
+    def __init__(self, postal_code):
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         super().__init__(options=options)
         self.implicitly_wait(15)
         self.maximize_window()
+        self.postal_code = postal_code
 
     def land_first_page(self):
         self.get("https://login.bvdinfo.com/R1/SabiInforma")
@@ -28,7 +29,7 @@ class Sabi(webdriver.Chrome):
         submit_btn = self.find_element(By.XPATH, "//input[@id='bnLoginNeo']")
         submit_btn.click()
 
-    def filter_cp(self, postal_code):
+    def filter_cp(self):
         alphabetical_list = self.find_element(
             By.XPATH, "//div[@class='alphabeticalIcon']/following-sibling::a"
         )
@@ -41,12 +42,12 @@ class Sabi(webdriver.Chrome):
         min_postal_code_input = self.find_element(
             By.XPATH, "//input[contains(@id,'MinFree')]"
         )
-        min_postal_code_input.send_keys(postal_code)
+        min_postal_code_input.send_keys(self.postal_code)
 
         max_postal_code_input = self.find_element(
             By.XPATH, "//input[contains(@id,'MaxFree')]"
         )
-        max_postal_code_input.send_keys(postal_code)
+        max_postal_code_input.send_keys(self.postal_code)
         first_search_btn = self.find_element(
             By.XPATH, "//img[contains(@id, 'MultiMinMaxControl_SelectButton')]"
         )

@@ -30,18 +30,24 @@ def get_pliego_info(url_pdf, i_delegation):
             ref_catastrales = [item[0] for item in final_data]
             final_data = list(zip(ref_catastrales, prices))
 
-        final_data = [
+        lotes = [
             {"refs_catastrales": refs, "precio": price} for refs, price in final_data
         ]
-        # Write in a user-friendly way to the log
-        for i_lote, lote in enumerate(final_data, 1):
-            logging.info(
-                f"{i_delegation}.\t\t{i_lote}: {''.join(lote['refs_catastrales'])}, {lote['precio']}"
-            )
-        return final_data
+        for i_lote, lote in enumerate(lotes, 1):
+            # When the processing of a lote gives some error, it returns (None, None)
+            if lote["refs_catastrales"] == None:
+                logging.warning(
+                    f"{i_delegation} - {i_lote} - X Failed to process the lote {i_lote}"
+                )
+            else:
+                logging.info(
+                    f"{i_delegation} - {i_lote} - X {''.join(lote['refs_catastrales'])}, {lote['precio']}"
+                )
+        lotes = [lote for lote in lotes if lote["refs_catastrales"]]
+        return lotes
     except Exception as e:
         logging.error(
-            f"{i_delegation}. An error occurred while processing the Pliego PDF: {e}"
+            f"{i_delegation} - X - X Failed to process Pliego PDF using get_pliego_info function: {e}"
         )
         return None
 
@@ -71,7 +77,7 @@ def get_desired_information(type_structure, paragraph):
     try:
         return (get_ref_catastral(paragraph), get_precio(type_structure, paragraph))
     except AttributeError:
-        return ("ERROR", "ERROR")
+        return (None, None)
 
 
 def get_ref_catastral(paragraph):
