@@ -1,8 +1,8 @@
 # Class that inherits from a Selenium class. Given the catastro url for a property,
 # it downloads the KML, and scrapes some data
 
-from selenium import webdriver
 import Catastro.constants as const
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -35,6 +35,7 @@ class Catastro(webdriver.Chrome):
     def land_first_page(self):
         self.get(const.BASE_URL_SEARCH_CATASTRO)
 
+    # Called indirectly by another method
     def close_cookies(self):
         # This is an HTML <iframe> element.
         # It is used to embed another HTML document within the current one
@@ -109,13 +110,7 @@ class Catastro(webdriver.Chrome):
         otros_visores_anchor.click()
 
     def download_kml(self):
-        # Wait for a new window or tab
-        WebDriverWait(self, 10).until(lambda d: len(d.window_handles) > 1)
-        # Switch to the new window
-        if len(self.window_handles) > 1:
-            new_window_handle = self.window_handles[-1]
-            self.switch_to.window(new_window_handle)
-
+        self.wait_for_a_new_window_tab()
         google_earth_kml = self.find_element(
             By.XPATH, "//img[@id='ctl00_Contenido_btnGoogleEarth']"
         )
@@ -124,6 +119,37 @@ class Catastro(webdriver.Chrome):
         # to rename it, or do something with the file
         time.sleep(5)
         self.rename_kml(self.referencia_catastral)
+
+    # Get coordinates from the land, to pass them as an argument
+    # to the constructor when creating a GoogleMaps object
+    def get_coordenates_google_maps(self):
+        google_maps_input = self.find_element(
+            By.XPATH, "//input[@id='ctl00_Contenido_ImgBGoogleMaps']"
+        )
+        google_maps_input.click()
+        self.wait_for_a_new_window_tab()
+        self.close_cookies_google()
+
+        coordinates_element = self.find_element(
+            By.XPATH, "//input[contains(@class, 'searchboxinput')]"
+        )
+        return coordinates_element.get_attribute("value")
+
+    # Called indirectly by another method
+    def close_cookies_google(self):
+        cookies_btn = self.find_element(
+            By.XPATH, "//button[@aria-label='Aceptar todo']"
+        )
+        cookies_btn.click()
+
+    # Called indirectly by another methods
+    def wait_for_a_new_window_tab(self):
+        # Wait for a new window or tab
+        WebDriverWait(self, 10).until(lambda d: len(d.window_handles) > 1)
+        # Switch to the new window
+        if len(self.window_handles) > 1:
+            new_window_handle = self.window_handles[-1]
+            self.switch_to.window(new_window_handle)
 
     # We use static methods when we want to do something that is not unique per instance,
     # but it should do something that has a relationship with the class
