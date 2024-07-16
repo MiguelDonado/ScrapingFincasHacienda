@@ -21,7 +21,7 @@ current_date = datetime.datetime.now()
 formatted_date = current_date.strftime("%d/%m/%Y")
 
 # Directory where the PDF file would be saved
-download_dir_pdf = "/home/miguel/coding-projects/ScrapingFincasHacienda/data/pdf"
+download_dir_pdf = "/home/miguel/coding-projects/ScrapingFincasHacienda/data/pdf/report"
 
 
 class CatastroReport(webdriver.Chrome):

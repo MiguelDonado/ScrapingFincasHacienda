@@ -107,6 +107,40 @@ class Sabi(webdriver.Chrome):
         watch_results = self.find_element(By.XPATH, "//img[contains(@id, 'GoToList')]")
         watch_results.click()
 
+        row_cabeceras = self.find_element(
+            By.XPATH,
+            "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_VHDRTBL']/tbody/tr[last()]",
+        )
+        cabeceras = row_cabeceras.find_elements(By.XPATH, "./td[@id]")
+        for cabecera in cabeceras:
+            print(cabecera.get_attribute("innerHTML"))
+
+        table_first_25_elements_first_part = self.find_element(
+            By.XPATH,
+            "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_FDTBL']/tbody",
+        )
+        names_enterprises = table_first_25_elements_first_part.find_elements(
+            By.XPATH,
+            ".//a[@href='#']",
+        )
+        for name in names_enterprises:
+            print(name.text)
+
+        table_first_25_elements_second_part = self.find_element(
+            By.XPATH,
+            "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_VDTBL']/tbody",
+        )
+        rows = table_first_25_elements_second_part.find_elements(
+            By.XPATH, "./tr[not(@id)]"
+        )
+        for row in rows:
+            cells = row.find_elements(
+                By.XPATH, "./td[contains(@class, 'resultsItems')]"
+            )
+            for cell in cells:
+                print(cell.text, end=" ")
+            print()
+
     def logout(self):
         logout_btn = self.find_element(By.XPATH, "//span[contains(@id,'logoutLabel')]")
         logout_btn.click()
