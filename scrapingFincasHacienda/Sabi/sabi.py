@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import os
 from dotenv import dotenv_values
+import pandas as pd
 
 config = dotenv_values()
 
@@ -107,14 +108,34 @@ class Sabi(webdriver.Chrome):
         watch_results = self.find_element(By.XPATH, "//img[contains(@id, 'GoToList')]")
         watch_results.click()
 
+        headers = self.get_results_cabeceras()
+        names = self.get_results_first_table()
+        data = self.get_results_second_table()
+
+        df = self.sabi_results_to_df(headers, names, data)
+        return df
+
+    # Called indirectly by another methods
+    # This method fetches the headers from the results page
+    def get_results_cabeceras(self):
         row_cabeceras = self.find_element(
             By.XPATH,
             "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_VHDRTBL']/tbody/tr[last()]",
         )
         cabeceras = row_cabeceras.find_elements(By.XPATH, "./td[@id]")
-        for cabecera in cabeceras:
-            print(cabecera.get_attribute("innerHTML"))
+        cabeceras = [
+            self.html_to_text(cabecera.get_attribute("innerHTML"))
+            for cabecera in cabeceras
+        ]
+        cabeceras.insert(0, "Nombre")
+        return cabeceras
 
+    # Called indirectly by another methods
+    # This method fetches the first table from the results page
+    # The first table contains only the names of the enterprises
+    # The table covers the first 25 results, if we'd wanted to extract more,
+    # we'd have to interact with another elements to move to the next pages.
+    def get_results_first_table(self):
         table_first_25_elements_first_part = self.find_element(
             By.XPATH,
             "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_FDTBL']/tbody",
@@ -123,9 +144,16 @@ class Sabi(webdriver.Chrome):
             By.XPATH,
             ".//a[@href='#']",
         )
-        for name in names_enterprises:
-            print(name.text)
+        names_enterprises = [name.text for name in names_enterprises]
+        return names_enterprises
 
+    # Called indirectly by another methods
+    # This method fetches the second table from the results page
+    # The second table contains all the data except the names
+    # The table covers the first 25 results, if we'd wanted to extract more,
+    # we'd have to interact with another elements to move to the next pages.
+    def get_results_second_table(self):
+        data = []
         table_first_25_elements_second_part = self.find_element(
             By.XPATH,
             "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_VDTBL']/tbody",
@@ -134,13 +162,29 @@ class Sabi(webdriver.Chrome):
             By.XPATH, "./tr[not(@id)]"
         )
         for row in rows:
-            cells = row.find_elements(
+            row_data = row.find_elements(
                 By.XPATH, "./td[contains(@class, 'resultsItems')]"
             )
-            for cell in cells:
-                print(cell.text, end=" ")
-            print()
+            row_data = [cell.text for cell in row_data]
+            data.append(row_data)
+        return data
 
     def logout(self):
         logout_btn = self.find_element(By.XPATH, "//span[contains(@id,'logoutLabel')]")
         logout_btn.click()
+
+    # We use static methods when we want to do something that is not unique per instance,
+    # but it should do something that has a relationship with the class
+    # I give this method three lists, and it returns me a dataframe.
+    @staticmethod
+    def sabi_results_to_df(headers, names, data):
+        # Combine names and data into a single list of rows
+        combined_data = [[name] + row for name, row in zip(names, data)]
+
+        # Create a dataframe
+        df = pd.DataFrame(combined_data, columns=headers)
+        return df
+
+    @staticmethod
+    def html_to_text(html):
+        return html.replace("<br>", " ").replace("\n", " ")
