@@ -7,3 +7,4 @@ AuctionsExamples/
 *.env
 assets/
 BUGS.md
+data/

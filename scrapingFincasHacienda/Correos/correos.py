@@ -1,5 +1,5 @@
-# Class that inherits from a Selenium class. Given the direction of a land, it returns the postal code,
-# the province and the locality
+# Class that inherits from a Selenium class. Given the direction of a land,
+# it returns the postal code, the province and the locality
 
 from selenium import webdriver
 import Correos.constants as const

@@ -1,5 +1,8 @@
-# Class that inherits from a Selenium Class, given two directions
-# calculates the distance and time that takes from one point to the other
+# Class that inherits from a Selenium Class. It can be used in two ways
+# 1) Given two directions calculates the distance and time that takes from one point to the other
+# 2) Given a direction, we can take a screenshot of the place. We've to use the search_to method.
+
+
 # I had two options to deal with Google Maps:
 #   1. Through Google Maps API, particularly the Distance Matrix API to measure the distance between two points.
 #   Using the API involves a cost (pay per usage fee)
@@ -7,23 +10,27 @@
 #   THis options doesn't have any cost.
 # I choose Selenium because it's free and because it allows me to practice
 # with Selenium library, XPATH, and Chrome Developer Tools.
+
 import GoogleMaps.constants as const
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
+import sys
 
 
 class GoogleMaps(webdriver.Chrome):
-    def __init__(self, starting_point, destination):
+    def __init__(self, ref_catastral, to, from_=None):
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         super().__init__(options=options)
         self.maximize_window()
         self.implicitly_wait(15)
-        self.starting_point = starting_point
-        self.destination = destination
+        self.from_ = from_
+        self.to = to
+        self.referencia_catastral = ref_catastral
 
     def land_first_page(self):
         self.get(const.BASE_URL)
@@ -34,11 +41,12 @@ class GoogleMaps(webdriver.Chrome):
         )
         cookies_btn.click()
 
-    def search_destination(self):
-        destination_input = self.find_element(
+    def search_to(self):
+        to_input = self.find_element(
             By.XPATH, "//input[contains(@class,'searchboxinput')]"
         )
-        destination_input.send_keys(self.destination)
+        to_input.clear()
+        to_input.send_keys(self.to)
 
         search_btn = self.find_element(
             By.XPATH, "//button[@id='searchbox-searchbutton']"
@@ -50,18 +58,19 @@ class GoogleMaps(webdriver.Chrome):
         )
         how_to_get_btn.click()
 
-    def search_starting_point(self):
-        starting_point_input = self.find_element(
+    def search_from_(self):
+        from__input = self.find_element(
             By.XPATH, "//input[contains(@aria-label,'unto de partida')]"
         )
-        starting_point_input.send_keys(self.starting_point)
+        from__input.clear()
+        from__input.send_keys(self.from_)
 
         search_btn = self.find_element(By.XPATH, "//button[@aria-label='Buscar']")
         search_btn.click()
 
     def search(self):
-        self.search_destination()
-        self.search_starting_point()
+        self.search_to()
+        self.search_from_()
 
     def get_distance_time_on_car(self):
         on_car_btn = self.find_element(
@@ -101,3 +110,26 @@ class GoogleMaps(webdriver.Chrome):
             "time_on_foot": time_label.text,
             "distance_on_foot": distance_label.text,
         }
+
+    # This method will be called only once per land
+    # It'll take a screenshot about the land and the nearby interest points
+    def get_screenshot(self):
+        hide_panel_btn = self.find_element(
+            By.XPATH,
+            "//button[@aria-label='Ocultar el panel lateral' and contains(@jsaction, 'drawer.close')]",
+        )
+        hide_panel_btn.click()
+
+        WebDriverWait(self, 30).until(
+            EC.element_to_be_clickable(
+                (
+                    By.XPATH,
+                    "//div[@id='minimap']//button[contains(@aria-labelledby, 'overlay')]",
+                )
+            )
+        ).click()
+        zoom_out_button = self.find_element(By.XPATH, "//button[@id='widget-zoom-out']")
+        zoom_out_button.click()
+        screenshot_path = f"/home/miguel/coding-projects/ScrapingFincasHacienda/data/googlemaps/{self.referencia_catastral}.png"
+        time.sleep(2)
+        self.get_screenshot_as_file(screenshot_path)

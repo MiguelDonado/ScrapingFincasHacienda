@@ -1,12 +1,10 @@
-from Sabi.sabi import Sabi
-from bs4 import BeautifulSoup
-import pandas as pd
+from GoogleMaps.GoogleMaps import GoogleMaps
 
-item = Sabi("15894")
+item = GoogleMaps(
+    None,
+    """42.74920155490726, -8.56230785817032""",
+)
 item.land_first_page()
-item.login()
-item.filter_cp()
-item.filter_status()
-item.filter_last_year_available_financial_statements()
-print(item.get_results())
-item.logout()
+item.close_cookies()
+item.search_to()
+item.get_screenshot()
