@@ -1,8 +1,10 @@
 # HACIENDA
-from Hacienda.auction_delegation import has_auction_url
-from Hacienda.auction_pliego_url import get_url_pliego_pdf
-from Hacienda.auction_get_data_pdf import get_pliego_info
 import Hacienda.constants as const
+from Hacienda.auction_delegation import has_auction
+from Hacienda.pliego_url import get_pliego
+from Hacienda.data_pdf import get_lotes_data
+
+"""
 
 # CATASTRO
 from Catastro.catastro import Catastro
@@ -16,45 +18,48 @@ from INE.ine_population import InePopulation
 from INE.ine_num_transmisiones_fincas_rusticas import IneNumTransmisionesFincasRusticas
 
 # from scrapingFincasHacienda.Hacienda.to_rename import get_url_pliego_pdf
-# from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info
+# from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info"""
 
 import logging
 
-# Set up basic configuration for logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)-8s - %(message)s",
-    filename="app.log",
-    filemode="a",
-)
-
 
 def main():
-    # In total there are 57 delegations. So for each one of them we're going to do the next:
-    for i_delegation in range(1, const.NUMBER_OF_DELEGATIONS + 1):
-        #      1) Search on hacienda website if there's any auction.
-        auction = has_auction_url(i_delegation)
+    for delegation in const.DELEGATIONS:
+
+        # 1) Search on hacienda website if there's any auction.
+        auction = has_auction(delegation)
         if not auction:
             continue
-        #      2) Get the pdf that contains the list of lands.
-        auction_pdf = get_url_pliego_pdf(auction, i_delegation)
+
+        # 2) Get the pdf that contains the list of lands.
+        auction_pdf = get_pliego(auction, delegation)
         if not auction_pdf:
             continue
-        #      3) Get the ref_catastral and price from the lands
-        #      auction_pdf_info is a list of dictionaries,
-        #      each dictionary represents a lote, and it has two keys,
-        #      the first refs_catastrales that holds a list of refs,
-        #      and the second price that holds the price for the lote.
 
-        #      The function get_pliego_info returns only the lotes that
-        #      doesn't give an error
-        auction_pdf_info = get_pliego_info(auction_pdf, i_delegation)  # Filtered
-        if not auction_pdf_info:
+        """3) Get the ref_catastral and price from the lands.
+            o The variable auction_pdf_info is a list of dictionaries.
+                o Each dictionary represents a lote, it has two keys.
+                    1) Refs_catastrales: Holds a list of refs.
+                    2) Price: Holds the price for the lote.
+            Example:
+            [ {[ref1, ref2], price}, {[ref1, ref2], price}, {[ref1, ref2],price} ]
+               ____________________
+              |       LOTE 1       |
+                
+            o The function get_pliego_info returns only the lotes that
+              doesn't give an error """
+
+        lotes = get_lotes_data(auction_pdf, delegation)
+
+        # When the function 'get_lotes_data' fails to process the auction_pdf
+        # it returns 'None'
+        if not lotes:
             continue
-        #      4) For each lote in auction
-        for i_lote, lote in enumerate(auction_pdf_info, 1):
-            #      5) For each land on the lote
-            for i_land, ref in enumerate(lote["refs_catastrales"], 1):
+
+        # 4) For each lote in auction
+        for lote in lotes:
+            # 5) For each land on the lote
+            '''for i_land, ref in enumerate(lote["refs_catastrales"], 1):
                 msg_header = f"{i_delegation} - {i_lote} - {i_land}"
                 try:
                     #   5.1) Scrape data from Catastro
@@ -176,7 +181,7 @@ def main():
                 else:
                     info_msg = f"Because it has the class '{catastro_data['clase']}', no scraping has been performed using IneNumTransmisionesFincasRusticas class"
                     logging.info(f"{msg_header} {info_msg}")
-    '''auctions = get_all_auctions_urls()
+    auctions = get_all_auctions_urls()
     auctions_pliegos_urlpdf = [get_url_pliego_pdf(auction) for auction in auctions]
     # The relevant info extracted from the pliego is (ref_catastral, price)
     print(

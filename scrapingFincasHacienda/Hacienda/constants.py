@@ -2,8 +2,11 @@ import regex
 
 # Number of delegations are 57 in total
 NUMBER_OF_DELEGATIONS = (
-    8  # This number is for testing purposes, so it only run on a few provinces.
+    16  # This number is for testing purposes, so it only run on a few provinces.
 )
+
+DELEGATIONS = range(1, NUMBER_OF_DELEGATIONS + 1)
+
 BASE_URL_HACIENDA = "https://www.hacienda.gob.es"
 DELEGATION_URL = (
     "https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/"
