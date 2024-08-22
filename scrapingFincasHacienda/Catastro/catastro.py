@@ -1,7 +1,6 @@
-# Class that inherits from a Selenium class. Given the catastro url for a property,
+# Class that inherits from a Selenium class. Given the referencia catastral of a property,
 # it downloads the KML, and scrapes some data
 
-import Catastro.constants as const
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,19 +8,18 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 
-# Directory where the KML file would be saved
-download_dir = "/home/miguel/coding-projects/ScrapingFincasHacienda/data/catastro"
+import Catastro.constants as const
 
 
 class Catastro(webdriver.Chrome):
-    def __init__(self, referencia_catastral):
+    def __init__(self, ref):  # ref -> referencia catastral
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         options.add_experimental_option(
             "prefs",
             {
-                "download.default_directory": download_dir,
+                "download.default_directory": const.DOWNLOAD_DIR,
                 "download.prompt_for_download": False,  # To automatically save files to the specified directory without asking
                 "download.directory_upgrade": True,
                 "safebrowsing.enabled": True,
@@ -30,51 +28,73 @@ class Catastro(webdriver.Chrome):
         super().__init__(options=options)
         self.implicitly_wait(15)
         self.maximize_window()
-        self.referencia_catastral = referencia_catastral
+        self.ref = ref
 
-    def land_first_page(self):
+    # Returns a dictionary with 4 keys
+    #    1) localizacion
+    #    2) clase
+    #    3) uso
+    #    4) cultivo_aprovechamiento
+    def get_data(self):
+        self.__land_first_page()
+        self.__search()
+        data = self.__scrape()
+        self.__download_ortofoto()
+        self.__download_kml()
+        coordinates = self.__get_coordenates_google_maps()
+        # return data
+
+    ################################### PRIVATE METHODS ############################################
+
+    # Lands on the main Catastro webpage
+    def __land_first_page(self):
         self.get(const.BASE_URL_SEARCH_CATASTRO)
 
-    def search(self):
+    # Let the instance on the webpage that shows data about the ref.
+    def __search(self):
         self.close_cookies()
         input_search = self.find_element(
             By.XPATH, "//input[@id='ctl00_Contenido_txtRC2']"
         )
-        input_search.send_keys(self.referencia_catastral)
+        input_search.send_keys(self.ref)
         button_submit = self.find_element(By.XPATH, "//input[@value='DATOS']")
         button_submit.click()
 
         # After clicking and navigating to a new page
         self.switch_to.default_content()  # Switch back to the main document context
 
-    def get_info_about_search(self):
-        localizacion_label = self.find_element(
+    # Given the webpage that shows data about the ref, it scrapes some info
+    # It returns a dictionary with four keys.
+    def __scrape(self):
+        localizacion = self.find_element(
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Localización']/following-sibling::div//label",
-        )
-        clase_label = self.find_element(
+        ).text
+        clase = self.find_element(
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Clase']/following-sibling::*//label",
-        )
-        uso_label = self.find_element(
+        ).text
+        uso = self.find_element(
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Uso principal']/following-sibling::*//label",
-        )
-        if clase_label.text == "Rústico":
-            cultivo_aprovechamiento_label = self.find_element(
+        ).text
+        if clase == "Rústico":
+            cultivo = self.find_element(
                 By.XPATH,
                 "//table[@id='ctl00_Contenido_tblCultivos']//tr[2]//td[2]/span",
-            ).text
+            )
         else:
-            cultivo_aprovechamiento_label = None
+            cultivo = None
         return {
-            "localizacion": localizacion_label.text,
-            "clase": clase_label.text,
-            "uso": uso_label.text,
-            "cultivo_aprovechamiento": cultivo_aprovechamiento_label,
+            "localizacion": localizacion,
+            "clase": clase,
+            "uso": uso,
+            "cultivo": cultivo,
         }
 
-    def download_img(self):
+    # Given the webpage that shows data about the ref, it downloads the ortofoto of the land
+    # and it goes back to the provided webpage
+    def __download_ortofoto(self):
         cartografia_collapse = self.find_element(
             By.XPATH, "//a[span[@id='ctl00_Contenido_lblCartografia']]"
         )
@@ -104,12 +124,36 @@ class Catastro(webdriver.Chrome):
             By.XPATH, "//input[@id='ctl00_Contenido_bImprimir']"
         )
         download_img.click()
+
         # Give time to the pdf to be downloaded, before trying
         # to rename it, or do something with the file
         time.sleep(5)
-        self.rename_file(self.referencia_catastral, ".pdf")
+        self.__rename_file(self.ref, ".pdf")
 
-    def go_to_otros_visores(self):
+        # Go back to the previous page
+        self.back()
+
+    # Given the webpage that shows data about the ref, it downloads the kml of the land
+    # and it goes back to the provided webpage
+    def __download_kml(self):
+        self.__go_to_otros_visores()
+        self.wait_for_a_new_window_tab()
+        google_earth_kml = self.find_element(
+            By.XPATH, "//img[@id='ctl00_Contenido_btnGoogleEarth']"
+        )
+        google_earth_kml.click()
+        # Give time to the KML to be downloaded, before trying
+        # to rename it, or do something with the file
+        time.sleep(5)
+        self.__rename_file(self.ref, ".kml")
+
+        # Close focused window
+        self.close()
+
+    # Given the webpage that shows data about the ref, it goes to a webpage that have multiple visores.
+    # Used by another methods.
+    # Constitutes the building blocks for a lot of other methods.
+    def __go_to_otros_visores(self):
         cartografia_collapse = self.find_element(
             By.XPATH, "//a[span[@id='ctl00_Contenido_lblCartografia']]"
         )
@@ -119,20 +163,10 @@ class Catastro(webdriver.Chrome):
         )
         otros_visores_anchor.click()
 
-    def download_kml(self):
-        self.wait_for_a_new_window_tab()
-        google_earth_kml = self.find_element(
-            By.XPATH, "//img[@id='ctl00_Contenido_btnGoogleEarth']"
-        )
-        google_earth_kml.click()
-        # Give time to the KML to be downloaded, before trying
-        # to rename it, or do something with the file
-        time.sleep(5)
-        self.rename_file(self.referencia_catastral, ".kml")
-
     # Get coordinates from the land, to pass them as an argument
     # to the constructor when creating a GoogleMaps object
-    def get_coordenates_google_maps(self):
+    def __get_coordenates_google_maps(self):
+        self.__go_to_otros_visores()
         google_maps_input = self.find_element(
             By.XPATH, "//input[@id='ctl00_Contenido_ImgBGoogleMaps']"
         )
@@ -190,12 +224,16 @@ class Catastro(webdriver.Chrome):
     # We use static methods when we want to do something that is not unique per instance,
     # but it should do something that has a relationship with the class
     @staticmethod
-    def rename_file(ref_catastral, extension):
-        # Get the most recent file from the kml destination directory
+    def __rename_file(ref, ext):
+        # Get the most recent file from the destination directory
         most_recent_file = max(
-            [os.path.join(download_dir, f) for f in os.listdir(download_dir)],
+            [
+                os.path.join(const.DOWNLOAD_DIR, f)
+                for f in os.listdir(const.DOWNLOAD_DIR)
+            ],
             key=os.path.getctime,
         )
+
         # Establish the variable that helds the new path
-        new_file_path = os.path.join(download_dir, ref_catastral + extension)
+        new_file_path = os.path.join(const.DOWNLOAD_DIR, ref + ext)
         os.rename(most_recent_file, new_file_path)

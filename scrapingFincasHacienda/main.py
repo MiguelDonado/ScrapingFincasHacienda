@@ -59,7 +59,7 @@ def main():
         # 4) For each lote in auction
         for lote in lotes:
             # 5) For each land on the lote
-            '''for i_land, ref in enumerate(lote["refs_catastrales"], 1):
+            for i, land in enumerate(lote["refs"], 1):
                 msg_header = f"{i_delegation} - {i_lote} - {i_land}"
                 try:
                     #   5.1) Scrape data from Catastro
@@ -75,6 +75,8 @@ def main():
                     logging.error(f"{msg_header} {error_msg} {e}")
                     continue
 
+
+'''
                 try:
                     #       5.1.2) Download the KML file
                     catastro_land.go_to_otros_visores()
