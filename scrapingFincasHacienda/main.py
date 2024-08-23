@@ -4,11 +4,10 @@ from Hacienda.auction_delegation import has_auction
 from Hacienda.pliego_url import get_pliego
 from Hacienda.data_pdf import get_lotes_data
 
-"""
-
 # CATASTRO
 from Catastro.catastro import Catastro
-from Catastro.catastro_report import CatastroReport
+from Catastro.report import Report
+
 
 # CORREOS
 from Correos.correos import Correos
@@ -58,38 +57,16 @@ def main():
 
         # 4) For each lote in auction
         for lote in lotes:
+            i_lote = lote["id"]
+            data_lote = lote["data"]
             # 5) For each land on the lote
-            for i, land in enumerate(lote["refs"], 1):
-                msg_header = f"{i_delegation} - {i_lote} - {i_land}"
+            for i_land, land in enumerate(data_lote["refs"], 1):
                 try:
-                    #   5.1) Scrape data from Catastro
-                    catastro_land = Catastro(ref)
-                    catastro_land.land_first_page()
-                    catastro_land.search()
-                    #       5.1.1) The variable catastro_data will hold data scraped from the Catastro web:
-                    #           {localizacion, clase, uso, cultivo_aprovechamiento}
-                    catastro_data = catastro_land.get_info_about_search()
-                    logging.info(f"{msg_header} {catastro_data}")
-                except Exception as e:
-                    error_msg = "Failed to scrape data '{localizacion, clase, uso, cultivo_aprovechamiento}' using Catastro class:"
-                    logging.error(f"{msg_header} {error_msg} {e}")
+                    info_land = Catastro(delegation, i_lote, i_land, land)
+                    data_land, coordinates_land = info_land.get_data()
+                except Exception:
                     continue
 
-
-'''
-                try:
-                    #       5.1.2) Download the KML file
-                    catastro_land.go_to_otros_visores()
-                    catastro_land.download_kml()
-                    logging.info(
-                        f"{msg_header} The kml has been downloaded successfully"
-                    )
-                except Exception as e:
-                    error_msg = "Failed to download KML file using Catastro class:"
-                    logging.error(f"{msg_header} {error_msg} {e}")
-                    continue
-
-                try:
                     #   5.2) Download PDF report from a different Catastro webpage and scrape reference_value
                     catastro_land_report = CatastroReport(ref, catastro_data["clase"])
                     catastro_land_report.land_first_page()
@@ -109,7 +86,9 @@ def main():
                     logging.error(f"{msg_header} {error_msg} {e}")
                     continue
 
-                try:
+
+'''
+               try:
                     #   5.2.2) Get the PDF report, only when the land is "Rústico", in the rest of the cases
                     #   the pdf is different, and it hasn't relevant data.
                     #   The logic is implemented inside the method

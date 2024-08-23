@@ -67,7 +67,7 @@ def get_lotes_data(url_pdf, delegation):
         #   lotes_data = [{id, {refs, price}},{id, {refs, price}}]
         lotes_data = [
             {"id": i, "data": lote}
-            for i, lote in enumerate(lotes_data)
+            for i, lote in enumerate(lotes_data, 1)
             if lote_data["refs"]
         ]
 

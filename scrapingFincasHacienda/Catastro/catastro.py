@@ -7,12 +7,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
+import logging
 
 import Catastro.constants as const
+import logger_config
+
+logger = logging.getLogger(__name__)
 
 
 class Catastro(webdriver.Chrome):
-    def __init__(self, ref):  # ref -> referencia catastral
+    def __init__(self, delegation, lote, land, ref):  # ref -> referencia catastral
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -28,21 +32,41 @@ class Catastro(webdriver.Chrome):
         super().__init__(options=options)
         self.implicitly_wait(15)
         self.maximize_window()
+        self.delegation = delegation
+        self.lote = lote
+        self.land = land
         self.ref = ref
 
-    # Returns a dictionary with 4 keys
-    #    1) localizacion
-    #    2) clase
-    #    3) uso
-    #    4) cultivo_aprovechamiento
+    # Returns a dictionary with 2 keys
+    #    1) Data (again, a dictionary with 4 keys)
+    #       1.1) localizacion
+    #       1.2) clase
+    #       1.3) uso
+    #       1.4) cultivo_aprovechamiento
+    #    2) Coordinates
     def get_data(self):
-        self.__land_first_page()
-        self.__search()
-        data = self.__scrape()
-        self.__download_ortofoto()
-        self.__download_kml()
-        coordinates = self.__get_coordenates_google_maps()
-        # return data
+        try:
+            self.__land_first_page()
+            self.__search()
+            data = self.__scrape()
+            self.__download_ortofoto()
+            self.__download_kml()
+            coordinates = self.__get_coordenates_google_maps()
+
+            # Log
+            msg = f"Successfully downloaded PDF and KML of the land '{self.ref}' with coordinates '{coordinates}' and data: {data}."
+            logger.info(
+                f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+            )
+            return {"data": data, "coordinates": coordinates}
+
+        except Exception:
+
+            # Log
+            msg = f"Failed to get data from land '{self.ref}'"
+            logger.error(
+                f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+            )
 
     ################################### PRIVATE METHODS ############################################
 
@@ -52,7 +76,7 @@ class Catastro(webdriver.Chrome):
 
     # Let the instance on the webpage that shows data about the ref.
     def __search(self):
-        self.close_cookies()
+        self.__close_cookies()
         input_search = self.find_element(
             By.XPATH, "//input[@id='ctl00_Contenido_txtRC2']"
         )
@@ -82,7 +106,7 @@ class Catastro(webdriver.Chrome):
             cultivo = self.find_element(
                 By.XPATH,
                 "//table[@id='ctl00_Contenido_tblCultivos']//tr[2]//td[2]/span",
-            )
+            ).text
         else:
             cultivo = None
         return {
@@ -137,7 +161,7 @@ class Catastro(webdriver.Chrome):
     # and it goes back to the provided webpage
     def __download_kml(self):
         self.__go_to_otros_visores()
-        self.wait_for_a_new_window_tab()
+        self.__change_to_new_window_tab()
         google_earth_kml = self.find_element(
             By.XPATH, "//img[@id='ctl00_Contenido_btnGoogleEarth']"
         )
@@ -148,7 +172,36 @@ class Catastro(webdriver.Chrome):
         self.__rename_file(self.ref, ".kml")
 
         # Close focused window
+        self.__close_current_window()
+
+    # Get coordinates from the land, to pass them as an argument
+    # to the constructor when creating a GoogleMaps object
+    def __get_coordenates_google_maps(self):
+        self.__go_to_otros_visores()
+        self.__change_to_new_window_tab()
+        google_maps_input = self.find_element(
+            By.XPATH, "//input[@id='ctl00_Contenido_ImgBGoogleMaps']"
+        )
+        google_maps_input.click()
+        self.__change_to_new_window_tab()
+        self.__close_cookies_google()
+
+        coordinates_element = self.find_element(
+            By.XPATH, "//input[contains(@class, 'searchboxinput')]"
+        )
+        return coordinates_element.get_attribute("value")
+
+    # It closes the actual window, and changes focus to the remaining one
+    def __close_current_window(self):
+        # Close the current window
         self.close()
+
+        # Get the list of all open windows
+        all_windows = self.window_handles
+
+        # Switch to the only remaining window
+        if len(all_windows) == 1:
+            self.switch_to.window(all_windows[0])
 
     # Given the webpage that shows data about the ref, it goes to a webpage that have multiple visores.
     # Used by another methods.
@@ -163,25 +216,8 @@ class Catastro(webdriver.Chrome):
         )
         otros_visores_anchor.click()
 
-    # Get coordinates from the land, to pass them as an argument
-    # to the constructor when creating a GoogleMaps object
-    def __get_coordenates_google_maps(self):
-        self.__go_to_otros_visores()
-        google_maps_input = self.find_element(
-            By.XPATH, "//input[@id='ctl00_Contenido_ImgBGoogleMaps']"
-        )
-        google_maps_input.click()
-        self.wait_for_a_new_window_tab()
-        self.close_cookies_google()
-
-        coordinates_element = self.find_element(
-            By.XPATH, "//input[contains(@class, 'searchboxinput')]"
-        )
-        return coordinates_element.get_attribute("value")
-
-        # Called indirectly by another method
-
-    def close_cookies(self):
+    # Called indirectly by another method
+    def __close_cookies(self):
         # This is an HTML <iframe> element.
         # It is used to embed another HTML document within the current one
 
@@ -206,14 +242,15 @@ class Catastro(webdriver.Chrome):
         button_cookie_iframe.click()
 
     # Called indirectly by another method
-    def close_cookies_google(self):
+    def __close_cookies_google(self):
         cookies_btn = self.find_element(
             By.XPATH, "//button[@aria-label='Aceptar todo']"
         )
         cookies_btn.click()
 
-    # Called indirectly by another methods
-    def wait_for_a_new_window_tab(self):
+    # First, waits till a new window tab is opened.
+    # Second, changes to the new window.
+    def __change_to_new_window_tab(self):
         # Wait for a new window or tab
         WebDriverWait(self, 10).until(lambda d: len(d.window_handles) > 1)
         # Switch to the new window
@@ -223,6 +260,9 @@ class Catastro(webdriver.Chrome):
 
     # We use static methods when we want to do something that is not unique per instance,
     # but it should do something that has a relationship with the class
+
+    # Change the name of the most recent file that is on the destination directory
+    # And puts as the name the ref_catastral.
     @staticmethod
     def __rename_file(ref, ext):
         # Get the most recent file from the destination directory
