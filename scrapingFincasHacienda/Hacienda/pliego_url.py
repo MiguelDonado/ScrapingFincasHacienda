@@ -34,8 +34,8 @@ def get_pliego(href, delegation):
         except Exception:
 
             # Log
-            msg = f"Failed to find list of lands on Pliego or Anexo"
-            logger.error(f"{logger_config.build_id(delegation)}{msg}")
+            msg = f"Failed to find list of lands on Pliego or Anexo."
+            logger.error(f"{logger_config.build_id(delegation)}{msg}", exc_info=True)
 
             return None
     else:

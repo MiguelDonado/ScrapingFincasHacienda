@@ -6,3 +6,4 @@ BASE_URL_SEARCH_CATASTRO = (
 )
 
 DOWNLOAD_DIR = os.path.abspath("../data/catastro")
+DOWNLOAD_DIR_REPORT = os.path.abspath("../data/report")

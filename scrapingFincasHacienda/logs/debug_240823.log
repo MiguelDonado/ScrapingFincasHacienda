@@ -1,0 +1,330 @@
+2024-08-23 23:35:06,117 - WARNING  ->  16 -  1  -  1   - The land '16123A501000250000GW' is 'Rústico' but doesn't has a report.
+2024-08-23 23:35:06,117 - INFO     ->  16 -  1  -  1   - The land '16123A501000250000GW' has the next value 967.55. 
+2024-08-23 23:35:13,455 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-08-23 23:35:13,764 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-08-23 23:35:14,097 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-08-23 23:35:14,802 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-08-23 23:35:15,510 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-08-23 23:35:15,873 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-08-23 23:35:16,124 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-08-23 23:35:16,385 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-08-23 23:35:16,640 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-08-23 23:35:16,899 - INFO     ->  10 -  .  -  .   - No auctions available
+2024-08-23 23:35:17,186 - INFO     ->  11 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/Parte-de-casa-Medina-Sidonia-y-piso-en-Jerez-de-la-Frontera.aspx
+2024-08-23 23:35:18,632 - INFO     ->  11 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/Pliego%20de%20condiciones.pdf.xsig.pdf
+2024-08-23 23:35:19,819 - WARNING  ->  11 -  1  -  .   - Failed to process the lote 1
+2024-08-23 23:35:19,819 - WARNING  ->  11 -  2  -  .   - Failed to process the lote 2
+2024-08-23 23:35:20,058 - INFO     ->  12 -  .  -  .   - No auctions available
+2024-08-23 23:35:20,299 - INFO     ->  13 -  .  -  .   - No auctions available
+2024-08-23 23:35:20,537 - INFO     ->  14 -  .  -  .   - No auctions available
+2024-08-23 23:35:20,783 - INFO     ->  15 -  .  -  .   - No auctions available
+2024-08-23 23:35:21,074 - INFO     ->  16 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CUENCA-Subasta-publica.aspx
+2024-08-23 23:35:22,834 - INFO     ->  16 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf
+2024-08-23 23:35:24,482 - INFO     ->  16 -  1  -  .   - ['16123A501000250000GW'], 1275.0
+2024-08-23 23:35:24,482 - INFO     ->  16 -  2  -  .   - ['16123A511001620000GF'], 1315.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  3  -  .   - ['16123A511000310000GL'], 530.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  4  -  .   - ['16256A510000560000IF'], 2500.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  5  -  .   - ['16256A510000680000IE'], 490.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  6  -  .   - ['16256A513000510000IF'], 1050.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  7  -  .   - ['16256A513000520000IM'], 300.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  8  -  .   - ['16256A515000990000IM'], 1500.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  9  -  .   - ['16256A516000450000IO'], 1150.0
+2024-08-23 23:35:24,487 - INFO     ->  16 -  10 -  .   - ['16256A525000400000II'], 875.0
+2024-08-23 23:35:24,488 - INFO     ->  16 -  11 -  .   - ['16256A528000070000IW'], 1500.0
+2024-08-23 23:35:24,488 - INFO     ->  16 -  12 -  .   - ['16233A507000260000OO'], 7500.0
+2024-08-23 23:35:24,488 - INFO     ->  16 -  13 -  .   - ['16233A507000300000OK'], 300.0
+2024-08-23 23:35:24,488 - INFO     ->  16 -  14 -  .   - ['16256A511000300000IP'], 7650.0
+2024-08-23 23:35:24,488 - INFO     ->  16 -  15 -  .   - ['16256A512000650000IY'], 2337.5
+2024-08-23 23:35:24,488 - INFO     ->  16 -  16 -  .   - ['16256A516000490000IX'], 1657.5
+2024-08-23 23:35:24,488 - INFO     ->  16 -  17 -  .   - ['16256A521000660000ID'], 1402.5
+2024-08-23 23:35:24,488 - INFO     ->  16 -  18 -  .   - ['16123A509001370000GM'], 569.5
+2024-08-23 23:35:24,488 - WARNING  ->  16 -  19 -  .   - Failed to process the lote 19
+2024-08-23 23:35:24,488 - WARNING  ->  16 -  20 -  .   - Failed to process the lote 20
+2024-08-23 23:35:24,488 - INFO     ->  16 -  21 -  .   - ['16123A524000410000GW'], 650.25
+2024-08-23 23:35:24,488 - INFO     ->  16 -  22 -  .   - ['16123A520001480000GO'], 469.63
+2024-08-23 23:35:24,488 - INFO     ->  16 -  23 -  .   - ['16123A508001510000GA', '16123A511010180000GU', '16098A021001230000DF'], 912.52
+2024-08-23 23:35:24,488 - INFO     ->  16 -  24 -  .   - ['16091A507000790000UY'], 276.36
+2024-08-23 23:35:24,488 - INFO     ->  16 -  25 -  .   - ['16091A508050520000UK'], 122.83
+2024-08-23 23:35:24,488 - INFO     ->  16 -  26 -  .   - ['16091A508050720000UY'], 147.39
+2024-08-23 23:35:24,488 - INFO     ->  16 -  27 -  .   - ['16091A504000670000UK'], 122.83
+2024-08-23 23:35:24,488 - INFO     ->  16 -  28 -  .   - ['16091A506000330000UU'], 122.83
+2024-08-23 23:35:24,488 - INFO     ->  16 -  29 -  .   - ['16215A501001920000UY'], 331.63
+2024-08-23 23:35:24,488 - INFO     ->  16 -  30 -  .   - ['16215A505000040000UL'], 583.42
+2024-08-23 23:35:24,488 - INFO     ->  16 -  31 -  .   - ['16215A506000250000UI'], 110.54
+2024-08-23 23:35:24,488 - INFO     ->  16 -  32 -  .   - ['16215A510000370000US'], 3141.62
+2024-08-23 23:35:24,488 - INFO     ->  16 -  33 -  .   - ['16215A510000270000UK'], 6843.37
+2024-08-23 23:35:24,488 - INFO     ->  16 -  34 -  .   - ['16215A513000190000UK'], 3559.9
+2024-08-23 23:35:24,488 - INFO     ->  16 -  35 -  .   - ['16215A514000230000UL'], 5402.61
+2024-08-23 23:35:24,488 - INFO     ->  16 -  36 -  .   - ['16067A005000010000JG'], 429.89
+2024-08-23 23:35:24,488 - INFO     ->  16 -  37 -  .   - ['16091A513050200000UW'], 122.83
+2024-08-23 23:35:24,488 - INFO     ->  16 -  38 -  .   - ['16091A503052750000US'], 122.83
+2024-08-23 23:35:24,488 - INFO     ->  16 -  39 -  .   - ['16091A513050220000UB'], 122.83
+2024-08-23 23:35:24,488 - INFO     ->  16 -  40 -  .   - ['16215A504000630000UT'], 970.32
+2024-08-23 23:35:47,980 - INFO     ->  16 -  1  -  1   - Successfully downloaded PDF and KML of the land '16123A501000250000GW' with coordinates '39°55'11.4"N 1°21'03.7"W' and data: {'localizacion': 'Polígono 501 Parcela 25\nEL SATEADO. LANDETE (CUENCA)', 'clase': 'Rústico', 'uso': 'Agrario', 'cultivo': 'C- Labor o Labradío secano'}.
+2024-08-23 23:35:51,222 - ERROR    ->  16 -  1  -  1   - Failed to get the reference value and the 'Report PDF' of the land '<Catastro.catastro.Catastro (session="e38ee823bcde0d0d1ebfd48e80e6f862")>'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 60, in get_data
+    self.__select_date_and_property()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 148, in __select_date_and_property
+    ref_catastral_input.send_keys(self.ref)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 232, in send_keys
+    Command.SEND_KEYS_TO_ELEMENT, {"text": "".join(keys_to_typing(value)), "value": keys_to_typing(value)}
+                                                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/common/utils.py", line 137, in keys_to_typing
+    characters.extend(val)
+TypeError: 'Catastro' object is not iterable
+2024-08-23 23:39:34,785 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-08-23 23:39:35,487 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-08-23 23:39:35,747 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-08-23 23:39:35,983 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-08-23 23:39:36,222 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-08-23 23:39:47,648 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-08-23 23:39:48,411 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-08-23 23:39:49,037 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-08-23 23:39:49,589 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-08-23 23:39:49,857 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-08-23 23:39:50,127 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-08-23 23:39:50,391 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-08-23 23:39:50,661 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-08-23 23:39:50,921 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-08-23 23:39:51,186 - INFO     ->  10 -  .  -  .   - No auctions available
+2024-08-23 23:39:51,461 - INFO     ->  11 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/Parte-de-casa-Medina-Sidonia-y-piso-en-Jerez-de-la-Frontera.aspx
+2024-08-23 23:39:52,874 - INFO     ->  11 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/Pliego%20de%20condiciones.pdf.xsig.pdf
+2024-08-23 23:39:54,122 - WARNING  ->  11 -  1  -  .   - Failed to process the lote 1
+2024-08-23 23:39:54,123 - WARNING  ->  11 -  2  -  .   - Failed to process the lote 2
+2024-08-23 23:39:54,367 - INFO     ->  12 -  .  -  .   - No auctions available
+2024-08-23 23:39:54,618 - INFO     ->  13 -  .  -  .   - No auctions available
+2024-08-23 23:39:54,856 - INFO     ->  14 -  .  -  .   - No auctions available
+2024-08-23 23:39:55,278 - INFO     ->  15 -  .  -  .   - No auctions available
+2024-08-23 23:39:55,588 - INFO     ->  16 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CUENCA-Subasta-publica.aspx
+2024-08-23 23:39:57,421 - INFO     ->  16 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf
+2024-08-23 23:39:59,251 - INFO     ->  16 -  1  -  .   - ['16123A501000250000GW'], 1275.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  2  -  .   - ['16123A511001620000GF'], 1315.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  3  -  .   - ['16123A511000310000GL'], 530.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  4  -  .   - ['16256A510000560000IF'], 2500.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  5  -  .   - ['16256A510000680000IE'], 490.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  6  -  .   - ['16256A513000510000IF'], 1050.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  7  -  .   - ['16256A513000520000IM'], 300.0
+2024-08-23 23:39:59,251 - INFO     ->  16 -  8  -  .   - ['16256A515000990000IM'], 1500.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  9  -  .   - ['16256A516000450000IO'], 1150.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  10 -  .   - ['16256A525000400000II'], 875.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  11 -  .   - ['16256A528000070000IW'], 1500.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  12 -  .   - ['16233A507000260000OO'], 7500.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  13 -  .   - ['16233A507000300000OK'], 300.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  14 -  .   - ['16256A511000300000IP'], 7650.0
+2024-08-23 23:39:59,252 - INFO     ->  16 -  15 -  .   - ['16256A512000650000IY'], 2337.5
+2024-08-23 23:39:59,252 - INFO     ->  16 -  16 -  .   - ['16256A516000490000IX'], 1657.5
+2024-08-23 23:39:59,252 - INFO     ->  16 -  17 -  .   - ['16256A521000660000ID'], 1402.5
+2024-08-23 23:39:59,252 - INFO     ->  16 -  18 -  .   - ['16123A509001370000GM'], 569.5
+2024-08-23 23:39:59,252 - WARNING  ->  16 -  19 -  .   - Failed to process the lote 19
+2024-08-23 23:39:59,252 - WARNING  ->  16 -  20 -  .   - Failed to process the lote 20
+2024-08-23 23:39:59,252 - INFO     ->  16 -  21 -  .   - ['16123A524000410000GW'], 650.25
+2024-08-23 23:39:59,252 - INFO     ->  16 -  22 -  .   - ['16123A520001480000GO'], 469.63
+2024-08-23 23:39:59,252 - INFO     ->  16 -  23 -  .   - ['16123A508001510000GA', '16123A511010180000GU', '16098A021001230000DF'], 912.52
+2024-08-23 23:39:59,252 - INFO     ->  16 -  24 -  .   - ['16091A507000790000UY'], 276.36
+2024-08-23 23:39:59,252 - INFO     ->  16 -  25 -  .   - ['16091A508050520000UK'], 122.83
+2024-08-23 23:39:59,252 - INFO     ->  16 -  26 -  .   - ['16091A508050720000UY'], 147.39
+2024-08-23 23:39:59,252 - INFO     ->  16 -  27 -  .   - ['16091A504000670000UK'], 122.83
+2024-08-23 23:39:59,252 - INFO     ->  16 -  28 -  .   - ['16091A506000330000UU'], 122.83
+2024-08-23 23:39:59,252 - INFO     ->  16 -  29 -  .   - ['16215A501001920000UY'], 331.63
+2024-08-23 23:39:59,252 - INFO     ->  16 -  30 -  .   - ['16215A505000040000UL'], 583.42
+2024-08-23 23:39:59,252 - INFO     ->  16 -  31 -  .   - ['16215A506000250000UI'], 110.54
+2024-08-23 23:39:59,252 - INFO     ->  16 -  32 -  .   - ['16215A510000370000US'], 3141.62
+2024-08-23 23:39:59,252 - INFO     ->  16 -  33 -  .   - ['16215A510000270000UK'], 6843.37
+2024-08-23 23:39:59,252 - INFO     ->  16 -  34 -  .   - ['16215A513000190000UK'], 3559.9
+2024-08-23 23:39:59,252 - INFO     ->  16 -  35 -  .   - ['16215A514000230000UL'], 5402.61
+2024-08-23 23:39:59,252 - INFO     ->  16 -  36 -  .   - ['16067A005000010000JG'], 429.89
+2024-08-23 23:39:59,252 - INFO     ->  16 -  37 -  .   - ['16091A513050200000UW'], 122.83
+2024-08-23 23:39:59,252 - INFO     ->  16 -  38 -  .   - ['16091A503052750000US'], 122.83
+2024-08-23 23:39:59,252 - INFO     ->  16 -  39 -  .   - ['16091A513050220000UB'], 122.83
+2024-08-23 23:39:59,256 - INFO     ->  16 -  40 -  .   - ['16215A504000630000UT'], 970.32
+2024-08-23 23:40:17,175 - INFO     ->  16 -  1  -  1   - Successfully downloaded PDF and KML of the land '16123A501000250000GW' with coordinates '39°55'11.4"N 1°21'03.7"W' and data: {'localizacion': 'Polígono 501 Parcela 25\nEL SATEADO. LANDETE (CUENCA)', 'clase': 'Rústico', 'uso': 'Agrario', 'cultivo': 'C- Labor o Labradío secano'}.
+2024-08-23 23:40:36,275 - WARNING  ->  16 -  1  -  1   - The land '16123A501000250000GW' is 'Rústico' but doesn't has a report.
+2024-08-23 23:40:36,275 - INFO     ->  16 -  1  -  1   - The land '16123A501000250000GW' has the next value 967.55. 
+2024-08-23 23:40:54,177 - ERROR    ->  16 -  1  -  1   - Failed to get 'cp, province, locality'.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 33, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 65, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 62, in __close_cookies
+    reject_cookies_btn.click()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 347, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=126.0.6478.126)
+Stacktrace:
+#0 0x5d0ec112fc5a <unknown>
+#1 0x5d0ec0e12c71 <unknown>
+#2 0x5d0ec0e607ef <unknown>
+#3 0x5d0ec0e5415f <unknown>
+#4 0x5d0ec0e825c2 <unknown>
+#5 0x5d0ec0e53ad9 <unknown>
+#6 0x5d0ec0e8278e <unknown>
+#7 0x5d0ec0ea1303 <unknown>
+#8 0x5d0ec0e82363 <unknown>
+#9 0x5d0ec0e52247 <unknown>
+#10 0x5d0ec0e52b9e <unknown>
+#11 0x5d0ec10f622b <unknown>
+#12 0x5d0ec10fa2d1 <unknown>
+#13 0x5d0ec10e1ade <unknown>
+#14 0x5d0ec10fae32 <unknown>
+#15 0x5d0ec10c677f <unknown>
+#16 0x5d0ec111f618 <unknown>
+#17 0x5d0ec111f7f0 <unknown>
+#18 0x5d0ec112ed8c <unknown>
+#19 0x7399df6b939d <unknown>
+#20 0x7399df73e49c <unknown>
+
+2024-08-23 23:49:28,963 - ERROR    ->  16 -  1  -  2   - Failed to get 'cp, province, locality'.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 33, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 66, in __search
+    search_input = self.find_element(
+                   ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 741, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 347, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=126.0.6478.126)
+Stacktrace:
+#0 0x62ac4483ac5a <unknown>
+#1 0x62ac4451de2c <unknown>
+#2 0x62ac444f30d4 <unknown>
+#3 0x62ac44595a8d <unknown>
+#4 0x62ac445abca6 <unknown>
+#5 0x62ac4458d363 <unknown>
+#6 0x62ac4455d247 <unknown>
+#7 0x62ac4455db9e <unknown>
+#8 0x62ac4480122b <unknown>
+#9 0x62ac448052d1 <unknown>
+#10 0x62ac447ecade <unknown>
+#11 0x62ac44805e32 <unknown>
+#12 0x62ac447d177f <unknown>
+#13 0x62ac4482a618 <unknown>
+#14 0x62ac4482a7f0 <unknown>
+#15 0x62ac44839d8c <unknown>
+#16 0x71cadd24839d <unknown>
+#17 0x71cadd2cd49c <unknown>
+
+2024-08-23 23:52:06,734 - ERROR    ->  16 -  1  -  2   - Failed to get 'cp, province, locality'.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 33, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 65, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 62, in __close_cookies
+    reject_cookies_btn.click()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 347, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=126.0.6478.126)
+Stacktrace:
+#0 0x59985de96c5a <unknown>
+#1 0x59985db79c71 <unknown>
+#2 0x59985dbc77ef <unknown>
+#3 0x59985dbbb15f <unknown>
+#4 0x59985dbe95c2 <unknown>
+#5 0x59985dbbaad9 <unknown>
+#6 0x59985dbe978e <unknown>
+#7 0x59985dc08303 <unknown>
+#8 0x59985dbe9363 <unknown>
+#9 0x59985dbb9247 <unknown>
+#10 0x59985dbb9b9e <unknown>
+#11 0x59985de5d22b <unknown>
+#12 0x59985de612d1 <unknown>
+#13 0x59985de48ade <unknown>
+#14 0x59985de61e32 <unknown>
+#15 0x59985de2d77f <unknown>
+#16 0x59985de86618 <unknown>
+#17 0x59985de867f0 <unknown>
+#18 0x59985de95d8c <unknown>
+#19 0x7d5613dc339d <unknown>
+#20 0x7d5613e4849c <unknown>
+
+2024-08-23 23:53:20,180 - INFO     ->  16 -  1  -  2   - Land '16123A501000250000GW' is in CUENCA.LANDETE with C.P. 16330
+2024-08-23 23:55:04,299 - INFO     ->  16 -  1  -  2   - Land '16123A501000250000GW' is in CUENCA province. Specifically is on LANDETE locality with C.P. 16330
+2024-08-23 23:56:05,524 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-08-23 23:56:06,206 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-08-23 23:56:06,849 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-08-23 23:56:07,508 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-08-23 23:56:07,776 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-08-23 23:56:08,074 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-08-23 23:56:08,350 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-08-23 23:56:08,857 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-08-23 23:56:09,133 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-08-23 23:56:09,405 - INFO     ->  10 -  .  -  .   - No auctions available
+2024-08-23 23:56:09,700 - INFO     ->  11 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/Parte-de-casa-Medina-Sidonia-y-piso-en-Jerez-de-la-Frontera.aspx
+2024-08-23 23:56:11,230 - INFO     ->  11 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/Pliego%20de%20condiciones.pdf.xsig.pdf
+2024-08-23 23:56:12,485 - WARNING  ->  11 -  1  -  .   - Failed to process the lote 1
+2024-08-23 23:56:12,485 - WARNING  ->  11 -  2  -  .   - Failed to process the lote 2
+2024-08-23 23:56:12,746 - INFO     ->  12 -  .  -  .   - No auctions available
+2024-08-23 23:56:13,010 - INFO     ->  13 -  .  -  .   - No auctions available
+2024-08-23 23:56:13,255 - INFO     ->  14 -  .  -  .   - No auctions available
+2024-08-23 23:56:13,506 - INFO     ->  15 -  .  -  .   - No auctions available
+2024-08-23 23:56:13,805 - INFO     ->  16 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CUENCA-Subasta-publica.aspx
+2024-08-23 23:56:15,547 - INFO     ->  16 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf
+2024-08-23 23:56:17,281 - INFO     ->  16 -  1  -  .   - ['16123A501000250000GW'], 1275.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  2  -  .   - ['16123A511001620000GF'], 1315.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  3  -  .   - ['16123A511000310000GL'], 530.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  4  -  .   - ['16256A510000560000IF'], 2500.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  5  -  .   - ['16256A510000680000IE'], 490.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  6  -  .   - ['16256A513000510000IF'], 1050.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  7  -  .   - ['16256A513000520000IM'], 300.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  8  -  .   - ['16256A515000990000IM'], 1500.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  9  -  .   - ['16256A516000450000IO'], 1150.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  10 -  .   - ['16256A525000400000II'], 875.0
+2024-08-23 23:56:17,281 - INFO     ->  16 -  11 -  .   - ['16256A528000070000IW'], 1500.0
+2024-08-23 23:56:17,282 - INFO     ->  16 -  12 -  .   - ['16233A507000260000OO'], 7500.0
+2024-08-23 23:56:17,282 - INFO     ->  16 -  13 -  .   - ['16233A507000300000OK'], 300.0
+2024-08-23 23:56:17,282 - INFO     ->  16 -  14 -  .   - ['16256A511000300000IP'], 7650.0
+2024-08-23 23:56:17,282 - INFO     ->  16 -  15 -  .   - ['16256A512000650000IY'], 2337.5
+2024-08-23 23:56:17,282 - INFO     ->  16 -  16 -  .   - ['16256A516000490000IX'], 1657.5
+2024-08-23 23:56:17,282 - INFO     ->  16 -  17 -  .   - ['16256A521000660000ID'], 1402.5
+2024-08-23 23:56:17,282 - INFO     ->  16 -  18 -  .   - ['16123A509001370000GM'], 569.5
+2024-08-23 23:56:17,282 - WARNING  ->  16 -  19 -  .   - Failed to process the lote 19
+2024-08-23 23:56:17,282 - WARNING  ->  16 -  20 -  .   - Failed to process the lote 20
+2024-08-23 23:56:17,282 - INFO     ->  16 -  21 -  .   - ['16123A524000410000GW'], 650.25
+2024-08-23 23:56:17,282 - INFO     ->  16 -  22 -  .   - ['16123A520001480000GO'], 469.63
+2024-08-23 23:56:17,282 - INFO     ->  16 -  23 -  .   - ['16123A508001510000GA', '16123A511010180000GU', '16098A021001230000DF'], 912.52
+2024-08-23 23:56:17,282 - INFO     ->  16 -  24 -  .   - ['16091A507000790000UY'], 276.36
+2024-08-23 23:56:17,282 - INFO     ->  16 -  25 -  .   - ['16091A508050520000UK'], 122.83
+2024-08-23 23:56:17,282 - INFO     ->  16 -  26 -  .   - ['16091A508050720000UY'], 147.39
+2024-08-23 23:56:17,282 - INFO     ->  16 -  27 -  .   - ['16091A504000670000UK'], 122.83
+2024-08-23 23:56:17,282 - INFO     ->  16 -  28 -  .   - ['16091A506000330000UU'], 122.83
+2024-08-23 23:56:17,282 - INFO     ->  16 -  29 -  .   - ['16215A501001920000UY'], 331.63
+2024-08-23 23:56:17,282 - INFO     ->  16 -  30 -  .   - ['16215A505000040000UL'], 583.42
+2024-08-23 23:56:17,282 - INFO     ->  16 -  31 -  .   - ['16215A506000250000UI'], 110.54
+2024-08-23 23:56:17,283 - INFO     ->  16 -  32 -  .   - ['16215A510000370000US'], 3141.62
+2024-08-23 23:56:17,283 - INFO     ->  16 -  33 -  .   - ['16215A510000270000UK'], 6843.37
+2024-08-23 23:56:17,283 - INFO     ->  16 -  34 -  .   - ['16215A513000190000UK'], 3559.9
+2024-08-23 23:56:17,283 - INFO     ->  16 -  35 -  .   - ['16215A514000230000UL'], 5402.61
+2024-08-23 23:56:17,283 - INFO     ->  16 -  36 -  .   - ['16067A005000010000JG'], 429.89
+2024-08-23 23:56:17,283 - INFO     ->  16 -  37 -  .   - ['16091A513050200000UW'], 122.83
+2024-08-23 23:56:17,283 - INFO     ->  16 -  38 -  .   - ['16091A503052750000US'], 122.83
+2024-08-23 23:56:17,283 - INFO     ->  16 -  39 -  .   - ['16091A513050220000UB'], 122.83
+2024-08-23 23:56:17,283 - INFO     ->  16 -  40 -  .   - ['16215A504000630000UT'], 970.32
+2024-08-23 23:56:36,590 - INFO     ->  16 -  1  -  1   - Successfully downloaded PDF and KML of the land '16123A501000250000GW' with coordinates '39°55'11.4"N 1°21'03.7"W' and data: {'localizacion': 'Polígono 501 Parcela 25\nEL SATEADO. LANDETE (CUENCA)', 'clase': 'Rústico', 'uso': 'Agrario', 'cultivo': 'C- Labor o Labradío secano'}.
+2024-08-23 23:56:55,784 - WARNING  ->  16 -  1  -  1   - The land '16123A501000250000GW' is 'Rústico' but doesn't has a report.
+2024-08-23 23:56:55,784 - INFO     ->  16 -  1  -  1   - The land '16123A501000250000GW' has the next value 967.55. 
+2024-08-23 23:57:15,808 - INFO     ->  16 -  1  -  1   - Land '16123A501000250000GW' is in 'CUENCA' province. More precisely is on 'LANDETE' locality with C.P. 16330

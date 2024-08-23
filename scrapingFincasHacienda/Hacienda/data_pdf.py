@@ -76,7 +76,7 @@ def get_lotes_data(url_pdf, delegation):
 
         # Log
         msg = "Failed to proccess auction PDF using get_lotes_data function {e}"
-        logger.error(f"{logger_config.build_id(delegation)}{msg}")
+        logger.error(f"{logger_config.build_id(delegation)}{msg}", exc_info=True)
 
         return None
 

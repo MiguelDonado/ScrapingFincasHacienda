@@ -6,8 +6,7 @@ from Hacienda.data_pdf import get_lotes_data
 
 # CATASTRO
 from Catastro.catastro import Catastro
-from Catastro.report import Report
-
+from Catastro.report import CatastroReport
 
 # CORREOS
 from Correos.correos import Correos
@@ -61,71 +60,46 @@ def main():
             data_lote = lote["data"]
             # 5) For each land on the lote
             for i_land, land in enumerate(data_lote["refs"], 1):
+
+                # LAND VARIABLES THAT CONTAINS RELEVANT DATA:
+                # (mandatory) | data_land = {"localizacion","clase", "uso", "cultivo_aprovechamiento"}
+                # (mandatory) | coordinates_land = string
+                # (optional) | value_land = float
+                # (optional) | report_data_land = {"ath","denominacion_ath","agrupacion_cultivo","agrupacion_municipio","number_buildings","slope","fls"}
+                # (optional) | info_correos = {"cp", "province", "locality"}
+
+                # 5.1) CATASTRO CLASS
                 try:
-                    info_land = Catastro(delegation, i_lote, i_land, land)
-                    data_land, coordinates_land = info_land.get_data()
+                    land_object = Catastro(delegation, i_lote, i_land, land)
+                    info_land = land_object.get_data()
+                    data_land = info_land["data"]
+                    coordinates_land = info_land["coordinates"]
                 except Exception:
                     continue
 
-                    #   5.2) Download PDF report from a different Catastro webpage and scrape reference_value
-                    catastro_land_report = CatastroReport(ref, catastro_data["clase"])
-                    catastro_land_report.land_first_page()
-                    catastro_land_report.close_cookies()
-                    catastro_land_report.land_query_value_page()
-                    catastro_land_report.access_with_dni()
-                    catastro_land_report.select_date_and_property()
-                    #   5.2.1) Get the reference_value
-                    catastro_land_value = (
-                        catastro_land_report.get_reference_value_amount()
-                    )
-                    logging.info(
-                        f"{msg_header} Reference_value = {catastro_land_value}"
-                    )
-                except Exception as e:
-                    error_msg = "Failed to scrape data 'reference_value' using CatastroReport class:"
-                    logging.error(f"{msg_header} {error_msg} {e}")
+                # 5.2) CATASTRO_REPORT CLASS
+                report = CatastroReport(
+                    delegation, i_lote, i_land, land, data_land["clase"]
+                )
+                info_report = report.get_data()
+                value_land = info_report["value"]
+                report_data_land = info_report["data"]
+
+                # 5.3) CORREOS_CLASS
+                correos = Correos(
+                    delegation, i_lote, i_land, land, data_land["localizacion"]
+                )
+                info_correos = correos.get_data()
+
+                # If direction couldn't be extracted using correos webpage.
+                if not info_correos["cp"]:
                     continue
+
+                break
+            break
 
 
 '''
-               try:
-                    #   5.2.2) Get the PDF report, only when the land is "Rústico", in the rest of the cases
-                    #   the pdf is different, and it hasn't relevant data.
-                    #   The logic is implemented inside the method
-                    report_path = catastro_land_report.get_reference_value_report()
-                    if not report_path:
-                        msg = "The pdf is not relevant in this case."
-                    else:
-                        msg = "The pdf has been downloaded successfully"
-                    logging.info(f"{msg_header} {msg}")
-                except Exception as e:
-                    error_msg = "Failed to download 'reference_value' report using CatastroReport class:"
-                    logging.error(f"{msg_header}  {e}")
-
-                try:
-                    #   5.2.3) Process the PDF report
-                    if report_path:
-                        report_data = catastro_land_report.process_report(report_path)
-                        logging.info(f"{msg_header} {report_data}")
-                    else:
-                        info_msg = f"Because it has the class '{catastro_data['clase']}', no PDF has been processed"
-                        logging.info(f"{msg_header} {info_msg}")
-                except Exception as e:
-                    error_msg = "Failed to process the reference_value report using the CatastroReport class:"
-                    logging.error(f"{msg_header} {error_msg} {e}")
-
-                    #   5.3) Scrape data from Correos
-                try:
-                    correos_land = Correos(catastro_data["localizacion"])
-                    correos_land.land_first_page()
-                    correos_land.search()
-                    correos_data = correos_land.get_info_about_search()
-                    logging.info(f"{msg_header} {correos_data}")
-                except Exception as e:
-                    error_msg = "Failed to scrape data 'cp, province, locality' using Correos class"
-                    logging.error(f"{msg_header} {error_msg} {e}")
-                    continue
-
                     #   5.4) Scrape data from INE (using InePopulation class)
                 try:
                     ine_population_land = InePopulation(

@@ -65,10 +65,28 @@ class Catastro(webdriver.Chrome):
             # Log
             msg = f"Failed to get data from land '{self.ref}'"
             logger.error(
-                f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+                f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
+                exc_info=True,
             )
+        finally:
+            self.quit()
+            time.sleep(1)
 
+    #
+    #
+    #
+    #
+    #
+    #
+    #
     ################################### PRIVATE METHODS ############################################
+    #
+    #
+    #
+    #
+    #
+    #
+    #
 
     # Lands on the main Catastro webpage
     def __land_first_page(self):
