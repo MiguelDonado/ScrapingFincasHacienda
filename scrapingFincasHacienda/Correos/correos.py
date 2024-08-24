@@ -98,4 +98,8 @@ class Correos(webdriver.Chrome):
             By.XPATH,
             "//div[@slot='container-scroll']/div[contains(@class,'ui-list-result')][1]/following-sibling::div[1]//dd",
         )
-        return {"cp": cp.text, "province": province.text, "locality": locality.text}
+        return {
+            "cp": str(cp.text),
+            "province": province.text,
+            "locality": locality.text,
+        }

@@ -1,0 +1,71 @@
+2024-08-24 15:28:32,398 - ERROR    ->  16 -  1  -  2   - Failed to extract enterprises near land '15083G512013510000TH' located on C.P. 15894.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 46, in get_data
+    self.__logout()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 240, in __logout
+    WebDriverWait(self, 30).until(
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/support/wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+#0 0x63cdef3a6c5a <unknown>
+#1 0x63cdef089e2c <unknown>
+#2 0x63cdef0d6661 <unknown>
+#3 0x63cdef0d6751 <unknown>
+#4 0x63cdef11af64 <unknown>
+#5 0x63cdef0f95ed <unknown>
+#6 0x63cdef118303 <unknown>
+#7 0x63cdef0f9363 <unknown>
+#8 0x63cdef0c9247 <unknown>
+#9 0x63cdef0c9b9e <unknown>
+#10 0x63cdef36d22b <unknown>
+#11 0x63cdef3712d1 <unknown>
+#12 0x63cdef358ade <unknown>
+#13 0x63cdef371e32 <unknown>
+#14 0x63cdef33d77f <unknown>
+#15 0x63cdef396618 <unknown>
+#16 0x63cdef3967f0 <unknown>
+#17 0x63cdef3a5d8c <unknown>
+#18 0x7626b0aa539d <unknown>
+#19 0x7626b0b2a49c <unknown>
+
+2024-08-24 15:43:26,359 - ERROR    ->  16 -  1  -  2   - Failed to extract enterprises near land '15083G512013510000TH' located on C.P. 15894.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 42, in get_data
+    self.__filter_cp()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 98, in __filter_cp
+    alphabetical_list = self.find_element(
+                        ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 741, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 347, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: target frame detached
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=126.0.6478.126)
+Stacktrace:
+#0 0x637f338ebc5a <unknown>
+#1 0x637f335cec71 <unknown>
+#2 0x637f335b5d35 <unknown>
+#3 0x637f335b3cc6 <unknown>
+#4 0x637f335b433f <unknown>
+#5 0x637f335c4c67 <unknown>
+#6 0x637f335db465 <unknown>
+#7 0x637f3365d447 <unknown>
+#8 0x637f3363e363 <unknown>
+#9 0x637f3360e247 <unknown>
+#10 0x637f3360eb9e <unknown>
+#11 0x637f338b222b <unknown>
+#12 0x637f338b62d1 <unknown>
+#13 0x637f3389dade <unknown>
+#14 0x637f338b6e32 <unknown>
+#15 0x637f3388277f <unknown>
+#16 0x637f338db618 <unknown>
+#17 0x637f338db7f0 <unknown>
+#18 0x637f338ead8c <unknown>
+#19 0x7204e728339d <unknown>
+#20 0x7204e730849c <unknown>
+

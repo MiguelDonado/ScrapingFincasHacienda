@@ -15,6 +15,9 @@ from Correos.correos import Correos
 from INE.ine_population import InePopulation
 from INE.ine_num_transmisiones_fincas_rusticas import IneNumTransmisionesFincasRusticas
 
+# SABI
+from Sabi.sabi import Sabi
+
 # from scrapingFincasHacienda.Hacienda.to_rename import get_url_pliego_pdf
 # from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info"""
 
@@ -68,6 +71,7 @@ def main():
                 # (optional for next steps) | report_data_land = {"ath","denominacion_ath","agrupacion_cultivo","agrupacion_municipio","number_buildings","slope","fls"}
                 # (mandatory for next steps) | data_correos = {"cp", "province", "locality"}
                 # (optional for next steps) | data_ine_population = {"population_now","population_before","porcentual_variation"}
+                # (optional for next steps) | data_ine_transmisiones = {"transactions_now","transactions_before","variation"}
 
                 # 5.1) CATASTRO CLASS
                 try:
@@ -113,55 +117,14 @@ def main():
                         delegation, i_lote, i_land, land, data_correos["cp"]
                     )
                     data_ine_transmisiones = ine_transmisiones.get_data()
+
+                # 5.6) SABI CLASS
+                sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
+                # The method below returns a dataframe
+                # 'Nombre', "Calle", "Código postal"
+                data_sabi = sabi.get_data()
                 break
             break
-
-
-'''
-    auctions = get_all_auctions_urls()
-    auctions_pliegos_urlpdf = [get_url_pliego_pdf(auction) for auction in auctions]
-    # The relevant info extracted from the pliego is (ref_catastral, price)
-    print(
-        "########################################################################################################"
-    )
-    auctions_pliegos_info = [
-        get_pliego_info(pliego_url) for pliego_url in auctions_pliegos_urlpdf
-    ]
-    # To filter the errors
-    # The auctions_pliegos_info has the next structure:
-    """ [
-            [auction
-                (lote
-                    [ref catastral],
-                    'price'                
-                ),
-            ],
-        ]
-    1. List of lists. 
-        2. Each inner list (auction), contains multiple tuples
-            3. Each tuple contains two elements.
-                4. The first is a list of referencias catastrales of the lote
-                5. The second is a float price
-    """
-
-    filtered_auctions_pliegos_info = [
-        (ref, price)
-        for auction_info in auctions_pliegos_info
-        for ref, price in auction_info
-        if price != "ERROR"
-    ]
-    print(
-        f"The following lands are gonna be searched on the catastro page to get more info.{filtered_auctions_pliegos_info}"
-    )
-    print(
-        "############################ LANDS INFO ####################################################################"
-    )
-    # Get the info from the filtered list of lands
-    lands_info = [
-        get_whole_info_land(*auction_info)
-        for auction_info in filtered_auctions_pliegos_info
-    ]
-    print(lands_info)'''
 
 
 if __name__ == "__main__":

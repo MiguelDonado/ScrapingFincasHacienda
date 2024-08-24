@@ -1,0 +1,211 @@
+2024-08-24 15:06:04,537 - INFO     ->  16 -  1  -  2   - Enterprises near land '15083G512013510000TH' located on C.P. 15700 have been extracted successfully: '0    PREME MAQUINARIA SL.
+Name: Nombre, dtype: object'
+2024-08-24 15:08:32,165 - INFO     ->  16 -  1  -  2   - Enterprises near land '15083G512013510000TH' located on C.P. 15894 have been extracted successfully: '['GRUPO VALDES OIL SL.', 'TARLOGIC SECURITY SL.', 'SANITARIOS J OTERO SA', 'ROMERO CASTRILLON SL', 'EDUCADVANCE S.L.', 'EDICIONS POSITIVAS SL', 'TRANS GANADO AMPA SL', 'SAN-TRASTERO SL.']'
+2024-08-24 15:27:18,354 - INFO     ->  16 -  1  -  2   - Enterprises near land '15083G512013510000TH' located on C.P. 15894 have been extracted successfully: ['GRUPO VALDES OIL SL.', 'TARLOGIC SECURITY SL.', 'SANITARIOS J OTERO SA', 'ROMERO CASTRILLON SL', 'EDUCADVANCE S.L.', 'EDICIONS POSITIVAS SL', 'TRANS GANADO AMPA SL', 'SAN-TRASTERO SL.']
+2024-08-24 15:28:32,398 - ERROR    ->  16 -  1  -  2   - Failed to extract enterprises near land '15083G512013510000TH' located on C.P. 15894.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 46, in get_data
+    self.__logout()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 240, in __logout
+    WebDriverWait(self, 30).until(
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/support/wait.py", line 105, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+#0 0x63cdef3a6c5a <unknown>
+#1 0x63cdef089e2c <unknown>
+#2 0x63cdef0d6661 <unknown>
+#3 0x63cdef0d6751 <unknown>
+#4 0x63cdef11af64 <unknown>
+#5 0x63cdef0f95ed <unknown>
+#6 0x63cdef118303 <unknown>
+#7 0x63cdef0f9363 <unknown>
+#8 0x63cdef0c9247 <unknown>
+#9 0x63cdef0c9b9e <unknown>
+#10 0x63cdef36d22b <unknown>
+#11 0x63cdef3712d1 <unknown>
+#12 0x63cdef358ade <unknown>
+#13 0x63cdef371e32 <unknown>
+#14 0x63cdef33d77f <unknown>
+#15 0x63cdef396618 <unknown>
+#16 0x63cdef3967f0 <unknown>
+#17 0x63cdef3a5d8c <unknown>
+#18 0x7626b0aa539d <unknown>
+#19 0x7626b0b2a49c <unknown>
+
+2024-08-24 15:43:26,359 - ERROR    ->  16 -  1  -  2   - Failed to extract enterprises near land '15083G512013510000TH' located on C.P. 15894.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 42, in get_data
+    self.__filter_cp()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Sabi/sabi.py", line 98, in __filter_cp
+    alphabetical_list = self.find_element(
+                        ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 741, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 347, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: target frame detached
+  (failed to check if window was closed: disconnected: not connected to DevTools)
+  (Session info: chrome=126.0.6478.126)
+Stacktrace:
+#0 0x637f338ebc5a <unknown>
+#1 0x637f335cec71 <unknown>
+#2 0x637f335b5d35 <unknown>
+#3 0x637f335b3cc6 <unknown>
+#4 0x637f335b433f <unknown>
+#5 0x637f335c4c67 <unknown>
+#6 0x637f335db465 <unknown>
+#7 0x637f3365d447 <unknown>
+#8 0x637f3363e363 <unknown>
+#9 0x637f3360e247 <unknown>
+#10 0x637f3360eb9e <unknown>
+#11 0x637f338b222b <unknown>
+#12 0x637f338b62d1 <unknown>
+#13 0x637f3389dade <unknown>
+#14 0x637f338b6e32 <unknown>
+#15 0x637f3388277f <unknown>
+#16 0x637f338db618 <unknown>
+#17 0x637f338db7f0 <unknown>
+#18 0x637f338ead8c <unknown>
+#19 0x7204e728339d <unknown>
+#20 0x7204e730849c <unknown>
+
+2024-08-24 15:43:57,209 - INFO     ->  16 -  1  -  2   - Enterprises near land '15083G512013510000TH' located on C.P. 15894 have been extracted successfully: ['GRUPO VALDES OIL SL.', 'TARLOGIC SECURITY SL.', 'SANITARIOS J OTERO SA', 'ROMERO CASTRILLON SL', 'EDUCADVANCE S.L.', 'EDICIONS POSITIVAS SL', 'TRANS GANADO AMPA SL', 'SAN-TRASTERO SL.']
+2024-08-24 17:11:58,886 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-08-24 17:11:59,586 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-08-24 17:12:00,523 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-08-24 17:12:01,539 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-08-24 17:12:01,951 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-08-24 17:12:02,202 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-08-24 17:12:02,487 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-08-24 17:12:02,787 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-08-24 17:12:03,048 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-08-24 17:12:03,375 - INFO     ->  10 -  .  -  .   - No auctions available
+2024-08-24 17:12:03,654 - INFO     ->  11 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/Parte-de-casa-Medina-Sidonia-y-piso-en-Jerez-de-la-Frontera.aspx
+2024-08-24 17:12:05,126 - INFO     ->  11 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/Pliego%20de%20condiciones.pdf.xsig.pdf
+2024-08-24 17:12:06,354 - WARNING  ->  11 -  1  -  .   - Failed to process the lote 1
+2024-08-24 17:12:06,354 - WARNING  ->  11 -  2  -  .   - Failed to process the lote 2
+2024-08-24 17:12:06,606 - INFO     ->  12 -  .  -  .   - No auctions available
+2024-08-24 17:12:06,860 - INFO     ->  13 -  .  -  .   - No auctions available
+2024-08-24 17:12:07,111 - INFO     ->  14 -  .  -  .   - No auctions available
+2024-08-24 17:12:07,371 - INFO     ->  15 -  .  -  .   - No auctions available
+2024-08-24 17:12:07,647 - INFO     ->  16 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CUENCA-Subasta-publica.aspx
+2024-08-24 17:12:09,507 - INFO     ->  16 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf
+2024-08-24 17:12:11,572 - INFO     ->  16 -  1  -  .   - ['16123A501000250000GW'], 1275.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  2  -  .   - ['16123A511001620000GF'], 1315.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  3  -  .   - ['16123A511000310000GL'], 530.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  4  -  .   - ['16256A510000560000IF'], 2500.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  5  -  .   - ['16256A510000680000IE'], 490.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  6  -  .   - ['16256A513000510000IF'], 1050.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  7  -  .   - ['16256A513000520000IM'], 300.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  8  -  .   - ['16256A515000990000IM'], 1500.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  9  -  .   - ['16256A516000450000IO'], 1150.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  10 -  .   - ['16256A525000400000II'], 875.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  11 -  .   - ['16256A528000070000IW'], 1500.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  12 -  .   - ['16233A507000260000OO'], 7500.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  13 -  .   - ['16233A507000300000OK'], 300.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  14 -  .   - ['16256A511000300000IP'], 7650.0
+2024-08-24 17:12:11,572 - INFO     ->  16 -  15 -  .   - ['16256A512000650000IY'], 2337.5
+2024-08-24 17:12:11,572 - INFO     ->  16 -  16 -  .   - ['16256A516000490000IX'], 1657.5
+2024-08-24 17:12:11,572 - INFO     ->  16 -  17 -  .   - ['16256A521000660000ID'], 1402.5
+2024-08-24 17:12:11,573 - INFO     ->  16 -  18 -  .   - ['16123A509001370000GM'], 569.5
+2024-08-24 17:12:11,573 - WARNING  ->  16 -  19 -  .   - Failed to process the lote 19
+2024-08-24 17:12:11,573 - WARNING  ->  16 -  20 -  .   - Failed to process the lote 20
+2024-08-24 17:12:11,573 - INFO     ->  16 -  21 -  .   - ['16123A524000410000GW'], 650.25
+2024-08-24 17:12:11,573 - INFO     ->  16 -  22 -  .   - ['16123A520001480000GO'], 469.63
+2024-08-24 17:12:11,573 - INFO     ->  16 -  23 -  .   - ['16123A508001510000GA', '16123A511010180000GU', '16098A021001230000DF'], 912.52
+2024-08-24 17:12:11,573 - INFO     ->  16 -  24 -  .   - ['16091A507000790000UY'], 276.36
+2024-08-24 17:12:11,573 - INFO     ->  16 -  25 -  .   - ['16091A508050520000UK'], 122.83
+2024-08-24 17:12:11,573 - INFO     ->  16 -  26 -  .   - ['16091A508050720000UY'], 147.39
+2024-08-24 17:12:11,573 - INFO     ->  16 -  27 -  .   - ['16091A504000670000UK'], 122.83
+2024-08-24 17:12:11,573 - INFO     ->  16 -  28 -  .   - ['16091A506000330000UU'], 122.83
+2024-08-24 17:12:11,573 - INFO     ->  16 -  29 -  .   - ['16215A501001920000UY'], 331.63
+2024-08-24 17:12:11,573 - INFO     ->  16 -  30 -  .   - ['16215A505000040000UL'], 583.42
+2024-08-24 17:12:11,573 - INFO     ->  16 -  31 -  .   - ['16215A506000250000UI'], 110.54
+2024-08-24 17:12:11,573 - INFO     ->  16 -  32 -  .   - ['16215A510000370000US'], 3141.62
+2024-08-24 17:12:11,573 - INFO     ->  16 -  33 -  .   - ['16215A510000270000UK'], 6843.37
+2024-08-24 17:12:11,573 - INFO     ->  16 -  34 -  .   - ['16215A513000190000UK'], 3559.9
+2024-08-24 17:12:11,573 - INFO     ->  16 -  35 -  .   - ['16215A514000230000UL'], 5402.61
+2024-08-24 17:12:11,573 - INFO     ->  16 -  36 -  .   - ['16067A005000010000JG'], 429.89
+2024-08-24 17:12:11,573 - INFO     ->  16 -  37 -  .   - ['16091A513050200000UW'], 122.83
+2024-08-24 17:12:11,573 - INFO     ->  16 -  38 -  .   - ['16091A503052750000US'], 122.83
+2024-08-24 17:12:11,573 - INFO     ->  16 -  39 -  .   - ['16091A513050220000UB'], 122.83
+2024-08-24 17:12:11,573 - INFO     ->  16 -  40 -  .   - ['16215A504000630000UT'], 970.32
+2024-08-24 17:12:30,366 - INFO     ->  16 -  1  -  1   - Successfully downloaded PDF and KML of the land '16123A501000250000GW' with coordinates '39°55'11.4"N 1°21'03.7"W' and data: {'localizacion': 'Polígono 501 Parcela 25\nEL SATEADO. LANDETE (CUENCA)', 'clase': 'Rústico', 'uso': 'Agrario', 'cultivo': 'C- Labor o Labradío secano'}.
+2024-08-24 17:12:49,533 - WARNING  ->  16 -  1  -  1   - The land '16123A501000250000GW' is 'Rústico' but doesn't has a report.
+2024-08-24 17:12:49,533 - INFO     ->  16 -  1  -  1   - The land '16123A501000250000GW' has the next value 967.55. 
+2024-08-24 17:13:09,832 - INFO     ->  16 -  1  -  1   - Land '16123A501000250000GW' is in 'CUENCA' province. More precisely is on 'LANDETE' locality with C.P. 16330
+2024-08-24 17:13:12,489 - INFO     ->  16 -  1  -  1   - Population info about land '16123A501000250000GW' has been extracted successfully: Now -> 1230 /// Five years ago -> 1216
+2024-08-24 17:13:17,729 - INFO     ->  16 -  1  -  1   - Number of transactions of 'Fincas Rusticas' where land '16123A501000250000GW' is located: Now -> 3715 /// Seven years ago -> 3339
+2024-08-24 17:13:48,147 - INFO     ->  16 -  1  -  1   - Enterprises near land '16123A501000250000GW' located on C.P. 16330 have been extracted successfully: ['INDUSTRIA DE DISEÑO TEXTIL SA', 'STELLANTIS ESPAÑA SOCIEDAD LIMITADA.', 'ENDESA GENERACION SA', 'RENAULT ESPAÑA SA', 'MICHELIN ESPAÑA PORTUGAL SA', 'AIR EUROPA LINEAS AEREAS SA', 'ZARA ESPAÑA SA', 'BIDA FARMA S.COOP.AND.', 'ATLANTIC COPPER, S.L.U.', 'GRUPO BIDAFARMA S.COOP. ANDALUZA DE SEGUNDO GRADO', 'ELECTRAWORKS (CEUTA), SA.', 'DISA SUMINISTROS Y TRADING SL', 'ACERINOX EUROPA SAU', 'CUNEXT COPPER INDUSTRIES SL', 'UNION ELECTRICA DE CANARIAS GENERACION SA', 'PENINSULA PETROLEUM SL', 'EL POZO ALIMENTACION SA', 'ESPRINET IBERICA SLU', 'FASHION LOGISTICS FORWARDERS SA', 'METALURGICA GALAICA SA', 'BSH ELECTRODOMESTICOS ESPAÑA SA', 'BERSHKA BSK ESPAÑA SA', 'SOCIEDAD ANONIMA INDUSTRIAS CELULOSA ARAGONESA', 'TEMPE SA', 'PONTEGADEA INVERSIONES SL']
+2024-08-24 17:15:11,096 - INFO     ->  16 -  1  -  2   - Enterprises near land '15083G512013510000TH' located on C.P. 16330 have been extracted successfully: ['SANCHEZ SORIANO REQUENARIO SOCIEDAD LIMITADA.', 'MANCHA EXPANSION SOCIEDAD LIMITADA.', 'DISTRIBUCIONES Y TRANSPORTE HUERTA JIMENEZ SL', 'VALERO-CARRIZO SLL.', 'AUTOSERVICIO EL MATA S.L.', 'FREDERIC DESMOTTES SOCIEDAD LIMITADA.', 'HERNANDEZ VIADEL S.L.', 'FRAJAUTO SL', 'JEFALUMEJO SL', 'SANEAMIENTOS FONTANERIA Y CALEFACCION SALVADOR MARTINEZ SL', 'BUSELILANDT SLL.', 'CONSTRULAN URBANA SL', 'MALAVIA HERNANDEZ Y OVIEDO SLL']
+2024-08-24 17:15:48,561 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-08-24 17:15:49,371 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-08-24 17:15:50,401 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-08-24 17:15:50,812 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-08-24 17:15:51,073 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-08-24 17:15:51,327 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-08-24 17:15:51,581 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-08-24 17:15:51,829 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-08-24 17:15:52,096 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-08-24 17:15:52,374 - INFO     ->  10 -  .  -  .   - No auctions available
+2024-08-24 17:15:52,649 - INFO     ->  11 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/Parte-de-casa-Medina-Sidonia-y-piso-en-Jerez-de-la-Frontera.aspx
+2024-08-24 17:15:54,037 - INFO     ->  11 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/Pliego%20de%20condiciones.pdf.xsig.pdf
+2024-08-24 17:15:55,251 - WARNING  ->  11 -  1  -  .   - Failed to process the lote 1
+2024-08-24 17:15:55,252 - WARNING  ->  11 -  2  -  .   - Failed to process the lote 2
+2024-08-24 17:15:55,514 - INFO     ->  12 -  .  -  .   - No auctions available
+2024-08-24 17:15:55,761 - INFO     ->  13 -  .  -  .   - No auctions available
+2024-08-24 17:15:56,012 - INFO     ->  14 -  .  -  .   - No auctions available
+2024-08-24 17:15:56,284 - INFO     ->  15 -  .  -  .   - No auctions available
+2024-08-24 17:15:56,558 - INFO     ->  16 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CUENCA-Subasta-publica.aspx
+2024-08-24 17:15:58,377 - INFO     ->  16 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH_CUENCA/Pliego%20de%20condiciones.pdf
+2024-08-24 17:16:00,018 - INFO     ->  16 -  1  -  .   - ['16123A501000250000GW'], 1275.0
+2024-08-24 17:16:00,018 - INFO     ->  16 -  2  -  .   - ['16123A511001620000GF'], 1315.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  3  -  .   - ['16123A511000310000GL'], 530.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  4  -  .   - ['16256A510000560000IF'], 2500.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  5  -  .   - ['16256A510000680000IE'], 490.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  6  -  .   - ['16256A513000510000IF'], 1050.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  7  -  .   - ['16256A513000520000IM'], 300.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  8  -  .   - ['16256A515000990000IM'], 1500.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  9  -  .   - ['16256A516000450000IO'], 1150.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  10 -  .   - ['16256A525000400000II'], 875.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  11 -  .   - ['16256A528000070000IW'], 1500.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  12 -  .   - ['16233A507000260000OO'], 7500.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  13 -  .   - ['16233A507000300000OK'], 300.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  14 -  .   - ['16256A511000300000IP'], 7650.0
+2024-08-24 17:16:00,019 - INFO     ->  16 -  15 -  .   - ['16256A512000650000IY'], 2337.5
+2024-08-24 17:16:00,019 - INFO     ->  16 -  16 -  .   - ['16256A516000490000IX'], 1657.5
+2024-08-24 17:16:00,019 - INFO     ->  16 -  17 -  .   - ['16256A521000660000ID'], 1402.5
+2024-08-24 17:16:00,019 - INFO     ->  16 -  18 -  .   - ['16123A509001370000GM'], 569.5
+2024-08-24 17:16:00,019 - WARNING  ->  16 -  19 -  .   - Failed to process the lote 19
+2024-08-24 17:16:00,019 - WARNING  ->  16 -  20 -  .   - Failed to process the lote 20
+2024-08-24 17:16:00,019 - INFO     ->  16 -  21 -  .   - ['16123A524000410000GW'], 650.25
+2024-08-24 17:16:00,019 - INFO     ->  16 -  22 -  .   - ['16123A520001480000GO'], 469.63
+2024-08-24 17:16:00,019 - INFO     ->  16 -  23 -  .   - ['16123A508001510000GA', '16123A511010180000GU', '16098A021001230000DF'], 912.52
+2024-08-24 17:16:00,019 - INFO     ->  16 -  24 -  .   - ['16091A507000790000UY'], 276.36
+2024-08-24 17:16:00,019 - INFO     ->  16 -  25 -  .   - ['16091A508050520000UK'], 122.83
+2024-08-24 17:16:00,019 - INFO     ->  16 -  26 -  .   - ['16091A508050720000UY'], 147.39
+2024-08-24 17:16:00,019 - INFO     ->  16 -  27 -  .   - ['16091A504000670000UK'], 122.83
+2024-08-24 17:16:00,019 - INFO     ->  16 -  28 -  .   - ['16091A506000330000UU'], 122.83
+2024-08-24 17:16:00,019 - INFO     ->  16 -  29 -  .   - ['16215A501001920000UY'], 331.63
+2024-08-24 17:16:00,019 - INFO     ->  16 -  30 -  .   - ['16215A505000040000UL'], 583.42
+2024-08-24 17:16:00,019 - INFO     ->  16 -  31 -  .   - ['16215A506000250000UI'], 110.54
+2024-08-24 17:16:00,019 - INFO     ->  16 -  32 -  .   - ['16215A510000370000US'], 3141.62
+2024-08-24 17:16:00,019 - INFO     ->  16 -  33 -  .   - ['16215A510000270000UK'], 6843.37
+2024-08-24 17:16:00,019 - INFO     ->  16 -  34 -  .   - ['16215A513000190000UK'], 3559.9
+2024-08-24 17:16:00,019 - INFO     ->  16 -  35 -  .   - ['16215A514000230000UL'], 5402.61
+2024-08-24 17:16:00,019 - INFO     ->  16 -  36 -  .   - ['16067A005000010000JG'], 429.89
+2024-08-24 17:16:00,019 - INFO     ->  16 -  37 -  .   - ['16091A513050200000UW'], 122.83
+2024-08-24 17:16:00,019 - INFO     ->  16 -  38 -  .   - ['16091A503052750000US'], 122.83
+2024-08-24 17:16:00,019 - INFO     ->  16 -  39 -  .   - ['16091A513050220000UB'], 122.83
+2024-08-24 17:16:00,019 - INFO     ->  16 -  40 -  .   - ['16215A504000630000UT'], 970.32
+2024-08-24 17:16:19,060 - INFO     ->  16 -  1  -  1   - Successfully downloaded PDF and KML of the land '16123A501000250000GW' with coordinates '39°55'11.4"N 1°21'03.7"W' and data: {'localizacion': 'Polígono 501 Parcela 25\nEL SATEADO. LANDETE (CUENCA)', 'clase': 'Rústico', 'uso': 'Agrario', 'cultivo': 'C- Labor o Labradío secano'}.
+2024-08-24 17:16:38,328 - WARNING  ->  16 -  1  -  1   - The land '16123A501000250000GW' is 'Rústico' but doesn't has a report.
+2024-08-24 17:16:38,329 - INFO     ->  16 -  1  -  1   - The land '16123A501000250000GW' has the next value 967.55. 
+2024-08-24 17:16:58,271 - INFO     ->  16 -  1  -  1   - Land '16123A501000250000GW' is in 'CUENCA' province. More precisely is on 'LANDETE' locality with C.P. 16330
+2024-08-24 17:17:00,997 - INFO     ->  16 -  1  -  1   - Population info about land '16123A501000250000GW' has been extracted successfully: Now -> 1230 /// Five years ago -> 1216
+2024-08-24 17:17:06,594 - INFO     ->  16 -  1  -  1   - Number of transactions of 'Fincas Rusticas' where land '16123A501000250000GW' is located: Now -> 3715 /// Seven years ago -> 3339
+2024-08-24 17:17:31,806 - INFO     ->  16 -  1  -  1   - Enterprises near land '16123A501000250000GW' located on C.P. 16330 have been extracted successfully: ['SANCHEZ SORIANO REQUENARIO SOCIEDAD LIMITADA.', 'MANCHA EXPANSION SOCIEDAD LIMITADA.', 'DISTRIBUCIONES Y TRANSPORTE HUERTA JIMENEZ SL', 'VALERO-CARRIZO SLL.', 'AUTOSERVICIO EL MATA S.L.', 'FREDERIC DESMOTTES SOCIEDAD LIMITADA.', 'HERNANDEZ VIADEL S.L.', 'FRAJAUTO SL', 'JEFALUMEJO SL', 'SANEAMIENTOS FONTANERIA Y CALEFACCION SALVADOR MARTINEZ SL', 'BUSELILANDT SLL.', 'CONSTRULAN URBANA SL', 'MALAVIA HERNANDEZ Y OVIEDO SLL']
