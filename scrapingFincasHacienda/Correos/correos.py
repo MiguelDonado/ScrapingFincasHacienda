@@ -52,6 +52,23 @@ class Correos(webdriver.Chrome):
             self.quit()
             time.sleep(1)
 
+    #
+    #
+    #
+    #
+    #
+    #
+    #
+    ################################### PRIVATE METHODS ############################################
+    #
+    #
+    #
+    #
+    #
+    #
+    #
+
+    # Lands on a Correos webpage
     def __land_first_page(self):
         self.get(const.BASE_URL_CORREOS)
 
@@ -61,6 +78,7 @@ class Correos(webdriver.Chrome):
         )
         reject_cookies_btn.click()
 
+    # Let the instance on the webpage that shows data about the direction
     def __search(self):
         try:
             self.__close_cookies()
@@ -74,6 +92,7 @@ class Correos(webdriver.Chrome):
         submit_btn = self.find_element(By.XPATH, "//button[@aria-label='BUSCAR']")
         submit_btn.click()
 
+    # Scrape the webpage that shows info about direction.
     def __get_info_about_search(self):
         cp, province, locality = self.find_elements(
             By.XPATH,

@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 config = dotenv_values()
 
 # Get the current date
-current_date = datetime.datetime.now()
+current_date = datetime.datetime.now() - datetime.timedelta(days=1)
 
 # Format the date as dd/mm/yyyy
 formatted_date = current_date.strftime("%d/%m/%Y")
@@ -59,15 +59,12 @@ class CatastroReport(webdriver.Chrome):
             self.__insert_dni()
             self.__select_date_and_property()
             reference_value = self.__get_reference_value()
+            report = self.__get_reference_value_report()
 
-            if self.clase == "Rústico":
-                report = self.__get_reference_value_report()
-                if report:
-                    data_report = self.__process_report(report)
-                else:
-                    data_report = None
-            else:  # No report PDF will be downloaded
+            if not report:
                 data_report = None
+            else:
+                data_report = self.__process_report(report)
 
             # Log
             dynamic_msg = (
@@ -175,6 +172,8 @@ class CatastroReport(webdriver.Chrome):
     # Download and return the name of the PDF report only if the land is "Rústico" because
     # on the rest of cases the PDF report is different and dont have relevant data.
     def __get_reference_value_report(self):
+        if not self.clase == "Rústico":
+            return None
         try:
             report_button = self.find_element(
                 By.XPATH, "//input[@id='ctl00_Contenido_Button2']"

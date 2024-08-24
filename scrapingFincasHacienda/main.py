@@ -62,11 +62,12 @@ def main():
             for i_land, land in enumerate(data_lote["refs"], 1):
 
                 # LAND VARIABLES THAT CONTAINS RELEVANT DATA:
-                # (mandatory) | data_land = {"localizacion","clase", "uso", "cultivo_aprovechamiento"}
-                # (mandatory) | coordinates_land = string
-                # (optional) | value_land = float
-                # (optional) | report_data_land = {"ath","denominacion_ath","agrupacion_cultivo","agrupacion_municipio","number_buildings","slope","fls"}
-                # (optional) | info_correos = {"cp", "province", "locality"}
+                # (mandatory for next steps) | data_land = {"localizacion","clase", "uso", "cultivo_aprovechamiento"}
+                # (mandatory for next steps) | coordinates_land = string
+                # (optional for next steps) | value_land = float
+                # (optional for next steps) | report_data_land = {"ath","denominacion_ath","agrupacion_cultivo","agrupacion_municipio","number_buildings","slope","fls"}
+                # (mandatory for next steps) | data_correos = {"cp", "province", "locality"}
+                # (optional for next steps) | data_ine_population = {"population_now","population_before","porcentual_variation"}
 
                 # 5.1) CATASTRO CLASS
                 try:
@@ -89,53 +90,34 @@ def main():
                 correos = Correos(
                     delegation, i_lote, i_land, land, data_land["localizacion"]
                 )
-                info_correos = correos.get_data()
+                data_correos = correos.get_data()
 
                 # If direction couldn't be extracted using correos webpage.
-                if not info_correos["cp"]:
+                if not data_correos["cp"]:
                     continue
 
+                # 5.4) INE_POPULATION CLASS
+                ine_population = InePopulation(
+                    delegation,
+                    i_lote,
+                    i_land,
+                    land,
+                    data_land["localizacion"],
+                    data_correos["locality"],
+                )
+                data_ine_population = ine_population.get_data()
+
+                # 5.5) INE_NUMBER_TRANSMISIONES CLASS
+                if data_land["clase"] == "Rústico":
+                    ine_transmisiones = IneNumTransmisionesFincasRusticas(
+                        delegation, i_lote, i_land, land, data_correos["cp"]
+                    )
+                    data_ine_transmisiones = ine_transmisiones.get_data()
                 break
             break
 
 
 '''
-                    #   5.4) Scrape data from INE (using InePopulation class)
-                try:
-                    ine_population_land = InePopulation(
-                        catastro_data["localizacion"], correos_data["locality"]
-                    )
-                    ine_population_land.land_first_page()
-                    ine_population_land.search_population()
-                    #       5.4.1) The variable ine_population_data will hold data scraped from the Ine web:
-                    #           {population_now, population_before, porcentual_variation}
-                    ine_population_data = ine_population_land.get_population()
-                    logging.info(f"{msg_header} {ine_population_data}")
-                except Exception as e:
-                    error_msg = "Failed to scrape data 'population_now, population_before, variation' using InePopulation class"
-                    logging.error(f"{msg_header} {error_msg} {e}")
-
-                    #   5.5) Scrape data from INE (using IneNumTransmisionesFincasRusticas)
-                    #   This scraping'll be done only if the finca is 'rustica'
-                if catastro_data["clase"] == "Rústica":
-                    cp_first_two_digits = correos_data["cp"][0:2]
-                    try:
-                        ine_num_transm = IneNumTransmisionesFincasRusticas(
-                            cp_first_two_digits
-                        )
-                        ine_num_transm.land_first_page()
-                        ine_num_transm.close_cookies()
-                        ine_num_transm.choose_province()
-                        ine_num_transm.choose_transaction_type()
-                        ine_num_transm.choose_year()
-                        ine_num_transm_data = ine_num_transm.get_results()
-                        logging.info(f"{msg_header} {ine_num_transm_data}")
-                    except:
-                        error_msg = "Failed to scrape data 'transactions_now, transactions_before, variation' using IneNumTransmisionesFincasRusticas class"
-                        logging.error(f"{msg_header} {error_msg} {e}")
-                else:
-                    info_msg = f"Because it has the class '{catastro_data['clase']}', no scraping has been performed using IneNumTransmisionesFincasRusticas class"
-                    logging.info(f"{msg_header} {info_msg}")
     auctions = get_all_auctions_urls()
     auctions_pliegos_urlpdf = [get_url_pliego_pdf(auction) for auction in auctions]
     # The relevant info extracted from the pliego is (ref_catastral, price)
