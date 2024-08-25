@@ -18,6 +18,9 @@ from INE.ine_num_transmisiones_fincas_rusticas import IneNumTransmisionesFincasR
 # SABI
 from Sabi.sabi import Sabi
 
+# GOOGLE MAPS
+from GoogleMaps.GoogleMaps import GoogleMaps
+
 # from scrapingFincasHacienda.Hacienda.to_rename import get_url_pliego_pdf
 # from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info"""
 
@@ -72,6 +75,7 @@ def main():
                 # (mandatory for next steps) | data_correos = {"cp", "province", "locality"}
                 # (optional for next steps) | data_ine_population = {"population_now","population_before","porcentual_variation"}
                 # (optional for next steps) | data_ine_transmisiones = {"transactions_now","transactions_before","variation"}
+                # (optional for next steps) | data_two_directions = {"car": {"distance","time"}, "foot": {"distance","time"}}
 
                 # 5.1) CATASTRO CLASS
                 try:
@@ -82,7 +86,11 @@ def main():
                 except Exception:
                     continue
 
-                # 5.2) CATASTRO_REPORT CLASS
+                # 5.2) GOOGLE_MAPS CLASS
+                one_direction = GoogleMaps(delegation, i_lote, i_land, land, coordinates_land)
+                one_direction.get_data_one_direction()  # Just takes a screenshot, doesn't return anything
+
+                # 5.3) CATASTRO_REPORT CLASS
                 report = CatastroReport(
                     delegation, i_lote, i_land, land, data_land["clase"]
                 )
@@ -90,7 +98,7 @@ def main():
                 value_land = info_report["value"]
                 report_data_land = info_report["data"]
 
-                # 5.3) CORREOS_CLASS
+                # 5.4) CORREOS_CLASS
                 correos = Correos(
                     delegation, i_lote, i_land, land, data_land["localizacion"]
                 )
@@ -100,7 +108,7 @@ def main():
                 if not data_correos["cp"]:
                     continue
 
-                # 5.4) INE_POPULATION CLASS
+                # 5.5) INE_POPULATION CLASS
                 ine_population = InePopulation(
                     delegation,
                     i_lote,
@@ -111,18 +119,36 @@ def main():
                 )
                 data_ine_population = ine_population.get_data()
 
-                # 5.5) INE_NUMBER_TRANSMISIONES CLASS
+                # 5.6) INE_NUMBER_TRANSMISIONES CLASS
                 if data_land["clase"] == "Rústico":
                     ine_transmisiones = IneNumTransmisionesFincasRusticas(
                         delegation, i_lote, i_land, land, data_correos["cp"]
                     )
                     data_ine_transmisiones = ine_transmisiones.get_data()
 
-                # 5.6) SABI CLASS
+                # 5.7) SABI CLASS
                 sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
-                # The method below returns a dataframe
-                # 'Nombre', "Calle", "Código postal"
+                # The method below returns a dataframe with 61 columns.
+                # Some of the columns are 'Nombre', "Calle", "Código postal", "Localidad"
                 data_sabi = sabi.get_data()
+
+                # 5.8) GOOGLE MAPS CLASS
+                for _, enterprise in data_sabi.iterrows():
+                    enterprise_direction = f"{enterprise['Calle']}. {enterprise["Código postal"]} {enterprise["Localidad"]}"
+                    two_directions = GoogleMaps(
+                        delegation,
+                        i_lote,
+                        i_land,
+                        land,
+                        coordinates_land,   # 'to'
+                        enterprise_direction, # 'from'
+                        enterprise['Nombre'] # 'enterprise'
+                    )
+                    # Variable that holds a dictionary with 2 keys, each one holds another dictionary with 2 keys.
+                    # {"car": {"distance","time"}, "foot": {"distance","time"}}
+                    data_two_directions = two_directions.get_data_two_directions()
+                    break
+                # SCREENSHOT
                 break
             break
 
