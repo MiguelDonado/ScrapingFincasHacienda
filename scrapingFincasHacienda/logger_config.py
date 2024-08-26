@@ -35,9 +35,15 @@ logger.addHandler(error_handler)
 logger.addHandler(stream_handler)
 
 
-# Build an id to know which delegation, lote and finca is being processed.
-def build_id(delegation: int, lote: int = ".", finca: int = "."):
+# Build an id to know which delegation, lote and land is being processed.
+def build_id(delegation: int, lote: int = ".", land: int = "."):
+
+    # Validate the data types of our arguments
+    assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+    assert lote > 0, f"Lote {lote} is not greater than zero!"
+    assert land > 0, f"Land {land} is not greater than zero!"
+
     s_delegation = str(delegation)
     s_lote = str(lote)
-    s_finca = str(finca)
-    return f"{s_delegation:^4}- {s_lote:^4}- {s_finca:^4} - "
+    s_land = str(land)
+    return f"{s_delegation:^4}- {s_lote:^4}- {s_land:^4} - "

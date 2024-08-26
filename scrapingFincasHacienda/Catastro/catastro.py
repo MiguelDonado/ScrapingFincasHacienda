@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 import logging
+from typing import Union
 
 import Catastro.constants as const
 import logger_config
@@ -16,7 +17,20 @@ logger = logging.getLogger(__name__)
 
 
 class Catastro(webdriver.Chrome):
-    def __init__(self, delegation, lote, land, ref):  # ref -> referencia catastral
+
+    # Class attribute to store all instances
+    all = []
+
+    def __init__(
+        self, delegation: int, lote: int, land: int, ref: str
+    ):  # ref -> referencia catastral
+
+        # Validate the data types of our arguments
+        assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+        assert lote > 0, f"Lote {lote} is not greater than zero!"
+        assert land > 0, f"Land {land} is not greater than zero!"
+        assert isinstance(ref, str), f"Ref {ref} must be a string!"
+
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -37,6 +51,21 @@ class Catastro(webdriver.Chrome):
         self.land = land
         self.ref = ref
 
+        # Append new instance to the class attribute list
+        Catastro.all.append(self)
+
+    def __repr__(self):
+        return f"Catastro({self.delegation}, {self.lote}, {self.land}, '{self.ref}')"
+
+    def __str__(self):
+        return (
+            f"Catastro Object:\n"
+            f"  Delegation: {self.delegation}\n"
+            f"  Lote: {self.lote}\n"
+            f"  Land: {self.land}\n"
+            f"  Ref: {self.ref}"
+        )
+
     # Returns a dictionary with 2 keys
     #    1) Data (again, a dictionary with 4 keys)
     #       1.1) localizacion
@@ -44,7 +73,7 @@ class Catastro(webdriver.Chrome):
     #       1.3) uso
     #       1.4) cultivo_aprovechamiento
     #    2) Coordinates
-    def get_data(self):
+    def get_data(self) -> dict[str, Union[dict[str, dict[str, str]], str]]:
         try:
             self.__land_first_page()
             self.__search()
@@ -89,11 +118,11 @@ class Catastro(webdriver.Chrome):
     #
 
     # Lands on the main Catastro webpage
-    def __land_first_page(self):
+    def __land_first_page(self) -> None:
         self.get(const.BASE_URL_SEARCH_CATASTRO)
 
     # Let the instance on the webpage that shows data about the ref.
-    def __search(self):
+    def __search(self) -> None:
         self.__close_cookies()
         input_search = self.find_element(
             By.XPATH, "//input[@id='ctl00_Contenido_txtRC2']"
@@ -107,7 +136,7 @@ class Catastro(webdriver.Chrome):
 
     # Given the webpage that shows data about the ref, it scrapes some info
     # It returns a dictionary with four keys.
-    def __scrape(self):
+    def __scrape(self) -> dict[str, str]:
         localizacion = self.find_element(
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Localización']/following-sibling::div//label",
@@ -136,7 +165,7 @@ class Catastro(webdriver.Chrome):
 
     # Given the webpage that shows data about the ref, it downloads the ortofoto of the land
     # and it goes back to the provided webpage
-    def __download_ortofoto(self):
+    def __download_ortofoto(self) -> None:
         cartografia_collapse = self.find_element(
             By.XPATH, "//a[span[@id='ctl00_Contenido_lblCartografia']]"
         )
@@ -177,7 +206,7 @@ class Catastro(webdriver.Chrome):
 
     # Given the webpage that shows data about the ref, it downloads the kml of the land
     # and it goes back to the provided webpage
-    def __download_kml(self):
+    def __download_kml(self) -> None:
         self.__go_to_otros_visores()
         self.__change_to_new_window_tab()
         google_earth_kml = self.find_element(
@@ -194,7 +223,7 @@ class Catastro(webdriver.Chrome):
 
     # Get coordinates from the land, to pass them as an argument
     # to the constructor when creating a GoogleMaps object
-    def __get_coordenates_google_maps(self):
+    def __get_coordenates_google_maps(self) -> str:
         self.__go_to_otros_visores()
         self.__change_to_new_window_tab()
         google_maps_input = self.find_element(
@@ -210,7 +239,7 @@ class Catastro(webdriver.Chrome):
         return coordinates_element.get_attribute("value")
 
     # It closes the actual window, and changes focus to the remaining one
-    def __close_current_window(self):
+    def __close_current_window(self) -> None:
         # Close the current window
         self.close()
 
@@ -224,7 +253,7 @@ class Catastro(webdriver.Chrome):
     # Given the webpage that shows data about the ref, it goes to a webpage that have multiple visores.
     # Used by another methods.
     # Constitutes the building blocks for a lot of other methods.
-    def __go_to_otros_visores(self):
+    def __go_to_otros_visores(self) -> None:
         cartografia_collapse = self.find_element(
             By.XPATH, "//a[span[@id='ctl00_Contenido_lblCartografia']]"
         )
@@ -235,7 +264,7 @@ class Catastro(webdriver.Chrome):
         otros_visores_anchor.click()
 
     # Called indirectly by another method
-    def __close_cookies(self):
+    def __close_cookies(self) -> None:
         # This is an HTML <iframe> element.
         # It is used to embed another HTML document within the current one
 
@@ -260,7 +289,7 @@ class Catastro(webdriver.Chrome):
         button_cookie_iframe.click()
 
     # Called indirectly by another method
-    def __close_cookies_google(self):
+    def __close_cookies_google(self) -> None:
         cookies_btn = self.find_element(
             By.XPATH, "//button[@aria-label='Aceptar todo']"
         )
@@ -268,7 +297,7 @@ class Catastro(webdriver.Chrome):
 
     # First, waits till a new window tab is opened.
     # Second, changes to the new window.
-    def __change_to_new_window_tab(self):
+    def __change_to_new_window_tab(self) -> None:
         # Wait for a new window or tab
         WebDriverWait(self, 10).until(lambda d: len(d.window_handles) > 1)
         # Switch to the new window
@@ -282,7 +311,12 @@ class Catastro(webdriver.Chrome):
     # Change the name of the most recent file that is on the destination directory
     # And puts as the name the ref_catastral.
     @staticmethod
-    def __rename_file(ref, ext):
+    def __rename_file(ref: str, ext: str) -> None:
+
+        # Validate the data types of our arguments
+        assert isinstance(ref, str), f"Ref {ref} must be a string!"
+        assert isinstance(ext, str), f"Ext {ext} must be a string!"
+
         # Get the most recent file from the destination directory
         most_recent_file = max(
             [

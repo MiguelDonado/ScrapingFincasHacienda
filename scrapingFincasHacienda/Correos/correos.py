@@ -13,7 +13,19 @@ logger = logging.getLogger(__name__)
 
 
 class Correos(webdriver.Chrome):
-    def __init__(self, delegation, lote, land, ref, direction):
+
+    # Class attribute to store all instances
+    all = []
+
+    def __init__(self, delegation: int, lote: int, land: int, ref: str, direction: str):
+
+        # Validate the data types of our arguments
+        assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+        assert lote > 0, f"Lote {lote} is not greater than zero!"
+        assert land > 0, f"Land {land} is not greater than zero!"
+        assert isinstance(ref, str), f"Ref {ref} must be a string!"
+        assert isinstance(direction, str), f"Direction {direction} must be a string!"
+
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -26,7 +38,23 @@ class Correos(webdriver.Chrome):
         self.ref = ref
         self.direction = direction
 
-    def get_data(self):
+        # Append new instance to the class attribute list
+        Correos.all.append(self)
+
+    def __repr__(self):
+        return f"Correos({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.direction}')"
+
+    def __str__(self):
+        return (
+            f"Correos Object:\n"
+            f"  Delegation: {self.delegation}\n"
+            f"  Lote: {self.lote}\n"
+            f"  Land: {self.land}\n"
+            f"  Ref: {self.ref}\n"
+            f"  Direction: {self.direction}"
+        )
+
+    def get_data(self) -> dict[str, str]:
         try:
             self.__land_first_page()
             self.__close_cookies()
@@ -69,17 +97,17 @@ class Correos(webdriver.Chrome):
     #
 
     # Lands on a Correos webpage
-    def __land_first_page(self):
+    def __land_first_page(self) -> None:
         self.get(const.BASE_URL_CORREOS)
 
-    def __close_cookies(self):
+    def __close_cookies(self) -> None:
         reject_cookies_btn = self.find_element(
             By.XPATH, "//button[@aria-label='Rechazar todas las cookies']"
         )
         reject_cookies_btn.click()
 
     # Let the instance on the webpage that shows data about the direction
-    def __search(self):
+    def __search(self) -> None:
         try:
             self.__close_cookies()
         except Exception:
@@ -93,7 +121,7 @@ class Correos(webdriver.Chrome):
         submit_btn.click()
 
     # Scrape the webpage that shows info about direction.
-    def __get_info_about_search(self):
+    def __get_info_about_search(self) -> dict[str, str]:
         cp, province, locality = self.find_elements(
             By.XPATH,
             "//div[@slot='container-scroll']/div[contains(@class,'ui-list-result')][1]/following-sibling::div[1]//dd",

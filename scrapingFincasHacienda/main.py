@@ -21,12 +21,6 @@ from Sabi.sabi import Sabi
 # GOOGLE MAPS
 from GoogleMaps.GoogleMaps import GoogleMaps
 
-# from scrapingFincasHacienda.Hacienda.to_rename import get_url_pliego_pdf
-# from scrapingFincasHacienda.Hacienda.hacienda_pliegopdf import get_pliego_info"""
-
-import logging
-
-
 def main():
     for delegation in const.DELEGATIONS:
 
@@ -148,7 +142,6 @@ def main():
                     # {"car": {"distance","time"}, "foot": {"distance","time"}}
                     data_two_directions = two_directions.get_data_two_directions()
                     break
-                # SCREENSHOT
                 break
             break
 

@@ -11,6 +11,7 @@ import os
 import time
 from dotenv import dotenv_values
 import pdfplumber
+from typing import Union
 
 import logging
 import logger_config
@@ -28,7 +29,19 @@ formatted_date = current_date.strftime("%d/%m/%Y")
 
 
 class CatastroReport(webdriver.Chrome):
-    def __init__(self, delegation, lote, land, referencia_catastral, clase):
+
+    # Class attribute to store all instances
+    all = []
+
+    def __init__(self, delegation: int, lote: int, land: int, ref: str, clase: str):
+
+        # Validate the data types of our arguments
+        assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+        assert lote > 0, f"Lote {lote} is not greater than zero!"
+        assert land > 0, f"Land {land} is not greater than zero!"
+        assert isinstance(ref, str), f"Ref {ref} must be a string!"
+        assert isinstance(clase, str), f"Clase {clase} must be a string!"
+
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -47,11 +60,27 @@ class CatastroReport(webdriver.Chrome):
         self.delegation = delegation
         self.lote = lote
         self.land = land
-        self.ref = referencia_catastral
+        self.ref = ref
         self.clase = clase
 
+        # Append new instance to the class attributes list
+        CatastroReport.all.append(self)
+
+    def __repr__(self):
+        return f"CatastroReport({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.clase}')"
+
+    def __str__(self):
+        return (
+            f"CatastroReport Object:\n"
+            f"  Delegation: {self.delegation}\n"
+            f"  Lote: {self.lote}\n"
+            f"  Land: {self.land}\n"
+            f"  Ref: {self.ref}\n"
+            f"  Clase: {self.clase}"
+        )
+
     # Scrape the reference value and download the 'Report PDF' if the land is 'Rústico'
-    def get_data(self):
+    def get_data(self) -> dict[str, Union[float, dict[str, str]]]:
         try:
             self.__land_first_page()
             self.__close_cookies()
@@ -106,7 +135,7 @@ class CatastroReport(webdriver.Chrome):
     #
 
     # Lands on the main Catastro Report webpage
-    def __land_first_page(self):
+    def __land_first_page(self) -> None:
         self.get("https://www1.sedecatastro.gob.es/Accesos/SECAccvr.aspx")
 
     def __close_cookies(self):
@@ -114,7 +143,7 @@ class CatastroReport(webdriver.Chrome):
         accept_cookies.click()
 
     # Navigate to the query value webpage
-    def __access_query_value_page(self):
+    def __access_query_value_page(self) -> None:
         button_collapse = self.find_element(By.XPATH, "//a[@data-toggle='collapse']")
         button_collapse.click()
         query_value_button = self.find_element(
@@ -123,7 +152,7 @@ class CatastroReport(webdriver.Chrome):
         query_value_button.click()
 
     # Given the query value webpage, introduce DNI on the form
-    def __insert_dni(self):
+    def __insert_dni(self) -> None:
         dni_input = self.find_element(By.XPATH, "//input[@id='ctl00_Contenido_nif']")
         dni_input.clear()
         dni_input.send_keys(config["MY_DNI"])
@@ -138,7 +167,7 @@ class CatastroReport(webdriver.Chrome):
         validate_button.click()
 
     # Given the query value webpage, introduce date on the form
-    def __select_date_and_property(self):
+    def __select_date_and_property(self) -> None:
         ref_catastral_input = self.find_element(
             By.XPATH, "//input[@id='ctl00_Contenido_txtRC2']"
         )
@@ -162,7 +191,7 @@ class CatastroReport(webdriver.Chrome):
         submit_button.click()
 
     # Given the final webpage, scrape the reference value
-    def __get_reference_value(self):
+    def __get_reference_value(self) -> float:
         value_label = self.find_element(
             By.XPATH,
             "//span[text()='Valor de Referencia']/following-sibling::div//label",
@@ -171,7 +200,7 @@ class CatastroReport(webdriver.Chrome):
 
     # Download and return the name of the PDF report only if the land is "Rústico" because
     # on the rest of cases the PDF report is different and dont have relevant data.
-    def __get_reference_value_report(self):
+    def __get_reference_value_report(self) -> str:
         if not self.clase == "Rústico":
             return None
         try:
@@ -209,7 +238,13 @@ class CatastroReport(webdriver.Chrome):
     # We use static methods when we want to do something that is not unique per instance,
     # but it should do something that has a relationship with the class
     @staticmethod
-    def __rename_pdf(ref_catastral):
+    def __rename_pdf(ref_catastral: str) -> str:
+
+        # Validate the data types of our arguments
+        assert isinstance(
+            ref_catastral, str
+        ), f"Ref_catastral {ref_catastral} must be a string!"
+
         # Get the most recent file from the pdf destination directory
         most_recent_file = max(
             [
@@ -224,7 +259,7 @@ class CatastroReport(webdriver.Chrome):
         return new_file_path
 
     @staticmethod
-    def __format_price(price):
+    def __format_price(price: str) -> float:
         if not "€" in price:
             return None
         return float(
@@ -233,7 +268,11 @@ class CatastroReport(webdriver.Chrome):
 
     # Given the price report pdf, it extracts relevant data
     @staticmethod
-    def __process_report(report):
+    def __process_report(report: str) -> dict[str, str]:
+
+        # Validate the data types of our arguments
+        assert isinstance(report, str), f"Report {report} must be a string!"
+
         # It'll return the text from the PDF file as one string
         with pdfplumber.open(report) as pdf:
             text_file = pdf.pages[0].extract_tables()

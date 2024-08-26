@@ -9,7 +9,9 @@ import pandas as pd
 import os
 import logging
 import time
+from typing import Union
 
+import Sabi.constants as const
 from dotenv import dotenv_values
 import logger_config
 
@@ -19,9 +21,18 @@ config = dotenv_values()
 
 
 class Sabi(webdriver.Chrome):
-    def __init__(self, delegation, lote, land, ref, cp: str):
 
-        assert isinstance(cp, str)
+    # Class attribute to store all instances
+    all = []
+
+    def __init__(self, delegation: int, lote: int, land: int, ref: str, cp: str):
+
+        # Validate the data types of our arguments
+        assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+        assert lote > 0, f"Lote {lote} is not greater than zero!"
+        assert land > 0, f"Land {land} is not greater than zero!"
+        assert isinstance(ref, str), f"Ref {ref} must be a string!"
+        assert isinstance(cp, str), f"C.P. {cp} must be a string!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -35,7 +46,23 @@ class Sabi(webdriver.Chrome):
         self.ref = ref
         self.cp = cp
 
-    def get_data(self):
+        # Append new instance to the class attribute list
+        Sabi.all.append(self)
+
+    def __repr__(self):
+        return f"Sabi({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}')"
+
+    def __str__(self):
+        return (
+            f"Sabi Object:\n"
+            f"  Delegation: {self.delegation}\n"
+            f"  Lote: {self.lote}\n"
+            f"  Land: {self.land}\n"
+            f"  Reference: {self.ref}\n"
+            f"  C.P.: {self.cp}"
+        )
+
+    def get_data(self) -> pd.DataFrame:
         try:
             self.__land_first_page()
             self.__login()
@@ -81,11 +108,11 @@ class Sabi(webdriver.Chrome):
     #
 
     # Lands on Sabi main webpage
-    def __land_first_page(self):
-        self.get("https://login.bvdinfo.com/R1/SabiInforma")
+    def __land_first_page(self) -> None:
+        self.get(const.BASE_URL)
 
     # Login in Sabi website
-    def __login(self):
+    def __login(self) -> None:
         user = self.find_element(By.XPATH, "//input[@id='user']")
         user.send_keys(config["MY_SABI_ACCOUNT"])
         password = self.find_element(By.XPATH, "//input[@id='pw']")
@@ -94,7 +121,7 @@ class Sabi(webdriver.Chrome):
         submit_btn.click()
 
     # On the main Sabi Menu (once login has been done) add the CP to the filters.
-    def __filter_cp(self):
+    def __filter_cp(self) -> None:
         alphabetical_list = self.find_element(
             By.XPATH, "//div[@class='alphabeticalIcon']/following-sibling::a"
         )
@@ -120,7 +147,7 @@ class Sabi(webdriver.Chrome):
         accept_btn.click()
 
     # On the main Sabi Menu (once login has been done) add the status to the filters.
-    def __filter_status(self):
+    def __filter_status(self) -> None:
         status_button = self.find_element(By.XPATH, "//span[text()='Estatus']")
         status_button.click()
 
@@ -137,7 +164,7 @@ class Sabi(webdriver.Chrome):
         accept_btn.click()
 
     # On the main Sabi Menu (once login has been done) add the last year of available CCAA to the filters.
-    def __filter_last_year_available_financial_statements(self):
+    def __filter_last_year_available_financial_statements(self) -> None:
         alphabetical_list = self.find_element(
             By.XPATH, "//div[@class='alphabeticalIcon']/following-sibling::a"
         )
@@ -170,7 +197,7 @@ class Sabi(webdriver.Chrome):
     # the results (the first 25 results).
     # Returns a dataframe. It returns 61 colums because it's using the
     # default model that are using in Audicon to analyze the competence
-    def __get_results(self):
+    def __get_results(self) -> pd.DataFrame:
         watch_results = self.find_element(By.XPATH, "//img[contains(@id, 'GoToList')]")
         watch_results.click()
         self.__add_street_and_cp_columns()
@@ -183,7 +210,7 @@ class Sabi(webdriver.Chrome):
         return df
 
     # Given the results page, adds two columns (calle, C.P.) to the results table
-    def __add_street_and_cp_columns(self):
+    def __add_street_and_cp_columns(self) -> None:
         columns_button = self.find_element(
             By.XPATH,
             "//a[@id='ContentContainer1_ctl00_Content_ListHeader_ListHeaderRightButtons_AddRemoveColumns']",
@@ -211,7 +238,7 @@ class Sabi(webdriver.Chrome):
         accept_btn.click()
 
     # On the results page, get the cabeceras of the table
-    def __get_results_cabeceras(self):
+    def __get_results_cabeceras(self) -> list[str]:
         row_cabeceras = self.find_element(
             By.XPATH,
             "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_VHDRTBL']/tbody/tr[last()]",
@@ -228,7 +255,7 @@ class Sabi(webdriver.Chrome):
     # The first table contains only the names of the enterprises
     # The table covers the first 25 results, if we'd wanted to extract more,
     # we'd have to interact with another elements to move to the next pages.
-    def __get_results_first_table(self):
+    def __get_results_first_table(self) -> list[str]:
         table_first_25_elements_first_part = self.find_element(
             By.XPATH,
             "//table[@id='ContentContainer1_ctl00_Content_ListCtrl1_LB1_FDTBL']/tbody",
@@ -244,7 +271,7 @@ class Sabi(webdriver.Chrome):
     # The second table contains all the data except the names
     # The table covers the first 25 results, if we'd wanted to extract more,
     # we'd have to interact with another elements to move to the next pages.
-    def __get_results_second_table(self):
+    def __get_results_second_table(self) -> list[list[Union[str, int]]]:
         data = []
         table_first_25_elements_second_part = self.find_element(
             By.XPATH,
@@ -262,7 +289,7 @@ class Sabi(webdriver.Chrome):
         return data
 
     # Log out from Sabi website
-    def __logout(self):
+    def __logout(self) -> None:
         logout_btn = self.find_element(By.XPATH, "//span[contains(@id,'logoutLabel')]")
         logout_btn.click()
 
@@ -276,7 +303,9 @@ class Sabi(webdriver.Chrome):
     # but it should do something that has a relationship with the class
     # I give this method three lists, and it returns me a dataframe.
     @staticmethod
-    def __sabi_results_to_df(headers, names, data):
+    def __sabi_results_to_df(
+        headers: list, names: list, data: list[list[Union[str, int]]]
+    ) -> pd.DataFrame:
         # Combine names and data into a single list of rows
         combined_data = [[name] + row for name, row in zip(names, data)]
 
@@ -285,5 +314,5 @@ class Sabi(webdriver.Chrome):
         return df
 
     @staticmethod
-    def __html_to_text(html):
+    def __html_to_text(html: str) -> str:
         return html.replace("<br>", " ").replace("\n", " ")

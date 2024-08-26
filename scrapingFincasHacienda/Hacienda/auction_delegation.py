@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 import logger_config
 import Hacienda.constants as const
+from typing import Union
 
 
 # A delegation could've more than one auction anchor:
@@ -28,7 +29,11 @@ import Hacienda.constants as const
 logger = logging.getLogger(__name__)
 
 
-def has_auction(delegation):
+def has_auction(delegation: int) -> Union[str, None]:
+
+    # Validate the data types of our arguments
+    assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+
     delegation_url = const.DELEGATION_URL.format(code=delegation)
     html_text = requests.get(delegation_url)
     soup = BeautifulSoup(html_text.text, "lxml")

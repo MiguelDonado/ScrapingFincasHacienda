@@ -13,7 +13,12 @@ from Hacienda.data_pdf import read_pdf
 logger = logging.getLogger(__name__)
 
 
-def get_pliego(href, delegation):
+def get_pliego(href: str, delegation: int) -> str:
+
+    # Validate the data types of our arguments
+    assert isinstance(href, str), f"Href {href} must be a string!"
+    assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+
     # Given the href of the auction, from all the anchor tags of the web page,
     # returns the href of the one that correspond to the Pliego PDF.
     html_text = requests.get(href)
@@ -47,7 +52,11 @@ def get_pliego(href, delegation):
     return url_pliego
 
 
-def has_ref_catastral(url_pdf):
+def has_ref_catastral(url_pdf: str):
+
+    # Validate the data types of our arguments
+    assert isinstance(url_pdf, str), f"Url_pdf {url_pdf} must be a string!"
+
     # Sometimes the Pliego PDF doesn't contain the list of properties, but just the announcement,
     # and so the list of properties is detailed on another anchor tag
     text_pdf = read_pdf(url_pdf)

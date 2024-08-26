@@ -26,6 +26,10 @@ logger = logging.getLogger(__name__)
 
 
 class GoogleMaps(webdriver.Chrome):
+
+    # Class attribute to store all instances
+    all = []
+
     def __init__(
         self,
         delegation: int,
@@ -36,6 +40,16 @@ class GoogleMaps(webdriver.Chrome):
         from_: str = None,
         enterprise: str = None,
     ):
+
+        # Validate the data types of our arguments
+        assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+        assert lote > 0, f"Lote {lote} is not greater than zero!"
+        assert land > 0, f"Land {land} is not greater than zero!"
+        assert isinstance(ref, str), f"Ref {ref} must be a string!"
+        assert isinstance(to, str), f"'To' {to} must be a string!"
+        assert isinstance(from_, str), f"'From' {from_} must be a string!"
+        assert isinstance(enterprise, str), f"Enterprise {enterprise} must be a string!"
+
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -56,8 +70,26 @@ class GoogleMaps(webdriver.Chrome):
         self.from_ = from_
         self.enterprise = enterprise
 
+        # Append new instance to the class attribute list
+        GoogleMaps.all.append(self)
+
+    def __repr__(self):
+        return f"GoogleMaps({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.to}', '{self.from_}', '{self.enterprise}')"
+
+    def __str__(self):
+        return (
+            f"GoogleMaps Object:\n"
+            f"  Delegation: {self.delegation}\n"
+            f"  Lote: {self.lote}\n"
+            f"  Land: {self.land}\n"
+            f"  Ref: {self.ref}\n"
+            f"  To: {self.to}\n"
+            f"  From: {self.from_}\n"
+            f"  Enterprise: {self.enterprise}"
+        )
+
     # Given a direction ('to'), it takes a screenshot of the land and the nearby interest points
-    def get_data_one_direction(self):
+    def get_data_one_direction(self) -> None:
         try:
             self.__land_first_page()
             self.__close_cookies()
@@ -91,7 +123,7 @@ class GoogleMaps(webdriver.Chrome):
     #       2.1) time_on_foot
     #       2.2) distance_on_foot
 
-    def get_data_two_directions(self):
+    def get_data_two_directions(self) -> dict[str, dict[str, str]]:
         try:
             self.__land_first_page()
             self.__close_cookies()
@@ -139,17 +171,17 @@ class GoogleMaps(webdriver.Chrome):
     #
 
     # Lands on Google Maps webpage
-    def __land_first_page(self):
+    def __land_first_page(self) -> None:
         self.get(const.BASE_URL)
 
-    def __close_cookies(self):
+    def __close_cookies(self) -> None:
         cookies_btn = self.find_element(
             By.XPATH, "//button[@aria-label='Aceptar todo']"
         )
         cookies_btn.click()
 
     # Given the initial Google Maps webpage, searches 'to' destination.
-    def __search_to(self):
+    def __search_to(self) -> None:
         to_input = self.find_element(
             By.XPATH, "//input[contains(@class,'searchboxinput')]"
         )
@@ -163,7 +195,7 @@ class GoogleMaps(webdriver.Chrome):
 
     # Can be used to take a screenshot about the land and the nearby interest points (only 'to')
     # Or can be used to take a screenshot about the distance between two points ('to' and 'from')
-    def __get_screenshot(self, zoom=True, enterprise=False):
+    def __get_screenshot(self, zoom=True, enterprise=False) -> None:
         hide_panel_btn = self.find_element(
             By.XPATH,
             "//button[@aria-label='Ocultar el panel lateral' and contains(@jsaction, 'drawer.close')]",
@@ -194,14 +226,14 @@ class GoogleMaps(webdriver.Chrome):
 
     # Let the instance on Google Maps webpage that shows the route
     # (it must be done after searching 'to' destination)
-    def __get_directions(self):
+    def __get_directions(self) -> None:
         how_to_get_btn = self.find_element(
             By.XPATH, "//button[@data-value='Cómo llegar']"
         )
         how_to_get_btn.click()
 
     # Given the Google Maps route webpage change the 'from' destination
-    def __search_from_(self):
+    def __search_from_(self) -> None:
         from__input = self.find_element(
             By.XPATH, "//input[contains(@aria-label,'unto de partida')]"
         )
@@ -214,7 +246,7 @@ class GoogleMaps(webdriver.Chrome):
     # Given the final route returns a dictionary with 2 keys:
     #   1) Time on car
     #   2) Distance on car
-    def __get_distance_time_on_car(self):
+    def __get_distance_time_on_car(self) -> dict[str, str]:
         on_car_btn = self.find_element(
             By.XPATH, "//button[.//img[@aria-label='En coche']]"
         )
@@ -236,7 +268,7 @@ class GoogleMaps(webdriver.Chrome):
     # Given the final route returns a dictionary with 2 keys:
     #   1) Time on foot
     #   2) Distance on foot
-    def __get_distance_time_on_foot(self):
+    def __get_distance_time_on_foot(self) -> dict[str, str]:
         on_foot_btn = self.find_element(By.XPATH, "//img[@aria-label='A pie']")
         on_foot_btn.click()
 

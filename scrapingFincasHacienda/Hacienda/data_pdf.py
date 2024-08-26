@@ -6,6 +6,7 @@ import regex
 import pdfplumber
 import io
 import logging
+from typing import Union
 
 import Hacienda.constants as const
 import logger_config
@@ -14,7 +15,12 @@ import logger_config
 logger = logging.getLogger(__name__)
 
 
-def get_lotes_data(url_pdf, delegation):
+def get_lotes_data(url_pdf: str, delegation: int) -> dict[str, Union[int, dict]]:
+
+    # Validate the data types of our arguments
+    assert isinstance(url_pdf, str), f"Url_pdf {url_pdf} must be a string!"
+    assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
+
     try:
         text = read_pdf(url_pdf)
         lotes = get_lotes(text)
@@ -82,7 +88,11 @@ def get_lotes_data(url_pdf, delegation):
 
 
 # Given a url of a PDF, it returns the text in one string
-def read_pdf(url_pdf):
+def read_pdf(url_pdf: str) -> str:
+
+    # Validate the data types of our arguments
+    assert isinstance(url_pdf, str), f"Url_pdf {url_pdf} must be a string!"
+
     response = requests.get(url_pdf)
     pdf_binary = response.content
     pdf_content = io.BytesIO(pdf_binary)
@@ -96,7 +106,11 @@ def read_pdf(url_pdf):
 #   1) Type of structure
 #   2) List:
 #       o Each element represents all the text of a lote
-def get_lotes(text):
+def get_lotes(text: str) -> dict[str, Union[str, list[str]]]:
+
+    # Validate the data types of our arguments
+    assert isinstance(text, str), f"Text {text} must be a string!"
+
     if regex.search(const.CHECKER_SECOND_STRUCTURE_PATTERN, text):
         structure = "paragraphs"
         lotes = regex.findall(const.SECOND_PARAGRAPHS_PATTERN, text)
@@ -113,7 +127,14 @@ def get_lotes(text):
 # It returns a dictionary with two keys.
 #   1) List of referencias catastrales
 #   2) Price
-def get_desired_information(structure, lote):
+def get_desired_information(
+    structure: str, lote: str
+) -> dict[str, Union[list[str], float]]:
+
+    # Validate the data types of our arguments
+    assert isinstance(structure, str), f"Structure {structure} must be a string!"
+    assert isinstance(lote, str), f"Lote {lote} must be a string!"
+
     try:
         refs = get_ref_catastral(lote)
         price = get_precio(structure, lote)
@@ -124,7 +145,11 @@ def get_desired_information(structure, lote):
 
 # Given a lote it extracts the referencias catastrales of the lands that integrate it.
 # It returns a list of refs.
-def get_ref_catastral(lote):
+def get_ref_catastral(lote: str) -> list[str]:
+
+    # Validate the data types of our arguments
+    assert isinstance(lote, str), f"Lote {lote} must be a string!"
+
     ref_catastrales = regex.findall(const.REF_CATASTRAL_PATTERN, lote)
     if len(ref_catastrales) >= 1:
         return ref_catastrales
@@ -134,7 +159,12 @@ def get_ref_catastral(lote):
 
 # Given the structure of the lote, and the text on it,
 # it returns the price
-def get_precio(structure, lote):
+def get_precio(structure: str, lote: str) -> float:
+
+    # Validate the data types of our arguments
+    assert isinstance(structure, str), f"Structure {structure} must be a string!"
+    assert isinstance(lote, str), f"Lote {lote} must be a string!"
+
     if structure == "tables":
         price = regex.search(const.PRICE_FIRST_STRUCTURE_PDF_PATTERN, lote)
         return format_price(price.group())  # Returns the whole match
@@ -163,14 +193,22 @@ def get_precio(structure, lote):
             return format_price(price.group(1))
 
 
-def format_price(price):
+def format_price(price: str) -> float:
+
+    # Validate the data types of our arguments
+    assert isinstance(price, str), f"Price {price} must be a string!"
+
     return float(
         price.replace(".", "").replace(",", ".").replace(" ", "").replace("€", "")
     )
 
 
 # Given the text of a lote, it checks if it contains the price
-def has_price(lote):
+def has_price(lote: str):
+
+    # Validate the data types of our arguments
+    assert isinstance(lote, str), f"Lote {lote} must be a string!"
+
     result = regex.search(const.CHECKER_SECOND_STRUCTURE_PRICE_IN_THE_PARAGRAPH, lote)
     return result
 
