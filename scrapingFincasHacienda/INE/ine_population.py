@@ -35,6 +35,7 @@ class InePopulation(webdriver.Chrome):
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
+        options.add_argument("--disable-search-engine-choice-screen")
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         super().__init__(options=options)
         self.implicitly_wait(15)

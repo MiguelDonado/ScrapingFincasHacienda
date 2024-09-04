@@ -2,7 +2,7 @@ import regex
 
 # Number of delegations are 57 in total
 NUMBER_OF_DELEGATIONS = (
-    16  # This number is for testing purposes, so it only run on a few provinces.
+    56  # This number is for testing purposes, so it only run on a few provinces.
 )
 
 DELEGATIONS = range(1, NUMBER_OF_DELEGATIONS + 1)
@@ -105,3 +105,62 @@ PRICE_WHEN_IS_NOT_IN_PARAGRAPH = regex.compile(
 )
 
 # https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=90&RefC=15090A507018480000AY
+
+DELEGATION_MAPPING = {
+    "1": "ARABA/ÁLAVA",
+    "2": "ALBACETE",
+    "3": "ALACANT/ALICANTE",
+    "4": "ALMERÍA",
+    "5": "ÁVILA",
+    "6": "BADAJOZ",
+    "7": "ILLES BALEARS",
+    "8": "BARCELONA",
+    "9": "BURGOS",
+    "10": "CÁCERES",
+    "11": "CÁDIZ",
+    "12": "CASTELLÓ/CASTELLÓN",
+    "13": "CIUDAD REAL",
+    "14": "CÓRDOBA",
+    "15": "CORUÑA, A",
+    "16": "CUENCA",
+    "17": "GIRONA",
+    "18": "GRANADA",
+    "19": "GUADALAJARA",
+    "20": "GIPUZKOA",
+    "21": "HUELVA",
+    "22": "HUESCA",
+    "23": "JAÉN",
+    "24": "LEÓN",
+    "25": "LLEIDA",
+    "26": "RIOJA, LA",
+    "27": "LUGO",
+    "28": "MADRID",
+    "29": "MÁLAGA",
+    "30": "MURCIA",
+    "31": "NAVARRA",
+    "32": "OURENSE",
+    "33": "OVIEDO",
+    "34": "PALENCIA",
+    "35": "PALMAS, LAS",
+    "36": "PONTEVEDRA",
+    "37": "SALAMANCA",
+    "38": "SANTA CRUZ DE TENERIFE",
+    "39": "CANTABRIA",
+    "40": "SEGOVIA",
+    "41": "SEVILLA",
+    "42": "SORIA",
+    "43": "TARRAGONA",
+    "44": "TERUEL",
+    "45": "TOLEDO",
+    "46": "VALÈNCIA/VALENCIA",
+    "47": "VALLADOLID",
+    "48": "BIZKAIA",
+    "49": "ZAMORA",
+    "50": "ZARAGOZA",
+    "51": "CARTAGENA",
+    "52": "GIJÓN",
+    "53": "JEREZ DE LA FRONTERA",
+    "54": "VIGO",
+    "55": "CEUTA",
+    "56": "MELILLA",
+}

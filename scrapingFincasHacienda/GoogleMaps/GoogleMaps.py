@@ -47,11 +47,16 @@ class GoogleMaps(webdriver.Chrome):
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(to, str), f"'To' {to} must be a string!"
-        assert isinstance(from_, str), f"'From' {from_} must be a string!"
-        assert isinstance(enterprise, str), f"Enterprise {enterprise} must be a string!"
+        assert from_ == None or isinstance(
+            from_, str
+        ), f"'From' {from_} must be a string!"
+        assert enterprise == None or isinstance(
+            enterprise, str
+        ), f"Enterprise {enterprise} must be a string!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
+        options.add_argument("--disable-search-engine-choice-screen")
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
         # Disable location permissions (because Google Maps took "My location"

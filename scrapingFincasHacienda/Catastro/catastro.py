@@ -33,6 +33,7 @@ class Catastro(webdriver.Chrome):
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
+        options.add_argument("--disable-search-engine-choice-screen")
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         options.add_experimental_option(
             "prefs",
@@ -81,7 +82,6 @@ class Catastro(webdriver.Chrome):
             self.__download_ortofoto()
             self.__download_kml()
             coordinates = self.__get_coordenates_google_maps()
-
             # Log
             msg = f"Successfully downloaded PDF and KML of the land '{self.ref}' with coordinates '{coordinates}' and data: {data}."
             logger.info(
@@ -98,7 +98,7 @@ class Catastro(webdriver.Chrome):
                 exc_info=True,
             )
         finally:
-            self.quit()
+            # self.quit()
             time.sleep(1)
 
     #
@@ -141,6 +141,7 @@ class Catastro(webdriver.Chrome):
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Localización']/following-sibling::div//label",
         ).text
+        municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
         clase = self.find_element(
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Clase']/following-sibling::*//label",
@@ -158,6 +159,7 @@ class Catastro(webdriver.Chrome):
             cultivo = None
         return {
             "localizacion": localizacion,
+            "municipio": municipio,
             "clase": clase,
             "uso": uso,
             "cultivo": cultivo,
@@ -221,16 +223,25 @@ class Catastro(webdriver.Chrome):
         # Close focused window
         self.__close_current_window()
 
+        # Change focus to the remaining window
+        self.switch_to.window(self.window_handles[0])
+
     # Get coordinates from the land, to pass them as an argument
     # to the constructor when creating a GoogleMaps object
     def __get_coordenates_google_maps(self) -> str:
         self.__go_to_otros_visores()
         self.__change_to_new_window_tab()
+
+        # A window handle is a unique identifier for a browser window or tab
+        # Example of a window handle
+        # window_handle = "CDwindow-1234ABCD5678EFGH9012IJKL"
+
         google_maps_input = self.find_element(
             By.XPATH, "//input[@id='ctl00_Contenido_ImgBGoogleMaps']"
         )
         google_maps_input.click()
-        self.__change_to_new_window_tab()
+
+        self.__change_to_new_window_tab(current_windows=2)
         self.__close_cookies_google()
 
         coordinates_element = self.find_element(
@@ -297,11 +308,13 @@ class Catastro(webdriver.Chrome):
 
     # First, waits till a new window tab is opened.
     # Second, changes to the new window.
-    def __change_to_new_window_tab(self) -> None:
+    # current_windows = 'Windows already opened not including the new window'
+    def __change_to_new_window_tab(self, current_windows: int = 1) -> None:
         # Wait for a new window or tab
-        WebDriverWait(self, 10).until(lambda d: len(d.window_handles) > 1)
+        WebDriverWait(self, 10).until(lambda d: len(d.window_handles) > current_windows)
+
         # Switch to the new window
-        if len(self.window_handles) > 1:
+        if len(self.window_handles) > current_windows:
             new_window_handle = self.window_handles[-1]
             self.switch_to.window(new_window_handle)
 

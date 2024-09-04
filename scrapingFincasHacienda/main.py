@@ -23,7 +23,7 @@ from GoogleMaps.GoogleMaps import GoogleMaps
 
 def main():
     for delegation in const.DELEGATIONS:
-
+        
         # 1) Search on hacienda website if there's any auction.
         auction = has_auction(delegation)
         if not auction:
@@ -35,17 +35,16 @@ def main():
             continue
 
         """3) Get the ref_catastral and price from the lands.
-            o The variable auction_pdf_info is a list of dictionaries.
+            o The variable lotes is a list of dictionaries.
                 o Each dictionary represents a lote, it has two keys.
-                    1) Refs_catastrales: Holds a list of refs.
-                    2) Price: Holds the price for the lote.
+                    1) Id 
+                    2) Data (nested dictionary with two keys {refs, price})    
+                        1) Refs_catastrales: Holds a list of refs.
+                        2) Price: Holds the price for the lote.
             Example:
-            [ {[ref1, ref2], price}, {[ref1, ref2], price}, {[ref1, ref2],price} ]
+            [ {1, {[ref1, ref2], price}}, {2, {[ref1, ref2], price}},... ]
                ____________________
-              |       LOTE 1       |
-                
-            o The function get_pliego_info returns only the lotes that
-              doesn't give an error """
+              |       LOTE 1       | """
 
         lotes = get_lotes_data(auction_pdf, delegation)
 

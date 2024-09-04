@@ -44,6 +44,7 @@ class CatastroReport(webdriver.Chrome):
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
+        options.add_argument("--disable-search-engine-choice-screen")
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
         options.add_experimental_option(
             "prefs",

@@ -40,8 +40,12 @@ def build_id(delegation: int, lote: int = ".", land: int = "."):
 
     # Validate the data types of our arguments
     assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
-    assert lote > 0, f"Lote {lote} is not greater than zero!"
-    assert land > 0, f"Land {land} is not greater than zero!"
+    assert (
+        lote == "." or lote > 0
+    ), f"Lote {lote} is not greater than zero neither empty!"
+    assert (
+        land == "." or land > 0
+    ), f"Land {land} is not greater than zero neither empty!"
 
     s_delegation = str(delegation)
     s_lote = str(lote)

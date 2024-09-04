@@ -21,14 +21,14 @@ def get_pliego(href: str, delegation: int) -> str:
 
     # Given the href of the auction, from all the anchor tags of the web page,
     # returns the href of the one that correspond to the Pliego PDF.
-    html_text = requests.get(href)
-    soup = BeautifulSoup(html_text.text, "lxml")
-    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
-    url_pliego = const.BASE_URL_HACIENDA + pliego
+    try:
+        html_text = requests.get(href)
+        soup = BeautifulSoup(html_text.text, "lxml")
+        pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+        url_pliego = const.BASE_URL_HACIENDA + pliego
 
-    # If Pliego PDF doesn't contain a list of lands in auction, check for Anexo PDF.
-    if not has_ref_catastral(url_pliego):
-        try:
+        # If Pliego PDF doesn't contain a list of lands in auction, check for Anexo PDF.
+        if not has_ref_catastral(url_pliego):
             anexo = soup.find("a", href=const.ANEXO_PATTERN).get("href")
             url_anexo = const.BASE_URL_HACIENDA + anexo
 
@@ -36,20 +36,20 @@ def get_pliego(href: str, delegation: int) -> str:
             msg = f"List of lands: {url_anexo}"
             logger.info(f"{logger_config.build_id(delegation)}{msg}")
 
-        except Exception:
-
+        else:
             # Log
-            msg = f"Failed to find list of lands on Pliego or Anexo."
-            logger.error(f"{logger_config.build_id(delegation)}{msg}", exc_info=True)
+            msg = f"List of lands: {url_pliego}"
+            logger.info(f"{logger_config.build_id(delegation)}{msg}")
 
-            return None
-    else:
+        return url_pliego
+
+    except Exception:
 
         # Log
-        msg = f"List of lands: {url_pliego}"
-        logger.info(f"{logger_config.build_id(delegation)}{msg}")
+        msg = f"Failed to find list of lands on Pliego or Anexo."
+        logger.error(f"{logger_config.build_id(delegation)}{msg}", exc_info=True)
 
-    return url_pliego
+        return None
 
 
 def has_ref_catastral(url_pdf: str):
