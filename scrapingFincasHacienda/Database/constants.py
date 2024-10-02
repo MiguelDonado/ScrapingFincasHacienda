@@ -1,4 +1,7 @@
+import regex
+
 DB_NAME = "FincasProject.db"
+COLUMNS_PATTERN = regex.compile(r".+\"\s")
 EMPRESAS_HEADERS = """
     "Nombre" TEXT,
     "Código NIF" TEXT,
@@ -64,6 +67,7 @@ EMPRESAS_HEADERS = """
 """
 
 FINCA_HEADERS = """
+    "referencia_catastral" TEXT NOT NULL,
     "localizacion" TEXT NOT NULL,
     "lote_id" INTEGER NOT NULL,
     "clase_id" INTEGER NOT NULL,
@@ -78,6 +82,16 @@ FINCA_HEADERS = """
     "fls" NUMERIC NOT NULL,
     "datetime" NUMERIC NOT NULL DEFAULT CURRENT_TIMESTAMP,
 """
+EMPRESAS_FINCAS_HEADERS = """
+    "empresa_id" INTEGER NOT NULL,
+    "finca_id" INTEGER NOT NULL,
+    "distance_on_car" INTEGER NOT NULL,
+    "time_on_car" INTEGER NOT NULL,
+    "distance_on_foot" INTEGER NOT NULL,
+    "time_on_foot" INTEGER NOT NULL,
+    "route_screenshot" BLOB,
+"""
+
 ALLOWED_CLASES = ["rústico", "urbano", "de características especiales"]
 ALLOWED_USOS = {
     "almacén, estac.": "Almacén-Estacionamiento",
