@@ -332,7 +332,7 @@ class Auction(BaseDatabase):
             CREATE TABLE IF NOT EXISTS "auctions" (
                 "id" INTEGER,
                 "auction_url" TEXT UNIQUE NOT NULL,
-                "auction_pdf" BLOB,
+                "pliego_pdf" BLOB,
                 PRIMARY KEY ("id")
             )
             """
@@ -343,10 +343,10 @@ class Auction(BaseDatabase):
             file_content = file.read()
         sql = """
                 INSERT INTO "auctions"
-                ("auction_url", "auction_pdf")
-                VALUES (:auction_url, :auction_pdf)
+                ("auction_url", "pliego_pdf")
+                VALUES (:auction_url, :pliego_pdf)
                 """
-        params = {"auction_url": auction_url, "auction_pdf": file_content}
+        params = {"auction_url": auction_url, "pliego_pdf": file_content}
         self.execute_query(sql, params)
 
     def get_auction_id(self, auction_url):

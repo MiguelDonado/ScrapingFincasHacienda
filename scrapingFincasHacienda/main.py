@@ -63,11 +63,13 @@ def main():
                 # LAND VARIABLES THAT CONTAINS RELEVANT DATA:
                 # (mandatory for next steps) | data_land = {"localizacion","clase", "uso", "cultivo_aprovechamiento"}
                 # (mandatory for next steps) | coordinates_land = string
-                # (optional for next steps) | value_land = float
-                # (optional for next steps) | report_data_land = {"ath","denominacion_ath","agrupacion_cultivo","agrupacion_municipio","number_buildings","slope","fls"}
                 # (mandatory for next steps) | data_correos = {"cp", "province", "locality"}
+                # (optional for next steps) | report_data_land = {"ath","denominacion_ath","agrupacion_cultivo","agrupacion_municipio","number_buildings","slope","fls"}
+                # (optional for next steps) | value_land = float
                 # (optional for next steps) | data_ine_population = {"population_now","population_before","porcentual_variation"}
                 # (optional for next steps) | data_ine_transmisiones = {"transactions_now","transactions_before","variation"}
+                # (optional for next steps) | data_two_directions = {"car": {"distance","time"}, "foot": {"distance","time"}}
+                # (optional for next steps) | data_sabi = df with 61 columns
                 # (optional for next steps) | data_two_directions = {"car": {"distance","time"}, "foot": {"distance","time"}}
 
                 # 5.1) CATASTRO CLASS
@@ -79,19 +81,7 @@ def main():
                 except Exception:
                     continue
 
-                # 5.2) GOOGLE_MAPS CLASS
-                one_direction = GoogleMaps(delegation, i_lote, i_land, land, coordinates_land)
-                one_direction.get_data_one_direction()  # Just takes a screenshot, doesn't return anything
-
-                # 5.3) CATASTRO_REPORT CLASS
-                report = CatastroReport(
-                    delegation, i_lote, i_land, land, data_land["clase"]
-                )
-                info_report = report.get_data()
-                value_land = info_report["value"]
-                report_data_land = info_report["data"]
-
-                # 5.4) CORREOS_CLASS
+                # 5.2) CORREOS_CLASS
                 correos = Correos(
                     delegation, i_lote, i_land, land, data_land["localizacion"]
                 )
@@ -100,6 +90,18 @@ def main():
                 # If direction couldn't be extracted using correos webpage.
                 if not data_correos["cp"]:
                     continue
+
+                # 5.3) GOOGLE_MAPS CLASS
+                one_direction = GoogleMaps(delegation, i_lote, i_land, land, coordinates_land)
+                one_direction.get_data_one_direction()  # Just takes a screenshot, doesn't return anything
+
+                # 5.4) CATASTRO_REPORT CLASS
+                report = CatastroReport(
+                    delegation, i_lote, i_land, land, data_land["clase"]
+                )
+                info_report = report.get_data()
+                report_data_land = info_report["data"]
+                value_land = info_report["value"]
 
                 # 5.5) INE_POPULATION CLASS
                 ine_population = InePopulation(
@@ -125,7 +127,13 @@ def main():
                 # Some of the columns are 'Nombre', "Calle", "Código postal", "Localidad"
                 data_sabi = sabi.get_data()
 
+                # If data couldn't be extracted using sabi (mandatory for the next step)
+                if not data_sabi:
+                    continue
+
                 # 5.8) GOOGLE MAPS CLASS
+                # Dictionary that will hold the data for the 25 enterprises given a land
+                full_data_two_directions = []
                 for _, enterprise in data_sabi.iterrows():
                     enterprise_direction = f"{enterprise['Calle']}. {enterprise["Código postal"]} {enterprise["Localidad"]}"
                     two_directions = GoogleMaps(
@@ -140,7 +148,45 @@ def main():
                     # Variable that holds a dictionary with 2 keys, each one holds another dictionary with 2 keys.
                     # {"car": {"distance","time"}, "foot": {"distance","time"}}
                     data_two_directions = two_directions.get_data_two_directions()
+                    full_data_two_directions.append(
+                        {
+                            enterprise['Código NIF']: {'data':data_two_directions,'screenshot':0} # path_to_screenshot
+                    }
+                    )
                     break
+                # This is the info that I'll introduce in the db for each land.
+                full_data_land = {
+                    # --------- MANDATORY ------------ #
+                    "delegation": delegation,
+                    "auction_url": auction,
+                    "auction_pdf": 0,#path_to_downloaded_pdf
+                    "lote_number":i_lote,
+                    "referencia_catastral":land,
+                    "price":data_lote["price"],
+                    "localizacion": data_land["localizacion"],
+                    "clase": data_land["clase"],
+                    "uso": data_land["uso"],
+                    "aprovechamiento": data_land["cultivo_aprovechamiento"],
+                    "coordenadas": coordinates_land,
+                    "codigo_postal": data_correos["cp"],
+                    "province": data_correos["province"],
+                    "locality": data_correos["locality"],
+                    # --------- OPTIONAL ------------- #
+                    "screenshot": 0,#path_to_screenshot,
+                    "ath_number": report_data_land["ath"],
+                    "ath_name": report_data_land["denominacion_ath"], 
+                    "agrupacion_municipio": report_data_land["agrupacion_municipio"],
+                    "number_buildings": report_data_land["number_buildings"],
+                    "slope": report_data_land["slope"],
+                    "fls": report_data_land["fls"],
+                    "catastro_value": value_land,
+                    "population_now":data_ine_population["population_now"],
+                    "population_before":data_ine_population["population_before"],
+                    "rusticas_transactions_now":data_ine_transmisiones["transactions_now"],
+                    "rusticas_transactions_before":data_ine_transmisiones["transactions_before"],
+                    "empresas": data_sabi,
+                    "empresas_fincas": full_data_two_directions
+                    }
                 break
             break
 
