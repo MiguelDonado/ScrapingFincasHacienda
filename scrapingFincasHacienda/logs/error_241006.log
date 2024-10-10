@@ -1,0 +1,9 @@
+2024-10-06 14:07:45,991 - ERROR    ->  6  -  1  -  1   - Failed to get data from land '5578801QC0257N0001UE'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 144, in __scrape
+    municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range

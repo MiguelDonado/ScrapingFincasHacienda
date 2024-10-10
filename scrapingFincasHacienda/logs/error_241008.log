@@ -1,0 +1,190 @@
+2024-10-08 17:35:22,823 - ERROR    ->  6  -  .  -  .   - Failed to proccess auction PDF using get_lotes_data function {e}
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/data_pdf.py", line 25, in get_lotes_data
+    text = read_pdf(url_pdf)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/data_pdf.py", line 96, in read_pdf
+    response = requests.get(url_pdf)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL '/home/miguel/coding-projects/ScrapingFincasHacienda/data/auction/2024-10-08_Delegation_6.pdf': No scheme supplied. Perhaps you meant https:///home/miguel/coding-projects/ScrapingFincasHacienda/data/auction/2024-10-08_Delegation_6.pdf?
+2024-10-08 17:35:26,907 - ERROR    ->  10 -  .  -  .   - Failed to proccess auction PDF using get_lotes_data function {e}
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/data_pdf.py", line 25, in get_lotes_data
+    text = read_pdf(url_pdf)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/data_pdf.py", line 96, in read_pdf
+    response = requests.get(url_pdf)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL '/home/miguel/coding-projects/ScrapingFincasHacienda/data/auction/2024-10-08_Delegation_10.pdf': No scheme supplied. Perhaps you meant https:///home/miguel/coding-projects/ScrapingFincasHacienda/data/auction/2024-10-08_Delegation_10.pdf?
+2024-10-08 17:39:50,611 - ERROR    ->  6  -  .  -  .   - Failed to proccess auction PDF using get_lotes_data function {e}
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/data_pdf.py", line 25, in get_lotes_data
+    text = read_pdf(url_pdf)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/data_pdf.py", line 96, in read_pdf
+    response = requests.get(url_pdf)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/sessions.py", line 575, in request
+    prep = self.prepare_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/sessions.py", line 484, in prepare_request
+    p.prepare(
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/models.py", line 367, in prepare
+    self.prepare_url(url, params)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/requests/models.py", line 438, in prepare_url
+    raise MissingSchema(
+requests.exceptions.MissingSchema: Invalid URL 'url': No scheme supplied. Perhaps you meant https://url?
+2024-10-08 18:28:22,297 - ERROR    ->  6  -  1  -  1   - Failed to get the reference value and the 'Report PDF' of the land '5578801QC0257N0001UE'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 88, in get_data
+    self.__access_query_value_page()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 153, in __access_query_value_page
+    query_value_button.click()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x5937b45d62da <unknown>
+#1 0x5937b42a4041 <unknown>
+#2 0x5937b42f4d3f <unknown>
+#3 0x5937b42e88c6 <unknown>
+#4 0x5937b43188d2 <unknown>
+#5 0x5937b42e8279 <unknown>
+#6 0x5937b4318a9e <unknown>
+#7 0x5937b4336dfd <unknown>
+#8 0x5937b4318673 <unknown>
+#9 0x5937b42e6473 <unknown>
+#10 0x5937b42e747e <unknown>
+#11 0x5937b459d0db <unknown>
+#12 0x5937b45a1071 <unknown>
+#13 0x5937b45899d5 <unknown>
+#14 0x5937b45a1bf2 <unknown>
+#15 0x5937b456eb6f <unknown>
+#16 0x5937b45c5248 <unknown>
+#17 0x5937b45c5417 <unknown>
+#18 0x5937b45d50cc <unknown>
+#19 0x7add2788e39d <unknown>
+#20 0x7add2791349c <unknown>
+
+2024-10-08 18:45:59,602 - ERROR    ->  6  -  2  -  1   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 132, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 294, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x63498f9bc2da <unknown>
+#1 0x63498f68a200 <unknown>
+#2 0x63498f65fa1f <unknown>
+#3 0x63498f706eed <unknown>
+#4 0x63498f71c6a9 <unknown>
+#5 0x63498f6fe673 <unknown>
+#6 0x63498f6cc473 <unknown>
+#7 0x63498f6cd47e <unknown>
+#8 0x63498f9830db <unknown>
+#9 0x63498f987071 <unknown>
+#10 0x63498f96f9d5 <unknown>
+#11 0x63498f987bf2 <unknown>
+#12 0x63498f954b6f <unknown>
+#13 0x63498f9ab248 <unknown>
+#14 0x63498f9ab417 <unknown>
+#15 0x63498f9bb0cc <unknown>
+#16 0x71cf9288c39d <unknown>
+#17 0x71cf9291149c <unknown>
+
+2024-10-08 18:46:01,725 - ERROR    ->  6  -  2  -  2   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 132, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 294, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x610f656ae2da <unknown>
+#1 0x610f6537c200 <unknown>
+#2 0x610f65351a1f <unknown>
+#3 0x610f653f8eed <unknown>
+#4 0x610f6540e6a9 <unknown>
+#5 0x610f653f0673 <unknown>
+#6 0x610f653be473 <unknown>
+#7 0x610f653bf47e <unknown>
+#8 0x610f656750db <unknown>
+#9 0x610f65679071 <unknown>
+#10 0x610f656619d5 <unknown>
+#11 0x610f65679bf2 <unknown>
+#12 0x610f65646b6f <unknown>
+#13 0x610f6569d248 <unknown>
+#14 0x610f6569d417 <unknown>
+#15 0x610f656ad0cc <unknown>
+#16 0x79ced6afc39d <unknown>
+#17 0x79ced6b8149c <unknown>
+

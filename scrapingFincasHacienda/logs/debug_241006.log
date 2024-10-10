@@ -1,0 +1,34 @@
+2024-10-06 14:07:24,334 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-06 14:07:24,688 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-06 14:07:25,013 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-06 14:07:25,353 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-06 14:07:25,730 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-06 14:07:26,089 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-06 14:07:28,424 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-06 14:07:30,352 - INFO     ->  6  -  1  -  .   - ['5578801QC0257N0001UE'], 94987.0
+2024-10-06 14:07:30,352 - INFO     ->  6  -  2  -  .   - ['5218075QC5751N0001DO', '5218075QC5751N0001DO'], 6070.0
+2024-10-06 14:07:30,352 - INFO     ->  6  -  3  -  .   - ['2889408TJ6028N0001IU'], 11040.0
+2024-10-06 14:07:30,352 - INFO     ->  6  -  4  -  .   - ['2115027QC3721N0001GL', '2115027QC3721N0001GL'], 85683.0
+2024-10-06 14:07:30,352 - INFO     ->  6  -  5  -  .   - ['1902406PC9510S0001XO', '06063A003090070000AG'], 4185.0
+2024-10-06 14:07:45,991 - ERROR    ->  6  -  1  -  1   - Failed to get data from land '5578801QC0257N0001UE'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 144, in __scrape
+    municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+2024-10-06 14:07:47,337 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-10-06 14:07:47,658 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-10-06 14:07:47,977 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-10-06 14:07:48,326 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-10-06 14:07:51,225 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20CACERES/Pliego.pdf.xsig.pdf
+2024-10-06 14:07:54,731 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-10-06 14:07:54,731 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-10-06 14:07:54,731 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-10-06 14:07:54,731 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-10-06 14:07:54,731 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-10-06 14:07:54,731 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-10-06 14:07:54,731 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-10-06 14:07:54,731 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03

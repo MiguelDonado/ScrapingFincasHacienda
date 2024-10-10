@@ -99,7 +99,7 @@ class GoogleMaps(webdriver.Chrome):
             self.__land_first_page()
             self.__close_cookies()
             self.__search_to()
-            self.__get_screenshot()
+            path = self.__get_screenshot()
 
             # Log
             msg = f"Screenshot of the land '{self.ref}' has been taken successfully."
@@ -119,6 +119,7 @@ class GoogleMaps(webdriver.Chrome):
         finally:
             self.quit()
             time.sleep(1)
+        return path
 
     # Given two directions ('to' and 'from'), it returns a dictionary with 2 keys.
     #   1) car (nested dictionary with two keys)
@@ -137,14 +138,14 @@ class GoogleMaps(webdriver.Chrome):
             self.__search_from_()
             data_car = self.__get_distance_time_on_car()
             data_foot = self.__get_distance_time_on_foot()
-            self.__get_screenshot(zoom=False, enterprise=self.enterprise)
+            filename = self.__get_screenshot(zoom=False, enterprise=self.enterprise)
             # Log
             msg = f"Car and foot distance and time from '{self.ref}' - '{self.enterprise}' has been extracted successfully."
             logger.info(
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
             )
 
-            return {"car": data_car, "foot": data_foot}
+            return {"car": data_car, "foot": data_foot, "path": filename}
 
         except Exception:
 
@@ -207,10 +208,14 @@ class GoogleMaps(webdriver.Chrome):
         )
         hide_panel_btn.click()
 
-        satelite_button = self.find_element(
-            By.XPATH, "//button[@aria-labelledby='widget-minimap-icon-overlay']"
-        )
-        satelite_button.click()
+        time.sleep(5)
+
+        # Wait till satellite button is clickable
+        WebDriverWait(self, 30).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[@aria-labelledby='widget-minimap-icon-overlay']")
+            )
+        ).click()
 
         # Will only be True when called for the method get_data_one_direction
         if zoom:
@@ -227,7 +232,9 @@ class GoogleMaps(webdriver.Chrome):
 
         time.sleep(2)
 
-        self.get_screenshot_as_file(f"{const.DOWNLOAD_DIR}/{self.ref}{extra_path}.png")
+        filename = f"{const.DOWNLOAD_DIR}/{self.ref}{extra_path}.png"
+        self.get_screenshot_as_file(filename)
+        return filename
 
     # Let the instance on Google Maps webpage that shows the route
     # (it must be done after searching 'to' destination)

@@ -107,7 +107,7 @@ class CatastroReport(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
             )
 
-            return {"value": reference_value, "data": data_report}
+            return {"value": reference_value, "data": data_report, "path": report}
         except Exception:
 
             # Log
@@ -145,7 +145,9 @@ class CatastroReport(webdriver.Chrome):
 
     # Navigate to the query value webpage
     def __access_query_value_page(self) -> None:
-        button_collapse = self.find_element(By.XPATH, "//a[@data-toggle='collapse']")
+        button_collapse = self.find_element(
+            By.XPATH, "(//a[@data-toggle='collapse'])[2]"
+        )
         button_collapse.click()
         query_value_button = self.find_element(
             By.XPATH, "//a[contains(text(),'Consulta de valor de referencia')]"

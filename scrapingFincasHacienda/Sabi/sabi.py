@@ -201,6 +201,7 @@ class Sabi(webdriver.Chrome):
     def __get_results(self) -> pd.DataFrame:
         watch_results = self.find_element(By.XPATH, "//img[contains(@id, 'GoToList')]")
         watch_results.click()
+        self.__apply_competence_analysis_columns()
         self.__add_street_and_cp_columns()
 
         headers = self.__get_results_cabeceras()
@@ -210,6 +211,18 @@ class Sabi(webdriver.Chrome):
         df = self.__sabi_results_to_df(headers, names, data)
         return df
 
+    def __apply_competence_analysis_columns(self) -> None:
+        columns_button = self.find_element(
+            By.XPATH,
+            "//a[@id='ContentContainer1_ctl00_Content_ListHeader_ListHeaderRightButtons_AddRemoveColumns']",
+        )
+        columns_button.click()
+        competence_analysis_columns = self.find_element(
+            By.XPATH,
+            "//div[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_UserFormatsDivContainer']//a[contains(text(), 'SECTOR')]",
+        )
+        competence_analysis_columns.click()
+
     # Given the results page, adds two columns (calle, C.P.) to the results table
     def __add_street_and_cp_columns(self) -> None:
         columns_button = self.find_element(
@@ -217,7 +230,6 @@ class Sabi(webdriver.Chrome):
             "//a[@id='ContentContainer1_ctl00_Content_ListHeader_ListHeaderRightButtons_AddRemoveColumns']",
         )
         columns_button.click()
-
         contact_info_expand = self.find_element(
             By.XPATH, "//td[@id='GROUP_CONTACT_NodeImg']"
         )

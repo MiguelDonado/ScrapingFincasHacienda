@@ -4,7 +4,7 @@ import requests
 import logging
 from bs4 import BeautifulSoup
 import regex
-
+from datetime import date
 import logger_config
 import Hacienda.constants as const
 from Hacienda.data_pdf import read_pdf
@@ -35,13 +35,13 @@ def get_pliego(href: str, delegation: int) -> str:
             # Log
             msg = f"List of lands: {url_anexo}"
             logger.info(f"{logger_config.build_id(delegation)}{msg}")
-
+            url_pliego = url_anexo
         else:
             # Log
             msg = f"List of lands: {url_pliego}"
             logger.info(f"{logger_config.build_id(delegation)}{msg}")
-
-        return url_pliego
+        filename = download_pdf(url_pliego, delegation)
+        return {"url": url_pliego, "path": filename}
 
     except Exception:
 
@@ -61,3 +61,17 @@ def has_ref_catastral(url_pdf: str):
     # and so the list of properties is detailed on another anchor tag
     text_pdf = read_pdf(url_pdf)
     return regex.search(const.REF_CATASTRAL_PATTERN, text_pdf)
+
+
+def download_pdf(url_pdf: str, delegation: int) -> str:
+    # Returns the current local date
+    today = date.today()
+    # Create the filename that will be used for the downloaded auction pdf
+    filename = f"{const.DOWNLOAD_DIR}/{today}_Delegation_{delegation}.pdf"
+
+    response = requests.get(url_pdf)
+
+    # Write the content to a file
+    with open(filename, "wb") as file:
+        file.write(response.content)
+    return filename

@@ -69,6 +69,10 @@ EMPRESAS_HEADERS = """
 FINCA_HEADERS = """
     "referencia_catastral" TEXT NOT NULL,
     "localizacion" TEXT NOT NULL,
+    "catastro_value" NUMERIC NOT NULL,
+    "delegation_id" INTEGER NOT NULL,
+    "agrupacion_cultivo_id" INTEGER NOT NULL,
+    "locality_id" INTEGER NOT NULL,
     "lote_id" INTEGER NOT NULL,
     "clase_id" INTEGER NOT NULL,
     "uso_id" INTEGER NOT NULL,
@@ -80,6 +84,10 @@ FINCA_HEADERS = """
     "number_buildings" INTEGER NOT NULL,
     "slope" NUMERIC NOT NULL,
     "fls" NUMERIC NOT NULL,
+    "ortofoto" BLOB NOT NULL,
+    "kml" BLOB NOT NULL,
+    "google_maps" BLOB NOT NULL,
+    "report_catastro" BLOB NOT NULL,
     "datetime" NUMERIC NOT NULL DEFAULT CURRENT_TIMESTAMP,
 """
 EMPRESAS_FINCAS_HEADERS = """
@@ -92,7 +100,7 @@ EMPRESAS_FINCAS_HEADERS = """
     "route_screenshot" BLOB,
 """
 
-ALLOWED_CLASES = ["rústico", "urbano", "de características especiales"]
+ALLOWED_CLASES = ["Rústico", "Urbano", "De características especiales"]
 ALLOWED_USOS = {
     "almacén, estac.": "Almacén-Estacionamiento",
     "comercial": "Comercial",

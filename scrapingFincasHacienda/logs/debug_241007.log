@@ -1,0 +1,694 @@
+2024-10-07 14:39:21,955 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:39:22,974 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:39:23,834 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:39:24,158 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:39:24,672 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:39:24,955 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:39:41,146 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:39:42,218 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:39:42,856 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:39:43,162 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:39:43,399 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:39:43,695 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:41:02,083 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:41:02,859 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:41:03,919 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:41:04,566 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:41:04,895 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:41:05,217 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:41:07,293 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 14:53:48,061 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:53:49,037 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:53:49,751 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:53:50,070 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:53:50,333 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:53:50,629 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:53:52,538 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 14:53:52,897 - ERROR    ->  6  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 43, in get_pliego
+    download_pdf(url_pliego, delegation)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 75, in download_pdf
+    with open(filename, "wb") as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data/auction/2024-10-07_Delegation_6.pdf'
+2024-10-07 14:53:53,178 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-10-07 14:53:53,427 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-10-07 14:53:53,690 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-10-07 14:53:53,973 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-10-07 14:54:55,692 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:54:56,355 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:54:57,465 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:54:57,872 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:54:58,142 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:54:58,449 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:55:00,310 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 14:55:00,662 - ERROR    ->  6  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 43, in get_pliego
+    download_pdf(url_pliego, delegation)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 75, in download_pdf
+    with open(filename, "wb") as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: './data/auction/2024-10-07_Delegation_6.pdf'
+2024-10-07 14:55:00,923 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-10-07 14:55:01,203 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-10-07 14:55:01,462 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-10-07 14:55:01,738 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-10-07 14:56:20,416 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:56:21,306 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:56:21,880 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:56:22,182 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:56:22,477 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:56:22,765 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:56:25,092 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 14:56:25,442 - ERROR    ->  6  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 43, in get_pliego
+    download_pdf(url_pliego, delegation)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 75, in download_pdf
+    with open(filename, "wb") as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: './data/auction/2024-10-07_Delegation_6.pdf'
+2024-10-07 14:56:25,695 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-10-07 14:56:25,947 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-10-07 14:58:50,632 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 14:58:50,875 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 14:58:51,129 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 14:58:51,469 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 14:58:51,736 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 14:58:52,028 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 14:58:53,859 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 15:30:31,126 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 15:30:32,754 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 15:30:33,577 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 15:30:34,163 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 15:30:34,655 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 15:30:35,049 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 15:30:36,949 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 15:30:39,043 - INFO     ->  6  -  1  -  .   - ['5578801QC0257N0001UE'], 94987.0
+2024-10-07 15:30:39,043 - INFO     ->  6  -  2  -  .   - ['5218075QC5751N0001DO', '5218075QC5751N0001DO'], 6070.0
+2024-10-07 15:30:39,049 - INFO     ->  6  -  3  -  .   - ['2889408TJ6028N0001IU'], 11040.0
+2024-10-07 15:30:39,049 - INFO     ->  6  -  4  -  .   - ['2115027QC3721N0001GL', '2115027QC3721N0001GL'], 85683.0
+2024-10-07 15:30:39,049 - INFO     ->  6  -  5  -  .   - ['1902406PC9510S0001XO', '06063A003090070000AG'], 4185.0
+2024-10-07 15:32:24,968 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 15:32:26,204 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 15:32:27,425 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 15:32:27,830 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 15:32:28,110 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 15:32:28,386 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 15:32:30,236 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 15:32:32,196 - INFO     ->  6  -  1  -  .   - ['5578801QC0257N0001UE'], 94987.0
+2024-10-07 15:32:32,197 - INFO     ->  6  -  2  -  .   - ['5218075QC5751N0001DO', '5218075QC5751N0001DO'], 6070.0
+2024-10-07 15:32:32,197 - INFO     ->  6  -  3  -  .   - ['2889408TJ6028N0001IU'], 11040.0
+2024-10-07 15:32:32,197 - INFO     ->  6  -  4  -  .   - ['2115027QC3721N0001GL', '2115027QC3721N0001GL'], 85683.0
+2024-10-07 15:32:32,197 - INFO     ->  6  -  5  -  .   - ['1902406PC9510S0001XO', '06063A003090070000AG'], 4185.0
+2024-10-07 15:33:42,171 - ERROR    ->  6  -  1  -  1   - Failed to get data from land '5578801QC0257N0001UE'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 144, in __scrape
+    municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+2024-10-07 15:34:06,159 - ERROR    ->  6  -  2  -  1   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 144, in __scrape
+    municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+2024-10-07 15:34:24,205 - ERROR    ->  6  -  2  -  2   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 144, in __scrape
+    municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+2024-10-07 15:34:38,609 - ERROR    ->  6  -  3  -  1   - Failed to get data from land '2889408TJ6028N0001IU'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 144, in __scrape
+    municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+2024-10-07 15:34:45,316 - ERROR    ->  6  -  4  -  1   - Failed to get data from land '2115027QC3721N0001GL'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    data = self.__scrape()
+           ^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 140, in __scrape
+    localizacion = self.find_element(
+                   ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x64137fba22da <unknown>
+#1 0x64137f870200 <unknown>
+#2 0x64137f845a1f <unknown>
+#3 0x64137f8eceed <unknown>
+#4 0x64137f9026a9 <unknown>
+#5 0x64137f8e4673 <unknown>
+#6 0x64137f8b2473 <unknown>
+#7 0x64137f8b347e <unknown>
+#8 0x64137fb690db <unknown>
+#9 0x64137fb6d071 <unknown>
+#10 0x64137fb559d5 <unknown>
+#11 0x64137fb6dbf2 <unknown>
+#12 0x64137fb3ab6f <unknown>
+#13 0x64137fb91248 <unknown>
+#14 0x64137fb91417 <unknown>
+#15 0x64137fba10cc <unknown>
+#16 0x7ccd836b939d <unknown>
+#17 0x7ccd8373e49c <unknown>
+
+2024-10-07 15:34:47,431 - ERROR    ->  6  -  4  -  2   - Failed to get data from land '2115027QC3721N0001GL'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 80, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 126, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 283, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x5767427a92da <unknown>
+#1 0x576742477200 <unknown>
+#2 0x57674244ca1f <unknown>
+#3 0x5767424f3eed <unknown>
+#4 0x5767425096a9 <unknown>
+#5 0x5767424eb673 <unknown>
+#6 0x5767424b9473 <unknown>
+#7 0x5767424ba47e <unknown>
+#8 0x5767427700db <unknown>
+#9 0x576742774071 <unknown>
+#10 0x57674275c9d5 <unknown>
+#11 0x576742774bf2 <unknown>
+#12 0x576742741b6f <unknown>
+#13 0x576742798248 <unknown>
+#14 0x576742798417 <unknown>
+#15 0x5767427a80cc <unknown>
+#16 0x7d704d31539d <unknown>
+#17 0x7d704d39a49c <unknown>
+
+2024-10-07 15:46:02,056 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 15:46:03,161 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 15:46:03,984 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 15:46:05,267 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 15:46:06,083 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 15:46:06,803 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 15:46:11,294 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 15:46:17,626 - INFO     ->  6  -  1  -  .   - ['5578801QC0257N0001UE'], 94987.0
+2024-10-07 15:46:17,626 - INFO     ->  6  -  2  -  .   - ['5218075QC5751N0001DO', '5218075QC5751N0001DO'], 6070.0
+2024-10-07 15:46:17,626 - INFO     ->  6  -  3  -  .   - ['2889408TJ6028N0001IU'], 11040.0
+2024-10-07 15:46:17,626 - INFO     ->  6  -  4  -  .   - ['2115027QC3721N0001GL', '2115027QC3721N0001GL'], 85683.0
+2024-10-07 15:46:17,626 - INFO     ->  6  -  5  -  .   - ['1902406PC9510S0001XO', '06063A003090070000AG'], 4185.0
+2024-10-07 15:47:03,572 - ERROR    ->  6  -  1  -  1   - Failed to get data from land '5578801QC0257N0001UE'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 83, in get_data
+    self.__download_ortofoto()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 206, in __download_ortofoto
+    self.__rename_file(self.ref, ".pdf")
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 336, in __rename_file
+    most_recent_file = max(
+                       ^^^^
+ValueError: max() iterable argument is empty
+2024-10-07 15:47:53,287 - ERROR    ->  6  -  2  -  1   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x5ca8f78a02da <unknown>
+#1 0x5ca8f756e200 <unknown>
+#2 0x5ca8f7543a1f <unknown>
+#3 0x5ca8f75eaeed <unknown>
+#4 0x5ca8f76006a9 <unknown>
+#5 0x5ca8f75e2673 <unknown>
+#6 0x5ca8f75b0473 <unknown>
+#7 0x5ca8f75b147e <unknown>
+#8 0x5ca8f78670db <unknown>
+#9 0x5ca8f786b071 <unknown>
+#10 0x5ca8f78539d5 <unknown>
+#11 0x5ca8f786bbf2 <unknown>
+#12 0x5ca8f7838b6f <unknown>
+#13 0x5ca8f788f248 <unknown>
+#14 0x5ca8f788f417 <unknown>
+#15 0x5ca8f789f0cc <unknown>
+#16 0x7e70c3f4f39d <unknown>
+#17 0x7e70c3fd449c <unknown>
+
+2024-10-07 15:47:55,458 - ERROR    ->  6  -  2  -  2   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x598579d832da <unknown>
+#1 0x598579a51200 <unknown>
+#2 0x598579a26a1f <unknown>
+#3 0x598579acdeed <unknown>
+#4 0x598579ae36a9 <unknown>
+#5 0x598579ac5673 <unknown>
+#6 0x598579a93473 <unknown>
+#7 0x598579a9447e <unknown>
+#8 0x598579d4a0db <unknown>
+#9 0x598579d4e071 <unknown>
+#10 0x598579d369d5 <unknown>
+#11 0x598579d4ebf2 <unknown>
+#12 0x598579d1bb6f <unknown>
+#13 0x598579d72248 <unknown>
+#14 0x598579d72417 <unknown>
+#15 0x598579d820cc <unknown>
+#16 0x7ccac7ec239d <unknown>
+#17 0x7ccac7f4749c <unknown>
+
+2024-10-07 15:47:58,932 - ERROR    ->  6  -  3  -  1   - Failed to get data from land '2889408TJ6028N0001IU'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x621a71cf02da <unknown>
+#1 0x621a719be200 <unknown>
+#2 0x621a71993a1f <unknown>
+#3 0x621a71a3aeed <unknown>
+#4 0x621a71a506a9 <unknown>
+#5 0x621a71a32673 <unknown>
+#6 0x621a71a00473 <unknown>
+#7 0x621a71a0147e <unknown>
+#8 0x621a71cb70db <unknown>
+#9 0x621a71cbb071 <unknown>
+#10 0x621a71ca39d5 <unknown>
+#11 0x621a71cbbbf2 <unknown>
+#12 0x621a71c88b6f <unknown>
+#13 0x621a71cdf248 <unknown>
+#14 0x621a71cdf417 <unknown>
+#15 0x621a71cef0cc <unknown>
+#16 0x7b18cbfe639d <unknown>
+#17 0x7b18cc06b49c <unknown>
+
+2024-10-07 15:48:01,351 - ERROR    ->  6  -  4  -  1   - Failed to get data from land '2115027QC3721N0001GL'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x56cf540212da <unknown>
+#1 0x56cf53cef200 <unknown>
+#2 0x56cf53cc4a1f <unknown>
+#3 0x56cf53d6beed <unknown>
+#4 0x56cf53d816a9 <unknown>
+#5 0x56cf53d63673 <unknown>
+#6 0x56cf53d31473 <unknown>
+#7 0x56cf53d3247e <unknown>
+#8 0x56cf53fe80db <unknown>
+#9 0x56cf53fec071 <unknown>
+#10 0x56cf53fd49d5 <unknown>
+#11 0x56cf53fecbf2 <unknown>
+#12 0x56cf53fb9b6f <unknown>
+#13 0x56cf54010248 <unknown>
+#14 0x56cf54010417 <unknown>
+#15 0x56cf540200cc <unknown>
+#16 0x710f1cab939d <unknown>
+#17 0x710f1cb3e49c <unknown>
+
+2024-10-07 15:48:03,761 - ERROR    ->  6  -  4  -  2   - Failed to get data from land '2115027QC3721N0001GL'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x55e9271f82da <unknown>
+#1 0x55e926ec6200 <unknown>
+#2 0x55e926e9ba1f <unknown>
+#3 0x55e926f42eed <unknown>
+#4 0x55e926f586a9 <unknown>
+#5 0x55e926f3a673 <unknown>
+#6 0x55e926f08473 <unknown>
+#7 0x55e926f0947e <unknown>
+#8 0x55e9271bf0db <unknown>
+#9 0x55e9271c3071 <unknown>
+#10 0x55e9271ab9d5 <unknown>
+#11 0x55e9271c3bf2 <unknown>
+#12 0x55e927190b6f <unknown>
+#13 0x55e9271e7248 <unknown>
+#14 0x55e9271e7417 <unknown>
+#15 0x55e9271f70cc <unknown>
+#16 0x72c40dbc539d <unknown>
+#17 0x72c40dc4a49c <unknown>
+
+2024-10-07 15:48:06,187 - ERROR    ->  6  -  5  -  1   - Failed to get data from land '1902406PC9510S0001XO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x56d5a669b2da <unknown>
+#1 0x56d5a6369200 <unknown>
+#2 0x56d5a633ea1f <unknown>
+#3 0x56d5a63e5eed <unknown>
+#4 0x56d5a63fb6a9 <unknown>
+#5 0x56d5a63dd673 <unknown>
+#6 0x56d5a63ab473 <unknown>
+#7 0x56d5a63ac47e <unknown>
+#8 0x56d5a66620db <unknown>
+#9 0x56d5a6666071 <unknown>
+#10 0x56d5a664e9d5 <unknown>
+#11 0x56d5a6666bf2 <unknown>
+#12 0x56d5a6633b6f <unknown>
+#13 0x56d5a668a248 <unknown>
+#14 0x56d5a668a417 <unknown>
+#15 0x56d5a669a0cc <unknown>
+#16 0x7f513e56339d <unknown>
+#17 0x7f513e5e849c <unknown>
+
+2024-10-07 15:48:08,289 - ERROR    ->  6  -  5  -  2   - Failed to get data from land '06063A003090070000AG'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x5c087524e2da <unknown>
+#1 0x5c0874f1c200 <unknown>
+#2 0x5c0874ef1a1f <unknown>
+#3 0x5c0874f98eed <unknown>
+#4 0x5c0874fae6a9 <unknown>
+#5 0x5c0874f90673 <unknown>
+#6 0x5c0874f5e473 <unknown>
+#7 0x5c0874f5f47e <unknown>
+#8 0x5c08752150db <unknown>
+#9 0x5c0875219071 <unknown>
+#10 0x5c08752019d5 <unknown>
+#11 0x5c0875219bf2 <unknown>
+#12 0x5c08751e6b6f <unknown>
+#13 0x5c087523d248 <unknown>
+#14 0x5c087523d417 <unknown>
+#15 0x5c087524d0cc <unknown>
+#16 0x7966f863639d <unknown>
+#17 0x7966f86bb49c <unknown>
+
+2024-10-07 15:48:09,950 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-10-07 15:48:10,606 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-10-07 15:48:11,221 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-10-07 15:48:11,835 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-10-07 15:49:29,620 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 15:49:31,666 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 15:49:49,568 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-10-07 15:49:51,481 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-10-07 15:49:53,267 - INFO     ->  3  -  .  -  .   - No auctions available
+2024-10-07 15:50:03,506 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-10-07 15:50:10,270 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-10-07 15:50:16,932 - INFO     ->  6  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-BADAJOZ/Subasta-Bienes-Inmuebles.aspx
+2024-10-07 15:50:23,205 - INFO     ->  6  -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH%20BADAJOZ/Pliego-Condiciones-Subasta.pdf.xsig.pdf
+2024-10-07 15:50:42,299 - INFO     ->  6  -  1  -  .   - ['5578801QC0257N0001UE'], 94987.0
+2024-10-07 15:50:42,300 - INFO     ->  6  -  2  -  .   - ['5218075QC5751N0001DO', '5218075QC5751N0001DO'], 6070.0
+2024-10-07 15:50:42,300 - INFO     ->  6  -  3  -  .   - ['2889408TJ6028N0001IU'], 11040.0
+2024-10-07 15:50:42,300 - INFO     ->  6  -  4  -  .   - ['2115027QC3721N0001GL', '2115027QC3721N0001GL'], 85683.0
+2024-10-07 15:50:42,300 - INFO     ->  6  -  5  -  .   - ['1902406PC9510S0001XO', '06063A003090070000AG'], 4185.0
+2024-10-07 15:51:55,397 - ERROR    ->  6  -  1  -  1   - Failed to get data from land '5578801QC0257N0001UE'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 84, in get_data
+    self.__download_kml()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 219, in __download_kml
+    google_earth_kml.click()
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'click'
+2024-10-07 15:52:17,286 - ERROR    ->  6  -  2  -  1   - Failed to get data from land '5218075QC5751N0001DO'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connection.py", line 466, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1428, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 300, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 84, in get_data
+    self.__download_kml()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 214, in __download_kml
+    self.__go_to_otros_visores()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 273, in __go_to_otros_visores
+    cartografia_collapse.click()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 395, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 352, in execute
+    response = self.command_executor.execute(driver_command, params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/remote_connection.py", line 306, in execute
+    return self._request(command_info[0], url, body=data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/remote_connection.py", line 326, in _request
+    response = self._conn.request(method, url, body=body, headers=headers)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/_request_methods.py", line 144, in request
+    return self.request_encode_body(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/_request_methods.py", line 279, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/poolmanager.py", line 444, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/util/retry.py", line 470, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/util/util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/urllib3/connection.py", line 466, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1428, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 300, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2024-10-07 15:52:19,591 - ERROR    ->  6  -  3  -  1   - Failed to get data from land '2889408TJ6028N0001IU'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x61ddacedf2da <unknown>
+#1 0x61ddacbad200 <unknown>
+#2 0x61ddacb82a1f <unknown>
+#3 0x61ddacc29eed <unknown>
+#4 0x61ddacc3f6a9 <unknown>
+#5 0x61ddacc21673 <unknown>
+#6 0x61ddacbef473 <unknown>
+#7 0x61ddacbf047e <unknown>
+#8 0x61ddacea60db <unknown>
+#9 0x61ddaceaa071 <unknown>
+#10 0x61ddace929d5 <unknown>
+#11 0x61ddaceaabf2 <unknown>
+#12 0x61ddace77b6f <unknown>
+#13 0x61ddacece248 <unknown>
+#14 0x61ddacece417 <unknown>
+#15 0x61ddacede0cc <unknown>
+#16 0x7acaf0b7639d <unknown>
+#17 0x7acaf0bfb49c <unknown>
+
+2024-10-07 15:52:22,185 - ERROR    ->  6  -  4  -  1   - Failed to get data from land '2115027QC3721N0001GL'
+Traceback (most recent call last):
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 81, in get_data
+    self.__search()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 127, in __search
+    self.__close_cookies()
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/catastro.py", line 285, in __close_cookies
+    button_cookie = self.find_element(
+                    ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 748, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 354, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/coding-projects/ScrapingFincasHacienda/env/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=128.0.6613.113)
+Stacktrace:
+#0 0x5a8fc43ce2da <unknown>
+#1 0x5a8fc409c200 <unknown>
+#2 0x5a8fc4071a1f <unknown>
+#3 0x5a8fc4118eed <unknown>
+#4 0x5a8fc412e6a9 <unknown>
+#5 0x5a8fc4110673 <unknown>
+#6 0x5a8fc40de473 <unknown>
+#7 0x5a8fc40df47e <unknown>
+#8 0x5a8fc43950db <unknown>
+#9 0x5a8fc4399071 <unknown>
+#10 0x5a8fc43819d5 <unknown>
+#11 0x5a8fc4399bf2 <unknown>
+#12 0x5a8fc4366b6f <unknown>
+#13 0x5a8fc43bd248 <unknown>
+#14 0x5a8fc43bd417 <unknown>
+#15 0x5a8fc43cd0cc <unknown>
+#16 0x7e9bbd42739d <unknown>
+#17 0x7e9bbd4ac49c <unknown>
+

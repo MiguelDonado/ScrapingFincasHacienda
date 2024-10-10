@@ -1,11 +1,14 @@
 import regex
+import os
+
+DOWNLOAD_DIR = os.path.abspath("../data/auction")
 
 # Number of delegations are 57 in total
 NUMBER_OF_DELEGATIONS = (
     16  # This number is for testing purposes, so it only run on a few provinces.
 )
 
-DELEGATIONS = range(1, NUMBER_OF_DELEGATIONS + 1)
+DELEGATIONS = range(16, NUMBER_OF_DELEGATIONS + 1)
 
 BASE_URL_HACIENDA = "https://www.hacienda.gob.es"
 DELEGATION_URL = (
@@ -105,5 +108,3 @@ PRICE_WHEN_IS_NOT_IN_PARAGRAPH = regex.compile(
 )
 
 # https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=90&RefC=15090A507018480000AY
-
-

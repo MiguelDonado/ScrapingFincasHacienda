@@ -109,10 +109,6 @@ class Correos(webdriver.Chrome):
 
     # Let the instance on the webpage that shows data about the direction
     def __search(self) -> None:
-        try:
-            self.__close_cookies()
-        except Exception:
-            pass
         search_input = self.find_element(
             By.XPATH,
             "//input[contains(@id, 'correos-ui-input') and @type='text']",

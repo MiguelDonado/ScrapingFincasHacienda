@@ -9,6 +9,7 @@ import time
 import os
 import logging
 from typing import Union
+import regex
 
 import Catastro.constants as const
 import logger_config
@@ -79,15 +80,20 @@ class Catastro(webdriver.Chrome):
             self.__land_first_page()
             self.__search()
             data = self.__scrape()
-            self.__download_ortofoto()
-            self.__download_kml()
+            path_ortofoto = self.__download_ortofoto()
+            path_kml = self.__download_kml()
             coordinates = self.__get_coordenates_google_maps()
             # Log
             msg = f"Successfully downloaded PDF and KML of the land '{self.ref}' with coordinates '{coordinates}' and data: {data}."
             logger.info(
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
             )
-            return {"data": data, "coordinates": coordinates}
+            return {
+                "data": data,
+                "coordinates": coordinates,
+                "ortofoto": path_ortofoto,
+                "kml": path_kml,
+            }
 
         except Exception:
 
@@ -141,7 +147,10 @@ class Catastro(webdriver.Chrome):
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Localización']/following-sibling::div//label",
         ).text
-        municipio = localizacion.rsplit(".", 1)[1].split("(")[0].strip()
+        provincia = regex.search(r".*\((.*)\)", localizacion).group(1)
+        municipio = regex.search(
+            r".*\. (.+)\(", localizacion, flags=regex.DOTALL
+        ).group(1)
         clase = self.find_element(
             By.XPATH,
             "//div[@id='ctl00_Contenido_tblInmueble']//span[text()='Clase']/following-sibling::*//label",
@@ -159,6 +168,7 @@ class Catastro(webdriver.Chrome):
             cultivo = None
         return {
             "localizacion": localizacion,
+            "provincia": provincia,
             "municipio": municipio,
             "clase": clase,
             "uso": uso,
@@ -201,10 +211,12 @@ class Catastro(webdriver.Chrome):
         # Give time to the pdf to be downloaded, before trying
         # to rename it, or do something with the file
         time.sleep(5)
-        self.__rename_file(self.ref, ".pdf")
+        path = self.__rename_file(self.ref, ".pdf")
 
         # Go back to the previous page
         self.back()
+
+        return path
 
     # Given the webpage that shows data about the ref, it downloads the kml of the land
     # and it goes back to the provided webpage
@@ -218,13 +230,15 @@ class Catastro(webdriver.Chrome):
         # Give time to the KML to be downloaded, before trying
         # to rename it, or do something with the file
         time.sleep(5)
-        self.__rename_file(self.ref, ".kml")
+        path = self.__rename_file(self.ref, ".kml")
 
         # Close focused window
         self.__close_current_window()
 
         # Change focus to the remaining window
         self.switch_to.window(self.window_handles[0])
+
+        return path
 
     # Get coordinates from the land, to pass them as an argument
     # to the constructor when creating a GoogleMaps object
@@ -342,3 +356,4 @@ class Catastro(webdriver.Chrome):
         # Establish the variable that helds the new path
         new_file_path = os.path.join(const.DOWNLOAD_DIR, ref + ext)
         os.rename(most_recent_file, new_file_path)
+        return new_file_path

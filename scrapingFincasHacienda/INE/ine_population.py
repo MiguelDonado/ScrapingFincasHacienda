@@ -1,4 +1,4 @@
-# Class that inherits from a Selenium Class, given a "municipio" it extracts the population now, the population five years ago and the porcentual variation
+# Class that inherits from a Selenium Class, given a "municipio" it extracts the population now, the population five years ago
 
 import regex
 import time
@@ -121,9 +121,14 @@ class InePopulation(webdriver.Chrome):
         submit_btn.click()
 
     # Scrape the webpage that shows info about population.
-    # Returns the population now and the population 5 years ago as well as the porcentual variation
+    # Returns the population now and the population 5 years ago
     def __get_population(self) -> dict[str, Union[int, float]]:
         rows = self.find_elements(By.XPATH, "//tr[th[@class='lad']]")
+
+        # Initialize variables
+        population_now = None
+        population_before = None
+
         for row in rows:
             municipio_row = row.find_element(By.XPATH, "th[2]").text.split(" ", 1)[1]
             municipio_row_f = unidecode(municipio_row.lower())  # f stands for formatted
@@ -132,12 +137,8 @@ class InePopulation(webdriver.Chrome):
                 population_now = int(row.find_element(By.XPATH, "td[1]").text)
                 # The variable population_before, will hold the population data from 5 years ago
                 population_before = int(row.find_element(By.XPATH, "td[16]").text)
-                porcentual_variation = (
-                    population_now - population_before
-                ) / population_before
-                break
+            break
         return {
             "population_now": population_now,
             "population_before": population_before,
-            "porcentual_variation": round(porcentual_variation, 2),
         }

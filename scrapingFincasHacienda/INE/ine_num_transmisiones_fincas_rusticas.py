@@ -1,4 +1,4 @@
-# Class that extract the number of rural lands trades that's been on a province now, years before and get the porcentual variation
+# Class that extract the number of rural lands trades that's been on a province now, years before
 # The INE only provides this data for rural lands
 
 from selenium import webdriver
@@ -144,10 +144,9 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
         see_results = self.find_element(By.XPATH, "//input[@id='botonConsulSele']")
         see_results.click()
 
-    # Return a dictionary that contains 3 keys
+    # Return a dictionary that contains 2 keys
     #   1) transactions_now
     #   2) transactions_before
-    #   3) variation
     def __get_results(self) -> dict[str, Union[int, float]]:
         actual_year = int(
             self.find_element(
@@ -161,9 +160,4 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
             ).text.replace(".", "")
         )
 
-        variation = round((actual_year - seven_years_ago) / seven_years_ago, 2)
-        return {
-            "transactions_now": actual_year,
-            "transactions_before": seven_years_ago,
-            "variation": variation,
-        }
+        return {"transactions_now": actual_year, "transactions_before": seven_years_ago}
