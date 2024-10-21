@@ -26,6 +26,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 logger = logging.getLogger(__name__)
 
 
+def convert_path_to_str(path):
+    if not path:
+        return None
+    else:
+        return str(path)
+
+
 class GoogleMaps(webdriver.Chrome):
 
     # Class attribute to store all instances
@@ -146,7 +153,11 @@ class GoogleMaps(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
             )
 
-            return {"car": data_car, "foot": data_foot, "path": filename}
+            return {
+                "car": data_car,
+                "foot": data_foot,
+                "path": convert_path_to_str(filename),
+            }
 
         except Exception:
 

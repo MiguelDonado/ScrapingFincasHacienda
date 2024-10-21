@@ -104,7 +104,7 @@ class Catastro(webdriver.Chrome):
                 exc_info=True,
             )
         finally:
-            # self.quit()
+            self.quit()
             time.sleep(1)
 
     #
