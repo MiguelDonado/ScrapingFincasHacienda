@@ -1,4 +1,7 @@
-import os
+from pathlib import Path
+
+import regex
 
 BASE_URL = "https://www.google.com/maps"
-DOWNLOAD_DIR = os.path.abspath("../data/googlemaps")
+DOWNLOAD_DIR = Path("../data/googlemaps").resolve()
+KM_PATTERN = regex.compile(r"\s.*")

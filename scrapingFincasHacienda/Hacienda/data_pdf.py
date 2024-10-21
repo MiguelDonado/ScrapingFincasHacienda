@@ -1,18 +1,55 @@
 # Contains several functions, that are all used when calling the function get_pliego_info. Given the PDF that contains the list of lands in auction, it extracts
 # the ref_catastral and the price
 
-import requests
-import regex
-import pdfplumber
 import io
 import logging
 from typing import Union
 
 import Hacienda.constants as const
 import logger_config
+import pdfplumber
+import regex
+import requests
+from bs4 import BeautifulSoup
 
 # Logger configuration
 logger = logging.getLogger(__name__)
+
+
+def get_auction_id(url_pdf, delegation, auction):
+    try:
+        id = get_csv(url_pdf)
+        # If the PDF doesnt have a csv, then generate an id mixing the url and the celebration date
+        if not id:
+            id = generate_unique_id(url_pdf, auction)
+        return id
+    except Exception as e:
+
+        # Log
+        msg = "Failed to get a unique identifier for the auction using get_auction_id function {e}"
+        logger.error(f"{logger_config.build_id(delegation)}{msg}", exc_info=True)
+        return None
+
+
+def generate_unique_id(url_pdf, auction):
+    html_text = requests.get(auction)
+    soup = BeautifulSoup(html_text.text, "lxml")
+    celebration_date_div = soup.find("div", id=lambda x: x and "FechaCelebracion" in x)
+    if celebration_date_div:
+        celebration_date = celebration_date_div.text.strip().replace(" ", "")
+        id = f"{url_pdf}___date_{celebration_date}"
+        return id
+
+
+def get_csv(url_pdf):
+    text = read_pdf(url_pdf, only_first_page=True)
+    subset_csv = regex.search(const.ELECTRONIC_CSV_PATTERN, text).group()
+    # f stands for formatted
+    f_subset_csv = regex.sub(r"\n+", " ", subset_csv)
+    list_subset_csv = regex.split(" ", f_subset_csv)
+    reverse_csv = list_subset_csv[-2]
+    csv = reverse_csv[::-1]
+    return csv
 
 
 def get_lotes_data(url_pdf: str, delegation: int) -> dict[str, Union[int, dict]]:
@@ -88,7 +125,7 @@ def get_lotes_data(url_pdf: str, delegation: int) -> dict[str, Union[int, dict]]
 
 
 # Given a url of a PDF, it returns the text in one string
-def read_pdf(url_pdf: str) -> str:
+def read_pdf(url_pdf: str, only_first_page=False) -> str:
 
     # Validate the data types of our arguments
     assert isinstance(url_pdf, str), f"Url_pdf {url_pdf} must be a string!"
@@ -97,8 +134,13 @@ def read_pdf(url_pdf: str) -> str:
     pdf_binary = response.content
     pdf_content = io.BytesIO(pdf_binary)
     with pdfplumber.open(pdf_content) as pdf:
-        text_pages = [page.extract_text() for page in pdf.pages]
-    text = " ".join(text_pages)
+        # Extract content from all the pages, to parse lotes...
+        if not only_first_page:
+            text_pages = [page.extract_text() for page in pdf.pages]
+            text = " ".join(text_pages)
+        # Extract only the first page (to get the electronic csv)
+        else:
+            text = pdf.pages[0].extract_text()
     return text
 
 
@@ -211,17 +253,3 @@ def has_price(lote: str):
 
     result = regex.search(const.CHECKER_SECOND_STRUCTURE_PRICE_IN_THE_PARAGRAPH, lote)
     return result
-
-
-# DEBUG PURPOSES
-""" list_of_lands = get_pliego_info(
-    "https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CADIZ/01%20-%20Pliego%20de%20condiciones.pdf.xsig.pdf"
-)
-for counter, info in enumerate(list_of_lands):
-    print(f"The {counter+1} has the next info: {info}") """
-
-""" print(
-    read_pdf(
-        "https://www.hacienda.gob.es/DGPatrimonio/Gesti%C3%B3n%20Patrimonial/subastas/DEH-ILLES_BALEARS/PLIEGO-CONDICIONES_%20Subasta10jul2024.pdf"
-    )
-) """

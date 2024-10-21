@@ -3,12 +3,18 @@
 # It also contains a function used to build an id, that will be at the beggining
 # of the log message.
 
-import logging
 import datetime as dt
+import logging
+from pathlib import Path
 
 today = dt.datetime.today()
-debug_filename = f"logs/debug_{today:%y}{today.month:02d}{today.day:02d}.log"
-error_filename = f"logs/error_{today:%y}{today.month:02d}{today.day:02d}.log"
+debug_filename = Path(
+    f"logs/debug_{today:%y}{today.month:02d}{today.day:02d}.log"
+).resolve()
+
+error_filename = Path(
+    f"logs/error_{today:%y}{today.month:02d}{today.day:02d}.log"
+).resolve()
 
 # Create a custom logger
 logger = logging.getLogger()

@@ -1,17 +1,17 @@
 # Class that inherits from a Selenium Class, given a "municipio" it extracts the population now, the population five years ago
-
-import regex
-import time
 import logging
-from unidecode import unidecode  # To remove acentos
+import time
+from typing import Union
+
+import INE.constants as const
+import logger_config
+import regex
 
 # A través del catastro, voy a poder sacar el municipio
 # A través de la web de correos, voy a poder sacar la localidad
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from typing import Union
-
-import logger_config
+from unidecode import unidecode  # To remove acentos
 
 logger = logging.getLogger(__name__)
 
@@ -108,7 +108,7 @@ class InePopulation(webdriver.Chrome):
 
     # Lands on an Ine webpage
     def __land_first_page(self) -> None:
-        self.get("https://www.ine.es/nomen2/index.do")
+        self.get(const.POBLACION_URL_INE)
 
     # Let the instance on the webpage that shows data about the ref
     def __search_population(self) -> None:
@@ -130,15 +130,30 @@ class InePopulation(webdriver.Chrome):
         population_before = None
 
         for row in rows:
-            municipio_row = row.find_element(By.XPATH, "th[2]").text.split(" ", 1)[1]
-            municipio_row_f = unidecode(municipio_row.lower())  # f stands for formatted
+            municipio_row_f, population_now, population_before = (
+                self.__get_population_data(row)
+            )
             if municipio_row_f in self.place:
-                # The variable population_now will hold the population data from the last available year
-                population_now = int(row.find_element(By.XPATH, "td[1]").text)
-                # The variable population_before, will hold the population data from 5 years ago
-                population_before = int(row.find_element(By.XPATH, "td[16]").text)
-            break
+                break
+        # If the name of the municipio is not on the land 'localizacion' then give me back the
+        # data for the first row
+        else:
+            # This block executes if the loop completes without a break
+            municipio_row_f, population_now, population_before = (
+                self.__get_population_data(rows[0])
+            )
+
         return {
             "population_now": population_now,
             "population_before": population_before,
         }
+
+    # Helper function that will be used by get_population to get the data for a given row
+    def __get_population_data(self, row):
+        municipio_row = row.find_element(By.XPATH, "th[2]").text.split(" ", 1)[1]
+        municipio_row_f = unidecode(municipio_row.lower())  # f stands for formatted
+        # The variable population_now will hold the population data from the last available year
+        population_now = int(row.find_element(By.XPATH, "td[1]").text)
+        # The variable population_before, will hold the population data from 5 years ago
+        population_before = int(row.find_element(By.XPATH, "td[16]").text)
+        return municipio_row_f, population_now, population_before

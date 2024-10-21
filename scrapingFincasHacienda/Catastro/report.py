@@ -1,21 +1,20 @@
 # Class that uses Selenium to extract the reference value
 # and downloads the price report PDF for a land
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
 import datetime
+import logging
 import os
 import time
-from dotenv import dotenv_values
-import pdfplumber
 from typing import Union
 
-import logging
-import logger_config
 import Catastro.constants as const
+import logger_config
+import pdfplumber
+from dotenv import dotenv_values
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select, WebDriverWait
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +48,7 @@ class CatastroReport(webdriver.Chrome):
         options.add_experimental_option(
             "prefs",
             {
-                "download.default_directory": const.DOWNLOAD_DIR_REPORT,
+                "download.default_directory": str(const.DOWNLOAD_DIR_REPORT),
                 "download.propmt_for_download": False,
                 "download.directory_upgrade": True,
                 "safebrowsing.enabled": True,
@@ -137,7 +136,7 @@ class CatastroReport(webdriver.Chrome):
 
     # Lands on the main Catastro Report webpage
     def __land_first_page(self) -> None:
-        self.get("https://www1.sedecatastro.gob.es/Accesos/SECAccvr.aspx")
+        self.get(const.BASE_URL_REPORT_CATASTRO)
 
     def __close_cookies(self):
         accept_cookies = self.find_element(By.XPATH, "//a[@aria-label='allow cookies']")

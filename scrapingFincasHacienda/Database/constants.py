@@ -1,6 +1,7 @@
 import regex
 
 DB_NAME = "FincasProject.db"
+# Search line by line, and take everything before data type
 COLUMNS_PATTERN = regex.compile(r".+\"\s")
 EMPRESAS_HEADERS = """
     "Nombre" TEXT,
@@ -12,6 +13,8 @@ EMPRESAS_HEADERS = """
     "Provincia" TEXT,
     "Importe neto de la cifra de negocios mil EUR Últ. año disp." NUMERIC,
     "Importe neto de la cifra de negocios mil EUR Año - 1" NUMERIC,
+    "Total activo (A + B) mil EUR Últ. año disp." NUMERIC,
+    "Total activo (A + B) mil EUR Año - 1" NUMERIC,
     "Número empleados Últ. año disp." NUMERIC,
     "Número empleados Año - 1" NUMERIC,
     "Código primario CNAE 2009" NUMERIC,
@@ -28,6 +31,8 @@ EMPRESAS_HEADERS = """
     "Rentabilidad económica (%) % Año - 1" NUMERIC,
     "Rentabilidad financiera (%) % Últ. año disp." NUMERIC,
     "Rentabilidad financiera (%) % Año - 1" NUMERIC,
+    "Liquidez general % Últ. año disp." NUMERIC,
+    "Liquidez general % Año - 1" NUMERIC,
     "Endeudamiento (%) % Últ. año disp." NUMERIC,
     "Endeudamiento (%) % Año - 1" NUMERIC,
     "EBITDA mil EUR Últ. año disp." NUMERIC,
@@ -54,14 +59,6 @@ EMPRESAS_HEADERS = """
     "Costes de los trabajadores / Ingresos de explotación (%) % Año - 1" NUMERIC,
     "Ratio de solvencia % Últ. año disp." NUMERIC,
     "Ratio de solvencia % Año - 1" NUMERIC,
-    "Ratio de liquidez % Últ. año disp." NUMERIC,
-    "Ratio de liquidez % Año - 1" NUMERIC,
-    "Total Activo mil EUR Últ. año disp." NUMERIC,
-    "Total Activo mil EUR Año - 1" NUMERIC,
-    "Variación de existencias de productos terminados y en curso de fabricación mil EUR Últ. año disp." NUMERIC,
-    "Variación de existencias de productos terminados y en curso de fabricación mil EUR Año - 1" NUMERIC,
-    "Aprovisionamientos mil EUR Últ. año disp." NUMERIC,
-    "Aprovisionamientos mil EUR Año - 1" NUMERIC,
     "Calle" TEXT,
     "Código postal" TEXT,
 """
@@ -69,38 +66,38 @@ EMPRESAS_HEADERS = """
 FINCA_HEADERS = """
     "referencia_catastral" TEXT NOT NULL,
     "localizacion" TEXT NOT NULL,
-    "catastro_value" NUMERIC NOT NULL,
+    "catastro_value" NUMERIC,
     "delegation_id" INTEGER NOT NULL,
-    "agrupacion_cultivo_id" INTEGER NOT NULL,
+    "agrupacion_cultivo_id" INTEGER,
     "locality_id" INTEGER NOT NULL,
     "lote_id" INTEGER NOT NULL,
     "clase_id" INTEGER NOT NULL,
     "uso_id" INTEGER NOT NULL,
     "aprovechamiento_id" INTEGER NOT NULL,
     "codigo_postal_id" INTEGER NOT NULL,
-    "ath_id" INTEGER NOT NULL,
+    "ath_id" INTEGER,
     "coordenadas" TEXT NOT NULL,
-    "agrupacion_municipio" TEXT NOT NULL,
-    "number_buildings" INTEGER NOT NULL,
-    "slope" NUMERIC NOT NULL,
-    "fls" NUMERIC NOT NULL,
+    "agrupacion_municipio" TEXT,
+    "number_buildings" INTEGER,
+    "slope" NUMERIC,
+    "fls" NUMERIC,
     "ortofoto" BLOB NOT NULL,
     "kml" BLOB NOT NULL,
     "google_maps" BLOB NOT NULL,
-    "report_catastro" BLOB NOT NULL,
+    "report_catastro" BLOB,
     "datetime" NUMERIC NOT NULL DEFAULT CURRENT_TIMESTAMP,
 """
 EMPRESAS_FINCAS_HEADERS = """
     "empresa_id" INTEGER NOT NULL,
     "finca_id" INTEGER NOT NULL,
-    "distance_on_car" INTEGER NOT NULL,
+    "distance_on_car" NUMERIC NOT NULL,
     "time_on_car" INTEGER NOT NULL,
-    "distance_on_foot" INTEGER NOT NULL,
+    "distance_on_foot" NUMERIC NOT NULL,
     "time_on_foot" INTEGER NOT NULL,
     "route_screenshot" BLOB,
 """
 
-ALLOWED_CLASES = ["Rústico", "Urbano", "De características especiales"]
+ALLOWED_CLASES = ["rústico", "urbano", "de características especiales"]
 ALLOWED_USOS = {
     "almacén, estac.": "Almacén-Estacionamiento",
     "comercial": "Comercial",

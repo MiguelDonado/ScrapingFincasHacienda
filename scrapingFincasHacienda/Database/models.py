@@ -1,4 +1,6 @@
 import sqlite3
+from pathlib import Path
+
 import Database.constants as const
 import regex
 
@@ -16,6 +18,14 @@ def read_binary(path_binary_file):
     with open(path_binary_file, "rb") as file:
         binary_file = file.read()
     return binary_file
+
+
+def remove_file_from_filesystem(path):
+    if path:
+        file_path = Path(path)
+        file_path.unlink()
+    else:
+        return None
 
 
 class BaseDatabase:
@@ -455,6 +465,7 @@ class Auction(BaseDatabase):
         sql = f"""
             CREATE TABLE IF NOT EXISTS "auctions" (
                 "id" INTEGER,
+                "electronical_id" TEXT UNIQUE,   
                 "path_pdf" TEXT,
                 "pliego_pdf" BLOB,
                 PRIMARY KEY ("id")
@@ -462,28 +473,32 @@ class Auction(BaseDatabase):
             """
         self.execute_query(sql)
 
-    def insert_data(self, path_pdf):
+    def insert_data(self, electronical_id, path_pdf):
         # If the argument is None, then do nothing
-        if not path_pdf:
+        if not electronical_id:
             return None
         # Before inserting the data, check if already exists on the table
         # If it doesn't exists, then proceed to insert it
-        if not self.get_auction_id(path_pdf):
+        if not self.get_auction_id(electronical_id):
 
             # Get the binary contents of the PDF to insert them on the BLOB field
             pliego_pdf = read_binary(path_pdf)
 
             sql = """
                     INSERT INTO "auctions"
-                    ("path_pdf","pliego_pdf")
-                    VALUES (:path_pdf,:pliego_pdf)
+                    ("electronical_id","path_pdf","pliego_pdf")
+                    VALUES (:electronical_id,:path_pdf,:pliego_pdf)
                     """
-            params = {"path_pdf": path_pdf, "pliego_pdf": pliego_pdf}
+            params = {
+                "electronical_id": electronical_id,
+                "path_pdf": path_pdf,
+                "pliego_pdf": pliego_pdf,
+            }
             self.execute_query(sql, params)
 
-    def get_auction_id(self, path_pdf):
-        sql = 'SELECT "id" FROM auctions WHERE "path_pdf"=:path_pdf'
-        params = {"path_pdf": path_pdf}
+    def get_auction_id(self, electronical_id):
+        sql = 'SELECT "id" FROM auctions WHERE "electronical_id"=:electronical_id'
+        params = {"electronical_id": electronical_id}
         self.execute_query(sql, params)
         result = self.cursor.fetchone()
         return result["id"] if result else None
@@ -616,19 +631,25 @@ class Empresa(BaseDatabase):
         for row in df.itertuples(index=False, name=None):
             # Before inserting the data, check if already exists on the table
             # If it doesn't exists, then proceed to insert it
-            if not self.get_empresa_id(row["nif"]):
+            if not self.get_empresa_id(row[1]):
                 self.execute_query(sql, row)
 
     def get_empresa_id(self, nif):
         sql = 'SELECT "id" FROM empresas WHERE "Código NIF"=:nif'
         params = {"nif": nif}
-        result = self.execute_query(sql, params)
+        self.execute_query(sql, params)
+        result = self.cursor.fetchone()
         return result["id"] if result else None
 
     def delete_data(self, nif):
         sql = 'DELETE FROM empresas WHERE "Código NIF"=:nif'
         params = {"nif": nif}
         self.execute_query(sql, params)
+
+    def testing_purposes(self):
+        sql = 'SELECT "id" FROM empresas'
+        result = self.execute_query(sql)
+        return result["id"] if result else None
 
     # def __update_data(self): Won't have a method for updating data because it has no sense for this dimension table
     # the street and the financial ratios dont need to be updated till several years go by
@@ -641,7 +662,7 @@ class Finca(BaseDatabase):
 
     def __init__(self):
         self.__create_table()  # If the table is already created, it does nothing
-        Finca.columns, Finca.placeholders_sql = Finca.get_columns_placeholders_sql()
+        Finca.columns_sql, Finca.placeholders_sql = Finca.get_columns_placeholders_sql()
 
     def __create_table(self):
         sql = f"""
@@ -678,9 +699,8 @@ class Finca(BaseDatabase):
             google_maps = read_binary(path_google_maps)
             report_catastro = read_binary(path_report_catastro)
 
-            sql = f'INSERT INTO "empresas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
+            sql = f'INSERT INTO "fincas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
             values = tuple(data.values())
-
             # Add the binary data to the end of the values tuple
             values += (ortofoto, kml, google_maps, report_catastro)
 
@@ -699,7 +719,11 @@ class Finca(BaseDatabase):
     @staticmethod
     def get_columns_placeholders_sql():
         # Get the columns names to dynamically create the SQL statements
-        list_columns_names = regex.findall(const.COLUMNS_PATTERN, const.FINCA_HEADERS)
+        # Drop last element, because the datetime would be inserted
+        # by default, no need for a placeholder on sql statement
+        list_columns_names = regex.findall(const.COLUMNS_PATTERN, const.FINCA_HEADERS)[
+            :-1
+        ]
         list_columns_names = [column.strip() for column in list_columns_names]
         column_names_sql = ", ".join(list_columns_names)
         # Get the placeholders to dynamically create the SQL statements
@@ -715,7 +739,7 @@ class EmpresaFinca(BaseDatabase):
 
     def __init__(self):
         self.__create_table()  # If the table is already created, it does nothing
-        EmpresaFinca.columns, EmpresaFinca.placeholders_sql = (
+        EmpresaFinca.columns_sql, EmpresaFinca.placeholders_sql = (
             EmpresaFinca.get_columns_placeholders_sql()
         )
 
@@ -738,7 +762,7 @@ class EmpresaFinca(BaseDatabase):
         # Before inserting the data, check if already exists on the table
         # If it doesn't exists, then proceed to insert it
         if not self.get_empresa_finca_id(data["empresa_id"], data["finca_id"]):
-            sql = f'INSERT INTO "empresas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
+            sql = f'INSERT INTO "empresas_fincas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
             values = tuple(data.values())
             self.execute_query(sql, values)
 
@@ -765,7 +789,16 @@ class EmpresaFinca(BaseDatabase):
         return column_names_sql, placeholders_sql
 
 
-def definitive_insert_all_data(full_data_land):
+# Returns Truthy value if its old, Falsy value if its new
+def is_old(referencia_catastral):
+    db = BaseDatabase()
+    finca = Finca()
+    finca_id = finca.get_finca_id(referencia_catastral)
+    db.close_connection()
+    return finca_id
+
+
+def insert_land_data(land_data):
 
     # Create table if doesnt exist
     db = BaseDatabase()
@@ -795,53 +828,53 @@ def definitive_insert_all_data(full_data_land):
     # 1.1. Table 'clases' is already created and populated.
     # 1.2. Table 'usos' is already created and populated.
     # 1.3. Table 'agrupacion_cultivos'
-    agrupacion_cultivo.insert_data(full_data_land["agrupacion_cultivo"])
+    agrupacion_cultivo.insert_data(land_data["agrupacion_cultivo"])
     # 1.4. Table 'aprovechamientos'
-    aprovechamiento.insert_data(full_data_land["aprovechamiento"])
+    aprovechamiento.insert_data(land_data["aprovechamiento"])
     # 1.5. Table 'provinces'
     province.insert_data(
-        full_data_land["province"],
-        full_data_land["rusticas_transactions_now"],
-        full_data_land["rusticas_transactions_before"],
+        land_data["province"],
+        land_data["rusticas_transactions_now"],
+        land_data["rusticas_transactions_before"],
     )
     # 1.6. Table 'municipios'
-    municipio.insert_data(full_data_land["municipio"])
+    municipio.insert_data(land_data["municipio"])
     # 1.7. Table 'localities'
     """Before inserting the data on 'localities' table, 
     I've to retrieve the id of the 'municipio' and 'province'
     that I inserted previously (they may've already exists
     on their tables, so it weren't inserted again)"""
 
-    municipio_id = municipio.get_municipio_id(full_data_land["municipio"])
-    province_id = province.get_province_id(full_data_land["province"])
+    municipio_id = municipio.get_municipio_id(land_data["municipio"])
+    province_id = province.get_province_id(land_data["province"])
 
     locality.insert_data(
-        full_data_land["locality"],
+        land_data["locality"],
         municipio_id,
         province_id,
-        full_data_land["population_now"],
-        full_data_land["population_before"],
+        land_data["population_now"],
+        land_data["population_before"],
     )
     # 1.7. Table 'codigos_postales'
-    codigo_postal.insert_data(full_data_land["codigo_postal"])
+    codigo_postal.insert_data(land_data["codigo_postal"])
     # 1.8. Table 'delegations' is already created and populated.
     # 1.9. Table 'auctions'
-    auction.insert_data(full_data_land["auction_pdf_path"])
+    auction.insert_data(land_data["electronical_id"], land_data["auction_pdf_path"])
     # 2.0. Table 'territorios'
-    territorio.insert_data(full_data_land["ath_number"], full_data_land["ath_name"])
+    territorio.insert_data(land_data["ath_number"], land_data["ath_name"])
     # 2.1. Table 'lote'
     """Before inserting the data on 'lote' table, 
     I've to retrieve the id of the 'auction'
     that I inserted previously (they may've already exists
     on their tables, so it weren't inserted again)"""
-    auction_id = auction.get_auction_id(full_data_land["auction_pdf_path"])
+    auction_id = auction.get_auction_id(land_data["electronical_id"])
     lote.insert_data(
         auction_id,
-        full_data_land["lote_number"],
-        full_data_land["price"],
+        land_data["lote_number"],
+        land_data["price"],
     )
     # 2.2. Table 'empresa'
-    empresa.insert_data(full_data_land["empresas"])
+    empresa.insert_data(land_data["empresas"])
     # 2.3. Table 'finca'
     """Before inserting the data on 'finca' table, 
     I've to retrieve the id of the next variables:
@@ -858,26 +891,24 @@ def definitive_insert_all_data(full_data_land):
 
     # Getting the necessaries IDs of the foreign keys
     agrupacion_cultivo_id = agrupacion_cultivo.get_agrupacion_cultivo_id(
-        full_data_land["agrupacion_cultivo"]
+        land_data["agrupacion_cultivo"]
     )
-    locality_id = locality.get_locality_id(full_data_land["locality"], municipio_id)
-    lote_id = lote.get_lote_id(auction_id, full_data_land["lote_number"])
-    clase_id = clase.get_clase_id(full_data_land["clase"])
-    uso_id = uso.get_uso_id(full_data_land["uso"])
+    locality_id = locality.get_locality_id(land_data["locality"], municipio_id)
+    lote_id = lote.get_lote_id(auction_id, land_data["lote_number"])
+    clase_id = clase.get_clase_id(land_data["clase"])
+    uso_id = uso.get_uso_id(land_data["uso"])
     aprovechamiento_id = aprovechamiento.get_aprovechamiento_id(
-        full_data_land["aprovechamiento"]
+        land_data["aprovechamiento"]
     )
-    codigo_postal_id = codigo_postal.get_codigo_postal_id(
-        full_data_land["codigo_postal"]
-    )
-    ath_id = territorio.get_territorio_id(full_data_land["ath_number"])
+    codigo_postal_id = codigo_postal.get_codigo_postal_id(land_data["codigo_postal"])
+    ath_id = territorio.get_territorio_id(land_data["ath_number"])
 
     finca.insert_data(
         {
-            "referencia_catastral": full_data_land["referencia_catastral"],
-            "localizacion": full_data_land["localizacion"],
-            "catastro_value": full_data_land["catastro_value"],
-            "delegation_id": full_data_land["delegation"],
+            "referencia_catastral": land_data["referencia_catastral"],
+            "localizacion": land_data["localizacion"],
+            "catastro_value": land_data["catastro_value"],
+            "delegation_id": land_data["delegation"],
             "agrupacion_cultivo_id": agrupacion_cultivo_id,
             "locality_id": locality_id,
             "lote_id": lote_id,
@@ -886,16 +917,16 @@ def definitive_insert_all_data(full_data_land):
             "aprovechamiento_id": aprovechamiento_id,
             "codigo_postal_id": codigo_postal_id,
             "ath_id": ath_id,
-            "coordenadas": full_data_land["coordenadas"],
-            "agrupacion_municipio": full_data_land["agrupacion_municipio"],
-            "number_buildings": full_data_land["number_buildings"],
-            "slope": full_data_land["slope"],
-            "fls": full_data_land["fls"],
+            "coordenadas": land_data["coordenadas"],
+            "agrupacion_municipio": land_data["agrupacion_municipio"],
+            "number_buildings": land_data["number_buildings"],
+            "slope": land_data["slope"],
+            "fls": land_data["fls"],
         },
-        full_data_land["path_ortofoto_land"],
-        full_data_land["path_kml_land"],
-        full_data_land["path_googlemaps_land"],
-        full_data_land["path_report_land"],
+        land_data["path_ortofoto_land"],
+        land_data["path_kml_land"],
+        land_data["path_googlemaps_land"],
+        land_data["path_report_land"],
     )
 
     # 2.4. Table 'EmpresaFinca'
@@ -906,23 +937,24 @@ def definitive_insert_all_data(full_data_land):
     that I inserted previously (they may've already exists
     on their tables, so it weren't inserted again)"""
 
-    finca_id = finca.get_finca_id(full_data_land["referencia_catastral"])
+    finca_id = finca.get_finca_id(land_data["referencia_catastral"])
 
-    for empresa in full_data_land["empresas_fincas"]:
+    for empresa_finca_maps in land_data["empresas_fincas"]:
+
+        empresa_finca_cif = empresa_finca_maps["cif"]
+        empresa_finca_data = empresa_finca_maps["data"]
+
         # Get ID of enterprise
-        empresa_id = empresa.get_empresa_id(empresa["cif"])
-
-        # Get data of enterprise to insert on table
-        empresa_data = empresa["data"]
+        empresa_id = empresa.get_empresa_id(empresa_finca_cif)
 
         # Get relevant data
-        distance_on_car = empresa_data["car"]["distance"]
-        time_on_car = empresa_data["car"]["time"]
-        distance_on_foot = empresa_data["foot"]["distance"]
-        time_on_foot = empresa_data["foot"]["time"]
+        distance_on_car = empresa_finca_data["car"]["distance_on_car"]
+        time_on_car = empresa_finca_data["car"]["time_on_car"]
+        distance_on_foot = empresa_finca_data["foot"]["distance_on_foot"]
+        time_on_foot = empresa_finca_data["foot"]["time_on_foot"]
 
         # Read binary file to insert on BLOB field in table
-        path_route = empresa_data["path"]
+        path_route = empresa_finca_data["path"]
         binary_content = read_binary(path_route)
 
         data_to_insert = {
@@ -935,4 +967,12 @@ def definitive_insert_all_data(full_data_land):
             "route_screenshot": binary_content,
         }
         empresa_finca.insert_data(data_to_insert)
+
+    remove_file_from_filesystem(land_data["auction_pdf_path"])
+    remove_file_from_filesystem(land_data["path_ortofoto_land"])
+    remove_file_from_filesystem(land_data["path_kml_land"])
+    remove_file_from_filesystem(land_data["path_googlemaps_land"])
+    remove_file_from_filesystem(land_data["path_report_land"])
+    remove_file_from_filesystem(empresa_finca_data["path"])
+
     db.close_connection()

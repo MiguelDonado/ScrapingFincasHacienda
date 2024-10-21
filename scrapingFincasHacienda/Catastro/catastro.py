@@ -1,18 +1,18 @@
 # Class that inherits from a Selenium class. Given the referencia catastral of a property,
 # it downloads the KML, and scrapes some data
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
-import os
 import logging
+import os
+import time
 from typing import Union
-import regex
 
 import Catastro.constants as const
 import logger_config
+import regex
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ class Catastro(webdriver.Chrome):
         options.add_experimental_option(
             "prefs",
             {
-                "download.default_directory": const.DOWNLOAD_DIR,
+                "download.default_directory": str(const.DOWNLOAD_DIR),
                 "download.prompt_for_download": False,  # To automatically save files to the specified directory without asking
                 "download.directory_upgrade": True,
                 "safebrowsing.enabled": True,

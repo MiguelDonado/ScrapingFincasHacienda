@@ -1,7 +1,10 @@
-import regex
-import os
+from pathlib import Path
 
-DOWNLOAD_DIR = os.path.abspath("../data/auction")
+import regex
+
+ELECTRONIC_CSV_PATTERN = regex.compile(r"se\.bog\.adneicah.*:VSC", flags=regex.DOTALL)
+
+DOWNLOAD_DIR = Path("../data/auction").resolve()
 
 # Number of delegations are 57 in total
 NUMBER_OF_DELEGATIONS = (

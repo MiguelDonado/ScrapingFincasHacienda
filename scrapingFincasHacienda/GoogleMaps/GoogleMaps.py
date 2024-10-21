@@ -11,16 +11,17 @@
 # I choose Selenium because it's free and because it allows me to practice
 # with Selenium library, XPATH, and Chrome Developer Tools.
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
-import sys
 import logging
+import sys
+import time
 
 import GoogleMaps.constants as const
 import logger_config
+import regex
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 logger = logging.getLogger(__name__)
 
@@ -208,8 +209,6 @@ class GoogleMaps(webdriver.Chrome):
         )
         hide_panel_btn.click()
 
-        time.sleep(5)
-
         # Wait till satellite button is clickable
         WebDriverWait(self, 30).until(
             EC.element_to_be_clickable(
@@ -230,9 +229,9 @@ class GoogleMaps(webdriver.Chrome):
         else:
             extra_path = ""
 
-        time.sleep(2)
+        time.sleep(10)
 
-        filename = f"{const.DOWNLOAD_DIR}/{self.ref}{extra_path}.png"
+        filename = const.DOWNLOAD_DIR / f"{self.ref}{extra_path}.png"
         self.get_screenshot_as_file(filename)
         return filename
 
@@ -275,7 +274,10 @@ class GoogleMaps(webdriver.Chrome):
             By.XPATH,
             "//span[contains(@id, 'section-directions-trip')]/following-sibling::div//div[contains(text(), 'm') and not(contains(text(), 'min'))]",
         )
-        return {"time_on_car": time_label.text, "distance_on_car": distance_label.text}
+        return {
+            "time_on_car": self.__convert_to_minutes(time_label.text),
+            "distance_on_car": self.__km_as_standard_unit(distance_label.text),
+        }
 
     # Given the final route returns a dictionary with 2 keys:
     #   1) Time on foot
@@ -296,6 +298,36 @@ class GoogleMaps(webdriver.Chrome):
             "//span[contains(@id, 'section-directions-trip')]/following-sibling::div//div[contains(text(), 'm') and not(contains(text(), 'min'))]",
         )
         return {
-            "time_on_foot": time_label.text,
-            "distance_on_foot": distance_label.text,
+            "time_on_foot": self.__convert_to_minutes(time_label.text),
+            "distance_on_foot": self.__km_as_standard_unit(distance_label.text),
         }
+
+    # We use static methods when we want to do something that is not unique per instance,
+    # but it should do something that has a relationship with the class
+    # Standardized all distances to km, and it returns me a float
+    @staticmethod
+    def __km_as_standard_unit(distance_input):
+        if distance_input[-2:] == "km":
+            distance = regex.sub(const.KM_PATTERN, "", distance_input).replace(",", ".")
+            return float(distance)
+        else:
+            distance = regex.sub(const.KM_PATTERN, "", distance_input)
+            distance = float(distance) / 1000
+            return distance
+
+    # We use static methods when we want to do something that is not unique per instance,
+    # but it should do something that has a relationship with the class
+    # Standardized all times to min, and it returns me a integer
+    @staticmethod
+    def __convert_to_minutes(time_str):
+        # Split the time string by spaces
+        time_splitted = time_str.split()
+        total_in_minutes = 0
+        # Use a for loop to distinguish min than hours
+        for i, element in enumerate(time_splitted):
+            if i == len(time_splitted) - 1:
+                return total_in_minutes
+            elif time_splitted[i + 1] == "min":
+                total_in_minutes += int(element)
+            elif time_splitted[i + 1] == "h":
+                total_in_minutes += int(element) * 60

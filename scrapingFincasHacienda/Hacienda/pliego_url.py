@@ -1,12 +1,13 @@
 # Functions used to extract the url of the Pliego/Anexo PDF for a given auction url.
 
-import requests
 import logging
-from bs4 import BeautifulSoup
-import regex
 from datetime import date
-import logger_config
+
 import Hacienda.constants as const
+import logger_config
+import regex
+import requests
+from bs4 import BeautifulSoup
 from Hacienda.data_pdf import read_pdf
 
 # Logger configuration
@@ -67,7 +68,7 @@ def download_pdf(url_pdf: str, delegation: int) -> str:
     # Returns the current local date
     today = date.today()
     # Create the filename that will be used for the downloaded auction pdf
-    filename = f"{const.DOWNLOAD_DIR}/{today}_Delegation_{delegation}.pdf"
+    filename = const.DOWNLOAD_DIR / f"{today}_Delegation_{delegation}.pdf"
 
     response = requests.get(url_pdf)
 

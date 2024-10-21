@@ -1,14 +1,15 @@
 # Class that extract the number of rural lands trades that's been on a province now, years before
 # The INE only provides this data for rural lands
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 import logging
 import time
 from typing import Union
 
+import INE.constants as const
 import logger_config
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
 logger = logging.getLogger(__name__)
 
@@ -104,7 +105,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
 
     # Lands on an Ine webpage
     def __land_first_page(self) -> None:
-        self.get("https://www.ine.es/jaxiT3/Tabla.htm?t=6152")
+        self.get(const.BASE_URL_INE)
 
     def __close_cookies(self) -> None:
         accept_btn = self.find_element(By.XPATH, "//a[@id='aceptarCookie']")
