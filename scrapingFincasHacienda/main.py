@@ -170,7 +170,6 @@ def main():
                 }
                 save_python_object_to_file(full_data_land)
                 insert_land_data(full_data_land)
-                sys.exit()
             if skip_outer:
                 break  # To handle already stored auctions
 

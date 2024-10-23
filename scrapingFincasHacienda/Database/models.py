@@ -23,7 +23,10 @@ def read_binary(path_binary_file):
 def remove_file_from_filesystem(path):
     if path:
         file_path = Path(path)
-        file_path.unlink()
+        try:
+            file_path.unlink()
+        except Exception:
+            return None
     else:
         return None
 

@@ -220,12 +220,11 @@ class GoogleMaps(webdriver.Chrome):
         )
         hide_panel_btn.click()
 
-        # Wait till satellite button is clickable
-        WebDriverWait(self, 30).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, "//button[@aria-labelledby='widget-minimap-icon-overlay']")
-            )
-        ).click()
+        satellite_button = self.find_element(
+            By.XPATH, "//button[label[text()='Satélite']]"
+        )
+        # Use JavaScript to trigger the jsaction event, change to satellite view
+        self.execute_script("arguments[0].click();", satellite_button)
 
         # Will only be True when called for the method get_data_one_direction
         if zoom:

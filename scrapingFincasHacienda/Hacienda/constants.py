@@ -11,7 +11,7 @@ NUMBER_OF_DELEGATIONS = (
     16  # This number is for testing purposes, so it only run on a few provinces.
 )
 
-DELEGATIONS = range(16, NUMBER_OF_DELEGATIONS + 1)
+DELEGATIONS = range(16, NUMBER_OF_DELEGATIONS + 5)
 
 BASE_URL_HACIENDA = "https://www.hacienda.gob.es"
 DELEGATION_URL = (
