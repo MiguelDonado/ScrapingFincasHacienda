@@ -5,3 +5,7 @@ DOWNLOAD_DIR = Path("../data/iberpix").resolve()
 SUFFIX_FILENAME_CURVAS_NIVEL = "_mapa_curvas_nivel.png"
 SUFFIX_FILENAME_LIDAR = "_mapa_lidar.png"
 SUFFIX_FILENAME_USOS_SUELO = "_mapa_usos_suelo.png"
+
+##### LAYERS ######
+HIDROGRAFIA = "https://servicios.idee.es/wms-inspire/hidrografia?"
+ORTOFOTOS_PROVISIONALES = "https://wms-pnoa.idee.es/pnoa-provisionales?"

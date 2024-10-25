@@ -5,6 +5,8 @@ import Iberpix.constants as const
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Iberpix(webdriver.Chrome):
@@ -53,7 +55,12 @@ class Iberpix(webdriver.Chrome):
         self.__show_usos_suelo_map()
         filename_mapa_usos_suelo = f"{self.ref}{const.SUFFIX_FILENAME_USOS_SUELO}"
         self.__my_get_screenshot(filename_mapa_usos_suelo)
-        self.__scrape_usos_suelo_info()
+
+        # 'Data_usos_suelo' is a dictionary
+        data_usos_suelo = self.__scrape_usos_suelo_info()
+
+        # Get ortofoto provisional with hidrografia
+        self.__get_ortofoto()
 
     def __land_first_page(self):
         self.get(const.BASE_URL_IBERPIX)
@@ -121,21 +128,73 @@ class Iberpix(webdriver.Chrome):
         info_mode_btn = self.find_element(By.XPATH, "//button[@id='m-information-btn']")
         info_mode_btn.click()
 
-        time.sleep(5)
-        # Get the size of the map element
         map_element = self.find_element(By.XPATH, "//canvas")
-        map_size = map_element.size
-        map_width = map_size["width"]
-        map_height = map_size["height"]
-
-        # Calculate the center point of the map
-        center_x = map_width / 2
-        center_y = map_height / 2
 
         actions = ActionChains(self)
 
-        # ITS NOT WORKING !!!!
-        # actions.move_to_element_with_offset(map_element, center_x, center_y).click().perform()
+        # Move the mouse to the middle of the map element (where the interested land is located)
+        actions.move_to_element(map_element).click().perform()
+
+        # The info about the current layers, takes a bit to load.
+        # If I try to enter before loading, it kicks me out
+        time.sleep(2)
+
+        info_section = self.find_element(
+            By.XPATH, "//div[contains(@class, 'm-has-tabs')]/div/div[@data-index=1]"
+        )
+        info_section.click()
+
+        expand_data_land_usos_suelo = self.find_element(
+            By.XPATH, '//div[p[strong[contains(text(), "CORINE")]]]'
+        )
+        expand_data_land_usos_suelo.click()
+
+        # Get table that contains the specific info for the land
+        data_land_usos_suelo = self.find_element(
+            By.XPATH, "//table[@class='featureInfo']/tbody"
+        )
+
+        # Extract headers
+        headers = data_land_usos_suelo.find_elements(By.XPATH, "./tr[1]/th")
+        headers = [header.text for header in headers]
+
+        # Extract values
+        values = data_land_usos_suelo.find_elements(By.XPATH, "./tr[2]/td")
+        values = [value.text for value in values]
+
+        # Create a dictionary containing the headers and the values
+        final_data = dict(zip(headers, values))
+
+        # Close popup
+        close_btn = self.find_element(By.XPATH, "//a[@title='cerrar popup']")
+        close_btn.click()
+
+        # Exit info mode
+        info_mode_btn.click()
+
+        return final_data
+
+    def __get_ortofoto(self):
+        expand_layer_collapse_btn = self.find_element(
+            By.XPATH, "//div[@title='Gestor de capas']/button"
+        )
+        expand_layer_collapse_btn.click()
+
+        add_layer_btn = self.find_element(
+            By.XPATH, "//button[@id='m-layerswitcher-addlayers']"
+        )
+        add_layer_btn.click()
+
+        input_search = self.find_element(
+            By.XPATH, "//input[@id='m-layerswitcher-addservices-search-input']"
+        )
+        search_btn = self.find_element(
+            By.XPATH, "//button[@id='m-layerswitcher-addservices-search-btn']"
+        )
+
+        # Add hidrografia layer
+        input_search.send_keys(const.HIDROGRAFIA)
+        search_btn.click()
 
     def __my_get_screenshot(self, filename):
         # The background layers takes a bit of time to load. If i dont set any time, the screenshot
