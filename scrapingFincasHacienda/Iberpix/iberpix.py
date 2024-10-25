@@ -175,6 +175,38 @@ class Iberpix(webdriver.Chrome):
         return final_data
 
     def __get_ortofoto(self):
+        self.__set_bg_empty_layer()
+        # Hidrografia layer
+        self.__add_layer(const.HIDROGRAFIA)
+        # Ortofotos provisionales layer
+        self.__add_layer(const.ORTOFOTOS_PROVISIONALES)
+
+    def __set_bg_empty_layer(self):
+        choose_background_layer = self.find_element(
+            By.XPATH, '//button[contains(@aria-label,"BackImgLayer")]'
+        )
+        choose_background_layer.click()
+
+        select_empty_layer = self.find_element(
+            By.XPATH, "//div[@id='m-backimglayer-lyr-empty']"
+        )
+        select_empty_layer.click()
+
+        close_side_panel = self.find_element(
+            By.XPATH, '//button[@aria-label="Plugin BackImgLayer"]'
+        )
+        close_side_panel.click()
+
+    # Explanation of arguments:
+    # all: If we want to see all the sublayers for the given url_service
+    # If we dont want to see all the sublayers but only one, we should:
+    #    1. Set the all argument to False
+    #    2. Provide:
+    #       a) The name of the sublayer we want to see
+    #       b) Specify the number of the sublayer we want to see (the 1º, the 2º...)
+    def __add_layer(
+        self, url_service, all=True, name_sublayer="", number_position_sublayer=0
+    ):
         expand_layer_collapse_btn = self.find_element(
             By.XPATH, "//div[@title='Gestor de capas']/button"
         )
@@ -188,13 +220,31 @@ class Iberpix(webdriver.Chrome):
         input_search = self.find_element(
             By.XPATH, "//input[@id='m-layerswitcher-addservices-search-input']"
         )
+        input_search.send_keys(url_service)
+
         search_btn = self.find_element(
             By.XPATH, "//button[@id='m-layerswitcher-addservices-search-btn']"
         )
-
-        # Add hidrografia layer
-        input_search.send_keys(const.HIDROGRAFIA)
         search_btn.click()
+
+        if all:
+            add_layer_btn = self.find_element(
+                By.XPATH, "//button[@id='m-layerswitcher-addservices-selectall']"
+            )
+            add_layer_btn.click()
+        else:
+            pass
+
+        accept_btn = self.find_element(
+            By.XPATH,
+            "//div[@id='m-layerswitcher-addservices-results']//button[contains(@class,'m-layerswitcher-addservices-add')]",
+        )
+        accept_btn.click()
+
+        close_sidebar = self.find_element(
+            By.XPATH, "//button[@aria-label='Plugin Layerswitcher']"
+        )
+        close_sidebar.click()
 
     def __my_get_screenshot(self, filename):
         # The background layers takes a bit of time to load. If i dont set any time, the screenshot
