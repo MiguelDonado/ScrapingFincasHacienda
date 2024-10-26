@@ -100,6 +100,7 @@ def read_python_object_from_file():
 # (optional for next steps) | value_land = float
 # (optional for next steps) | data_ine_population = {"population_now","population_before"}
 # (optional for next steps) | data_ine_transmisiones = {"transactions_now","transactions_before"}
+# (optional for next steps) | data_usos_suelo = {"ID", "Código iberpix", "Cubierta terrestre iberpix", "Código CODIIGE", "Cubierta terrestre CODIIGE", "Código Uso de suelo", "Uso del suelo HILUCS", "Superficie (Ha)"}
 # (optional for next steps) | data_two_directions = {"car": {"distance","time"}, "foot": {"distance","time"}}
 # (optional for next steps) | data_sabi = df with 61 columns
 # (optional for next steps) | data_two_directions = {"car": {"distance","time"}, "foot": {"distance","time"}}
@@ -110,4 +111,8 @@ def read_python_object_from_file():
 # (mandatory) | path_kml_land (saved in /data/catastro/some_name.kml) | Catastro.get_data()
 # (mandatory) | path_googlemaps_land (saved in /data/googlemaps/ref_catast.png) | Google_Maps.get_one_direction()
 # (optional, only for rusticas) | path_report_land (saved in /data/report/some_name.pdf) | CatastroReport.get_data()
+# (optional)  | fullpath_mapa_curvas_nivel (saved in /data/iberpix/some_name.png) | Iberpix.get_data()
+# (optional)  | fullpath_mapa_lidar (saved in /data/iberpix/some_name.png) | Iberpix.get_data()
+# (optional)  | fullpath_mapa_usos_suelo (saved in /data/iberpix/some_name.png) | Iberpix.get_data()
+# (optional)  | fullpath_mapa_ortofoto_hidrografia (saved in /data/iberpix/some_name.png) | Iberpix.get_data()
 # (mandatory) | data_two_directions['path'] (saved in /data/googlemaps/ref_catast-name_enterprise.png) | Google_Maps.get_data_two_directions()

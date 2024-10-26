@@ -9,6 +9,7 @@ from GoogleMaps.GoogleMaps import GoogleMaps
 from Hacienda.auction_delegation import has_auction
 from Hacienda.data_pdf import get_auction_id, get_lotes_data
 from Hacienda.pliego_url import get_pliego
+from Iberpix.iberpix import Iberpix
 from INE.ine_num_transmisiones_fincas_rusticas import IneNumTransmisionesFincasRusticas
 from INE.ine_population import InePopulation
 from Sabi.sabi import Sabi
@@ -121,14 +122,25 @@ def main():
                     )
                     data_ine_transmisiones = ine_transmisiones.get_data()
 
-                # 5.7) SABI CLASS
+                # 5.7) IBERPIX CLASS
+                iberpix = Iberpix(delegation, i_lote, i_land, land, path_kml_land)
+                info_iberpix = iberpix.get_data()
+                data_usos_suelo = info_iberpix["data"]
+
+                paths_iberpix = info_iberpix["paths"]
+                fullpath_mapa_curvas_nivel = paths_iberpix["curvas_nivel"]
+                fullpath_mapa_lidar = paths_iberpix["lidar"]
+                fullpath_usos_suelo = paths_iberpix["usos_suelo"]
+                fullpath_ortofoto_hidrografia = paths_iberpix["ortofoto_hidrografia"]
+
+                # 5.8) SABI CLASS
                 sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
                 # 'data_sabi' contains a df with 61 columns and up to 25 enterprises
                 data_sabi = sabi.get_data()
                 if data_sabi is None:
                     continue
 
-                # 5.8) GOOGLE MAPS CLASS
+                # 5.9) GOOGLE MAPS CLASS
                 # 'full_data_two_directions' contain data for 25 enterprises given a land
                 full_data_two_directions = full_get_data_two_directions(
                     delegation, i_lote, i_land, land, coordinates_land, data_sabi
@@ -159,6 +171,7 @@ def main():
                     "catastro_value": value_land,
                     "empresas": data_sabi,
                     "empresas_fincas": full_data_two_directions,
+                    "usos_suelo": data_usos_suelo,
                     ############### FILES ##############
                     **convert_paths(
                         auction_pdf_path,
@@ -166,6 +179,10 @@ def main():
                         path_kml_land,
                         path_googlemaps_land,
                         path_report_land,
+                        fullpath_mapa_curvas_nivel,
+                        fullpath_mapa_lidar,
+                        fullpath_usos_suelo,
+                        fullpath_ortofoto_hidrografia,
                     ),
                 }
                 save_python_object_to_file(full_data_land)
