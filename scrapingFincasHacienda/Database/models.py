@@ -681,13 +681,25 @@ class Finca(BaseDatabase):
             FOREIGN KEY ("uso_id") REFERENCES "usos"("id"),
             FOREIGN KEY ("aprovechamiento_id") REFERENCES "aprovechamientos"("id"),
             FOREIGN KEY ("codigo_postal_id") REFERENCES "codigos_postales"("id"),
-            FOREIGN KEY ("ath_id") REFERENCES "territorios"("id")
+            FOREIGN KEY ("ath_id") REFERENCES "territorios"("id"),
+            FOREIGN KEY ("cubierta_terrestre_iberpix_id") REFERENCES "cubiertas_terrestres_iberpix"("id"),
+            FOREIGN KEY ("cubierta_terrestre_codigee_id") REFERENCES "cubiertas_terrestres_codigee"("id"),
+            FOREIGN KEY ("uso_suelo_hilucs_id") REFERENCES "usos_suelo_hilucs"("id")
             )
             """
         self.execute_query(sql)
 
     def insert_data(
-        self, data, path_ortofoto, path_kml, path_google_maps, path_report_catastro
+        self,
+        data,
+        path_ortofoto,
+        path_kml,
+        path_google_maps,
+        path_report_catastro,
+        path_curvas_nivel,
+        path_lidar,
+        path_usos_suelo,
+        path_ortofoto_hidrografia,
     ):
         # If the argument is None, then do nothing
         if not data:
@@ -700,12 +712,25 @@ class Finca(BaseDatabase):
             ortofoto = read_binary(path_ortofoto)
             kml = read_binary(path_kml)
             google_maps = read_binary(path_google_maps)
+            curvas_nivel = read_binary(path_curvas_nivel)
+            lidar = read_binary(path_lidar)
+            usos_suelo = read_binary(path_usos_suelo)
+            hidrografia = read_binary(path_ortofoto_hidrografia)
             report_catastro = read_binary(path_report_catastro)
 
             sql = f'INSERT INTO "fincas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
             values = tuple(data.values())
             # Add the binary data to the end of the values tuple
-            values += (ortofoto, kml, google_maps, report_catastro)
+            values += (
+                ortofoto,
+                kml,
+                google_maps,
+                curvas_nivel,
+                lidar,
+                usos_suelo,
+                hidrografia,
+                report_catastro,
+            )
 
             self.execute_query(sql, values)
 
@@ -792,6 +817,130 @@ class EmpresaFinca(BaseDatabase):
         return column_names_sql, placeholders_sql
 
 
+class CubiertaTerrestreIberpix(
+    BaseDatabase
+):  # Descripcion Cubierta Terrestre s/Iberpix
+    def __init__(self):
+        self.__create_table()  # If the table is already created, it does nothing
+
+    def __create_table(self):
+        sql = f"""
+            CREATE TABLE IF NOT EXISTS "cubiertas_terrestres_iberpix" (
+                "id" INTEGER, 
+                "cubierta_terrestre" TEXT NOT NULL UNIQUE,
+                PRIMARY KEY ("id")
+            )
+            """
+        self.execute_query(sql)
+
+    def insert_data(self, cubierta_terrestre):
+        # If the argument is None, then do nothing
+        if not cubierta_terrestre:
+            return None
+        # Before inserting the data, check if already exists on the table
+        # If it doesn't exists, then proceed to insert it
+        if not self.get_cubierta_terrestre_id(cubierta_terrestre):
+            sql = """
+                    INSERT INTO "cubiertas_terrestres_iberpix" 
+                    ("cubierta_terrestre")
+                    VALUES (:cubierta_terrestre)
+                    """
+            params = {"cubierta_terrestre": cubierta_terrestre}
+            self.execute_query(sql, params)
+
+    def get_cubierta_terrestre_id(self, cubierta_terrestre):
+        sql = 'SELECT "id" FROM "cubiertas_terrestres_iberpix" WHERE "cubierta_terrestre"=:cubierta_terrestre'
+        params = {"cubierta_terrestre": cubierta_terrestre}
+        self.execute_query(sql, params)
+        result = self.cursor.fetchone()
+        return result["id"] if result else None
+
+    # def __delete_data(self): Won't have a method for deleting data because it has no sense for this dimension table
+    # def __update_data(self): Won't have a method for updating data because it has no sense for this dimension table
+
+
+class CubiertaTerrestreCodigee(
+    BaseDatabase
+):  # Descripcion Cubierta Terrestre s/Codigee
+    def __init__(self):
+        self.__create_table()  # If the table is already created, it does nothing
+
+    def __create_table(self):
+        sql = f"""
+            CREATE TABLE IF NOT EXISTS "cubiertas_terrestres_codigee" (
+                "id" INTEGER, 
+                "cubierta_terrestre" TEXT NOT NULL UNIQUE,
+                PRIMARY KEY ("id")
+            )
+            """
+        self.execute_query(sql)
+
+    def insert_data(self, cubierta_terrestre):
+        # If the argument is None, then do nothing
+        if not cubierta_terrestre:
+            return None
+        # Before inserting the data, check if already exists on the table
+        # If it doesn't exists, then proceed to insert it
+        if not self.get_cubierta_terrestre_id(cubierta_terrestre):
+            sql = """
+                    INSERT INTO "cubiertas_terrestres_codigee" 
+                    ("cubierta_terrestre")
+                    VALUES (:cubierta_terrestre)
+                    """
+            params = {"cubierta_terrestre": cubierta_terrestre}
+            self.execute_query(sql, params)
+
+    def get_cubierta_terrestre_id(self, cubierta_terrestre):
+        sql = 'SELECT "id" FROM "cubiertas_terrestres_codigee" WHERE "cubierta_terrestre"=:cubierta_terrestre'
+        params = {"cubierta_terrestre": cubierta_terrestre}
+        self.execute_query(sql, params)
+        result = self.cursor.fetchone()
+        return result["id"] if result else None
+
+    # def __delete_data(self): Won't have a method for deleting data because it has no sense for this dimension table
+    # def __update_data(self): Won't have a method for updating data because it has no sense for this dimension table
+
+
+class UsosSueloHilucs(BaseDatabase):  # Descripcion Usos del Suelo s/Hilucs
+    def __init__(self):
+        self.__create_table()  # If the table is already created, it does nothing
+
+    def __create_table(self):
+        sql = f"""
+            CREATE TABLE IF NOT EXISTS "usos_suelo_hilucs" (
+                "id" INTEGER, 
+                "uso_suelo" TEXT NOT NULL UNIQUE,
+                PRIMARY KEY ("id")
+            )
+            """
+        self.execute_query(sql)
+
+    def insert_data(self, uso_suelo):
+        # If the argument is None, then do nothing
+        if not uso_suelo:
+            return None
+        # Before inserting the data, check if already exists on the table
+        # If it doesn't exists, then proceed to insert it
+        if not self.get_uso_suelo_id(uso_suelo):
+            sql = """
+                    INSERT INTO "usos_suelo_hilucs" 
+                    ("uso_suelo")
+                    VALUES (:uso_suelo)
+                    """
+            params = {"uso_suelo": uso_suelo}
+            self.execute_query(sql, params)
+
+    def get_uso_suelo_id(self, uso_suelo):
+        sql = 'SELECT "id" FROM "usos_suelo_hilucs" WHERE "uso_suelo"=:uso_suelo'
+        params = {"uso_suelo": uso_suelo}
+        self.execute_query(sql, params)
+        result = self.cursor.fetchone()
+        return result["id"] if result else None
+
+    # def __delete_data(self): Won't have a method for deleting data because it has no sense for this dimension table
+    # def __update_data(self): Won't have a method for updating data because it has no sense for this dimension table
+
+
 # Returns Truthy value if its old, Falsy value if its new
 def is_old(referencia_catastral):
     db = BaseDatabase()
@@ -819,6 +968,9 @@ def insert_land_data(land_data):
     lote = Lote()
     empresa = Empresa()
     finca = Finca()
+    cubierta_terrestre_iberpix = CubiertaTerrestreIberpix()
+    cubierta_terrestre_codigee = CubiertaTerrestreCodigee()
+    usos_suelo_hilucs = UsosSueloHilucs()
 
     empresa_finca = EmpresaFinca()
 
@@ -878,6 +1030,18 @@ def insert_land_data(land_data):
     )
     # 2.2. Table 'empresa'
     empresa.insert_data(land_data["empresas"])
+
+    # 2.5 Table 'CubiertaTerrestreIberpix'
+    cubierta_terrestre_iberpix.insert_data(
+        land_data["usos_suelo"]["Cubierta terrestre iberpix"]
+    )
+    # 2.6 Table 'CubiertaTerrestreCodigee'
+    cubierta_terrestre_codigee.insert_data(
+        land_data["usos_suelo"]["Cubierta terrestre CODIIGE"]
+    )
+    # 2.7 Table 'UsosSueloHilucs'
+    usos_suelo_hilucs.insert_data(land_data["usos_suelo"]["Uso del suelo HILUCS"])
+
     # 2.3. Table 'finca'
     """Before inserting the data on 'finca' table, 
     I've to retrieve the id of the next variables:
@@ -889,6 +1053,9 @@ def insert_land_data(land_data):
         6. aprovechamiento_id
         7. codigo_postal_id
         8. ath_id
+        9. cubierta_terrestre_iberpix_id
+        10. cubierta_terrestre_codigee_id
+        11. uso_suelo_hilucs_id
     that I inserted previously (they may've already exists
     on their tables, so it weren't inserted again)"""
 
@@ -905,6 +1072,19 @@ def insert_land_data(land_data):
     )
     codigo_postal_id = codigo_postal.get_codigo_postal_id(land_data["codigo_postal"])
     ath_id = territorio.get_territorio_id(land_data["ath_number"])
+    cubierta_terrestre_iberpix_id = (
+        cubierta_terrestre_iberpix.get_cubierta_terrestre_id(
+            land_data["usos_suelo"]["Cubierta terrestre iberpix"]
+        )
+    )
+    cubierta_terrestre_codigee_id = (
+        cubierta_terrestre_codigee.get_cubierta_terrestre_id(
+            land_data["usos_suelo"]["Cubierta terrestre CODIIGE"]
+        )
+    )
+    usos_suelo_hilucs_id = usos_suelo_hilucs.get_uso_suelo_id(
+        land_data["usos_suelo"]["Uso del suelo HILUCS"]
+    )
 
     finca.insert_data(
         {
@@ -920,6 +1100,9 @@ def insert_land_data(land_data):
             "aprovechamiento_id": aprovechamiento_id,
             "codigo_postal_id": codigo_postal_id,
             "ath_id": ath_id,
+            "cubierta_terrestre_iberpix_id": cubierta_terrestre_iberpix_id,
+            "cubierta_terrestre_codigee_id": cubierta_terrestre_codigee_id,
+            "uso_suelo_hilucs_id": usos_suelo_hilucs_id,
             "coordenadas": land_data["coordenadas"],
             "agrupacion_municipio": land_data["agrupacion_municipio"],
             "number_buildings": land_data["number_buildings"],
@@ -929,6 +1112,10 @@ def insert_land_data(land_data):
         land_data["path_ortofoto_land"],
         land_data["path_kml_land"],
         land_data["path_googlemaps_land"],
+        land_data["fullpath_mapa_curvas_nivel"],
+        land_data["fullpath_mapa_lidar"],
+        land_data["fullpath_usos_suelo"],
+        land_data["fullpath_ortofoto_hidrografia"],
         land_data["path_report_land"],
     )
 
@@ -975,7 +1162,11 @@ def insert_land_data(land_data):
     remove_file_from_filesystem(land_data["path_ortofoto_land"])
     remove_file_from_filesystem(land_data["path_kml_land"])
     remove_file_from_filesystem(land_data["path_googlemaps_land"])
-    remove_file_from_filesystem(land_data["path_report_land"])
     remove_file_from_filesystem(empresa_finca_data["path"])
+    remove_file_from_filesystem(land_data["fullpath_mapa_curvas_nivel"])
+    remove_file_from_filesystem(land_data["fullpath_mapa_lidar"])
+    remove_file_from_filesystem(land_data["fullpath_usos_suelo"])
+    remove_file_from_filesystem(land_data["fullpath_ortofoto_hidrografia"])
+    remove_file_from_filesystem(land_data["path_report_land"])
 
     db.close_connection()

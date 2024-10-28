@@ -1,10 +1,11 @@
+/.vscode
+data/
+docs/
 env/
+/issues
 __pycache__/
-AuctionsExamples/
 *.txt
 *test*.py
-*.code-workspace
 *.env
-assets/
-BUGS.md
-data/
+*.code-workspace
+*.pkl

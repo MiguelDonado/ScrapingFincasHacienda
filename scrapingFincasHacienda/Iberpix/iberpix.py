@@ -114,6 +114,8 @@ class Iberpix(webdriver.Chrome):
             fullpath_usos_suelo = self.__my_get_screenshot(filename_mapa_usos_suelo)
 
             # 'Data_usos_suelo' is a dictionary
+            # This data is regarding SIOSE 2014.
+            # SIOSE stands for "Sistema de Informacion de Ocupacion Suelo Español"
             data_usos_suelo = self.__scrape_usos_suelo_info()
 
             # Get ortofoto with hidrografia
