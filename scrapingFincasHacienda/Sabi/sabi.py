@@ -1,19 +1,18 @@
 # Class that inherits from a Selenium Class, given a postal code, scrape some interesting data from the Sabi database website
-
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
-import pandas as pd
-import os
 import logging
+import os
+import sys
 import time
 from typing import Union
 
+import logger_config
+import pandas as pd
 import Sabi.constants as const
 from dotenv import dotenv_values
-import logger_config
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select, WebDriverWait
 
 logger = logging.getLogger(__name__)
 
@@ -107,18 +106,19 @@ class Sabi(webdriver.Chrome):
     #
     #
     #
-
-    # Lands on Sabi main webpage
+    # Lands on Sabi UPC main webpage
     def __land_first_page(self) -> None:
         self.get(const.BASE_URL)
 
     # Login in Sabi website
     def __login(self) -> None:
-        user = self.find_element(By.XPATH, "//input[@id='user']")
-        user.send_keys(config["MY_SABI_ACCOUNT"])
-        password = self.find_element(By.XPATH, "//input[@id='pw']")
-        password.send_keys(config["MY_SABI_PASSWORD"])
-        submit_btn = self.find_element(By.XPATH, "//input[@id='bnLoginNeo']")
+        input_name = self.find_element(By.XPATH, "//input[@id='edit-name']")
+        input_name.send_keys(config["MY_UPC_ACCOUNT"])
+
+        input_password = self.find_element(By.XPATH, "//input[@id='edit-pass']")
+        input_password.send_keys(config["MY_UPC_PASSWORD"])
+
+        submit_btn = self.find_element(By.XPATH, "//input[@id='submit_ok']")
         submit_btn.click()
 
     # On the main Sabi Menu (once login has been done) add the CP to the filters.
@@ -202,7 +202,6 @@ class Sabi(webdriver.Chrome):
         watch_results = self.find_element(By.XPATH, "//img[contains(@id, 'GoToList')]")
         watch_results.click()
         self.__apply_competence_analysis_columns()
-        self.__add_street_and_cp_columns()
 
         headers = self.__get_results_cabeceras()
         names = self.__get_results_first_table()
@@ -217,33 +216,26 @@ class Sabi(webdriver.Chrome):
             "//a[@id='ContentContainer1_ctl00_Content_ListHeader_ListHeaderRightButtons_AddRemoveColumns']",
         )
         columns_button.click()
-        competence_analysis_columns = self.find_element(
+
+        load_list_from_disk_btn = self.find_element(
             By.XPATH,
-            "//div[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_UserFormatsDivContainer']//a[contains(text(), 'SECTOR')]",
+            "//img[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_bnLoadFromDisk']",
         )
-        competence_analysis_columns.click()
+        load_list_from_disk_btn.click()
 
-    # Given the results page, adds two columns (calle, C.P.) to the results table
-    def __add_street_and_cp_columns(self) -> None:
-        columns_button = self.find_element(
+        file_input = self.find_element(
             By.XPATH,
-            "//a[@id='ContentContainer1_ctl00_Content_ListHeader_ListHeaderRightButtons_AddRemoveColumns']",
+            "//input[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_LoadFromDisk_UploadedFile']",
         )
-        columns_button.click()
-        contact_info_expand = self.find_element(
-            By.XPATH, "//td[@id='GROUP_CONTACT_NodeImg']"
+        file_input.send_keys(
+            "/home/miguel/coding-projects/ScrapingFincasHacienda/analisis_sector.list"
         )
-        contact_info_expand.click()
 
-        street_column_btn = self.find_element(
-            By.XPATH, "//a/span[text()='Calle (RO_ADDR2)']"
+        accept_btn = self.find_element(
+            By.XPATH,
+            "//img[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_LoadFromDisk_OkButton']",
         )
-        street_column_btn.click()
-
-        cp_column_btn = self.find_element(
-            By.XPATH, "//a/span[text()='Código postal (ZIPCODE)']"
-        )
-        cp_column_btn.click()
+        accept_btn.click()
 
         accept_btn = self.find_element(
             By.XPATH, "//img[@id='ContentContainer1_ctl00_Content_SaveFormat_OkButton']"
@@ -251,6 +243,7 @@ class Sabi(webdriver.Chrome):
         accept_btn.click()
 
     # On the results page, get the cabeceras of the table
+
     def __get_results_cabeceras(self) -> list[str]:
         row_cabeceras = self.find_element(
             By.XPATH,

@@ -8,10 +8,10 @@ DOWNLOAD_DIR = Path("../data/auction").resolve()
 
 # Number of delegations are 57 in total
 NUMBER_OF_DELEGATIONS = (
-    16  # This number is for testing purposes, so it only run on a few provinces.
+    57  # This number is for testing purposes, so it only run on a few provinces.
 )
 
-DELEGATIONS = range(16, NUMBER_OF_DELEGATIONS + 5)
+DELEGATIONS = range(1, NUMBER_OF_DELEGATIONS)
 
 BASE_URL_HACIENDA = "https://www.hacienda.gob.es"
 DELEGATION_URL = (

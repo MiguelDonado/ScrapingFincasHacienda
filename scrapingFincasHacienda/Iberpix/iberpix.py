@@ -1,5 +1,8 @@
 # Class that inherits from a Selenium class. Given the referencia catastral of a property,
 # and the kml, it scrapes some data and take several screenshots of differents layers.
+# This class will only be used for the rústicas fincas, since it doesn't have a lot of sense
+# to download the LIDAR, usos suelo, curvas nivel, hidrografia and usos suelos data, for an
+# apartment that is on the middle of a city
 
 import logging
 import time

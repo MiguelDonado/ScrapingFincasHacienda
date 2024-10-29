@@ -70,6 +70,10 @@ def convert_paths(
     path_kml_land,
     path_googlemaps_land,
     path_report_land,
+    fullpath_mapa_curvas_nivel,
+    fullpath_mapa_lidar,
+    fullpath_usos_suelo,
+    fullpath_ortofoto_hidrografia,
 ):
     return {
         "auction_pdf_path": convert_path_to_str(auction_pdf_path),
@@ -77,6 +81,12 @@ def convert_paths(
         "path_kml_land": convert_path_to_str(path_kml_land),
         "path_googlemaps_land": convert_path_to_str(path_googlemaps_land),
         "path_report_land": convert_path_to_str(path_report_land),
+        "fullpath_mapa_curvas_nivel": convert_path_to_str(fullpath_mapa_curvas_nivel),
+        "fullpath_mapa_lidar": convert_path_to_str(fullpath_mapa_lidar),
+        "fullpath_usos_suelo": convert_path_to_str(fullpath_usos_suelo),
+        "fullpath_ortofoto_hidrografia": convert_path_to_str(
+            fullpath_ortofoto_hidrografia
+        ),
     }
 
 

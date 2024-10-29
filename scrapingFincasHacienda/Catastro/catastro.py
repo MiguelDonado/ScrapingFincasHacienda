@@ -149,7 +149,7 @@ class Catastro(webdriver.Chrome):
         ).text
         provincia = regex.search(r".*\((.*)\)", localizacion).group(1)
         municipio = regex.search(
-            r".*\. (.+)\(", localizacion, flags=regex.DOTALL
+            r".*(?:\.|\d{5}) (.+)\(", localizacion, flags=regex.DOTALL
         ).group(1)
         clase = self.find_element(
             By.XPATH,

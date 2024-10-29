@@ -116,6 +116,8 @@ def main():
                 data_ine_population = ine_population.get_data()
 
                 # 5.6) INE_NUMBER_TRANSMISIONES CLASS
+                data_ine_transmisiones = None
+
                 if data_land["clase"] == "Rústico":
                     ine_transmisiones = IneNumTransmisionesFincasRusticas(
                         delegation, i_lote, i_land, land, data_correos["cp"]
@@ -123,15 +125,24 @@ def main():
                     data_ine_transmisiones = ine_transmisiones.get_data()
 
                 # 5.7) IBERPIX CLASS
-                iberpix = Iberpix(delegation, i_lote, i_land, land, path_kml_land)
-                info_iberpix = iberpix.get_data()
-                data_usos_suelo = info_iberpix["data"]
+                data_usos_suelo = None
+                fullpath_mapa_curvas_nivel = None
+                fullpath_mapa_lidar = None
+                fullpath_usos_suelo = None
+                fullpath_ortofoto_hidrografia = None
 
-                paths_iberpix = info_iberpix["paths"]
-                fullpath_mapa_curvas_nivel = paths_iberpix["curvas_nivel"]
-                fullpath_mapa_lidar = paths_iberpix["lidar"]
-                fullpath_usos_suelo = paths_iberpix["usos_suelo"]
-                fullpath_ortofoto_hidrografia = paths_iberpix["ortofoto_hidrografia"]
+                if data_land["clase"] == "Rústico":
+                    iberpix = Iberpix(delegation, i_lote, i_land, land, path_kml_land)
+                    info_iberpix = iberpix.get_data()
+                    data_usos_suelo = info_iberpix["data"]
+
+                    paths_iberpix = info_iberpix["paths"]
+                    fullpath_mapa_curvas_nivel = paths_iberpix["curvas_nivel"]
+                    fullpath_mapa_lidar = paths_iberpix["lidar"]
+                    fullpath_usos_suelo = paths_iberpix["usos_suelo"]
+                    fullpath_ortofoto_hidrografia = paths_iberpix[
+                        "ortofoto_hidrografia"
+                    ]
 
                 # 5.8) SABI CLASS
                 sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
