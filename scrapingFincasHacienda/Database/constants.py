@@ -59,8 +59,8 @@ EMPRESAS_HEADERS = """
     "Costes de los trabajadores / Ingresos de explotación (%) % Año - 1" NUMERIC,
     "Ratio de solvencia % Últ. año disp." NUMERIC,
     "Ratio de solvencia % Año - 1" NUMERIC,
-    "Calle" TEXT,
-    "Código postal" TEXT,
+    "Coordenada X" TEXT,
+    "Coordenada Y" TEXT,
 """
 
 FINCA_HEADERS = """

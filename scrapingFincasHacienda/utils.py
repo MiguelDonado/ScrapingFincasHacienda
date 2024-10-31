@@ -25,22 +25,27 @@ def full_get_data_two_directions(
 ):
     full_data_two_directions = []
     for _, enterprise in data_sabi.iterrows():
-        enterprise_direction = f"{enterprise['Calle']}. {enterprise["Código postal"]} {enterprise["Localidad"]}"
-        two_directions = GoogleMaps(
-            delegation,
-            i_lote,
-            i_land,
-            land,
-            coordinates_land,  # 'to'
-            enterprise_direction,  # 'from'
-            enterprise["Nombre"],  # 'enterprise'
-        )
-        # Variable that holds a dictionary with 2 keys, each one holds another dictionary with 2 keys.
-        # {"car": {"distance","time"}, "foot": {"distance","time"}}
-        data_two_directions = two_directions.get_data_two_directions()
-        full_data_two_directions.append(
-            {"cif": enterprise["Código NIF"], "data": data_two_directions}
-        )
+        # Check enterprise has the coordinates right in Sabi
+        # Some have coordinate X = 0 and coordinate Y = 0. So they wont be used to get_data_two_directions()
+        if float(enterprise["Coordenada - Y"]) != 0:
+            enterprise_direction = (
+                f"{enterprise['Coordenada - Y']}, {enterprise["Coordenada - X"]}"
+            )
+            two_directions = GoogleMaps(
+                delegation,
+                i_lote,
+                i_land,
+                land,
+                coordinates_land,  # 'to'
+                enterprise_direction,  # 'from'
+                enterprise["Nombre"],  # 'enterprise'
+            )
+            # Variable that holds a dictionary with 2 keys, each one holds another dictionary with 2 keys.
+            # {"car": {"distance","time"}, "foot": {"distance","time"}}
+            data_two_directions = two_directions.get_data_two_directions()
+            full_data_two_directions.append(
+                {"cif": enterprise["Código NIF"], "data": data_two_directions}
+            )
     return full_data_two_directions
 
 

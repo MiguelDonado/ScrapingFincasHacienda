@@ -210,7 +210,7 @@ class Catastro(webdriver.Chrome):
 
         # Give time to the pdf to be downloaded, before trying
         # to rename it, or do something with the file
-        time.sleep(5)
+        time.sleep(10)
         path = self.__rename_file(self.ref, ".pdf")
 
         # Go back to the previous page
