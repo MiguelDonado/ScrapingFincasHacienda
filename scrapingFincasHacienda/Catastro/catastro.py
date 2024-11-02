@@ -194,29 +194,20 @@ class Catastro(webdriver.Chrome):
         ortofoto_checkbox = self.find_element(By.XPATH, "//input[@id='aPNOA']")
         ortofoto_checkbox.click()
 
-        expand_box_download_img = self.find_element(
-            By.XPATH, "//button[i[@id='IBImprimir']]"
-        )
-        expand_box_download_img.click()
+        zoom_out_button = self.find_element(By.XPATH, "//i[@title='Reducir']")
+        # In total click the button 3 times
+        zoom_out_button.click()
+        for _ in range(2):
+            time.sleep(1)
+            zoom_out_button.click()
 
-        choose_scale_input = self.find_element(By.XPATH, "//input[@id='txtEscala']")
-        choose_scale_input.clear()
-        choose_scale_input.send_keys("4000")
-
-        download_img = self.find_element(
-            By.XPATH, "//input[@id='ctl00_Contenido_bImprimir']"
-        )
-        download_img.click()
-
-        # Give time to the pdf to be downloaded, before trying
-        # to rename it, or do something with the file
-        time.sleep(10)
-        path = self.__rename_file(self.ref, ".pdf")
+        filename_ortofoto_land = f"{self.ref}.png"
+        fullpath = self.__my_get_screenshot(filename_ortofoto_land)
 
         # Go back to the previous page
         self.back()
 
-        return path
+        return fullpath
 
     # Given the webpage that shows data about the ref, it downloads the kml of the land
     # and it goes back to the provided webpage
@@ -357,3 +348,17 @@ class Catastro(webdriver.Chrome):
         new_file_path = os.path.join(const.DOWNLOAD_DIR, ref + ext)
         os.rename(most_recent_file, new_file_path)
         return new_file_path
+
+    # When called it takes a screenshot of the web, and save it with the filename
+    # that we pass as an argument
+    def __my_get_screenshot(self, filename):
+        # The background layers takes a bit of time to load. If i dont set any time, the screenshot
+        # is wrong, and i see nothing
+        time.sleep(5)
+
+        # Build the filename that will have our downloader file
+        path = const.DOWNLOAD_DIR / filename
+
+        self.get_screenshot_as_file(path)
+
+        return path

@@ -118,7 +118,7 @@ class Iberpix(webdriver.Chrome):
 
             # 'Data_usos_suelo' is a dictionary
             # This data is regarding SIOSE 2014.
-            # SIOSE stands for "Sistema de Informacion de Ocupacion Suelo Español"
+            # SIOSE stands for "Sistema de Informacion de Ocupacion Suelo Español"t
             data_usos_suelo = self.__scrape_usos_suelo_info()
 
             # Get ortofoto with hidrografia
