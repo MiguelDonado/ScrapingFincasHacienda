@@ -1,8 +1,12 @@
+import logging
 import sqlite3
 from pathlib import Path
 
 import Database.constants as const
+import logger_config
 import regex
+
+logger = logging.getLogger(__name__)
 
 
 def to_str(list):
@@ -948,6 +952,31 @@ def is_old(referencia_catastral):
     finca_id = finca.get_finca_id(referencia_catastral)
     db.close_connection()
     return finca_id
+
+
+# Returns Truthy value if its old, Falsy value if its new
+def is_auction_id_old(delegation, id_auction):
+    db_path = Path(const.DB_NAME)
+    is_created_db = db_path.exists()
+    if is_created_db:
+        db = BaseDatabase()
+        auction = Auction()
+        result = auction.get_auction_id(electronical_id=id_auction)
+        db.close_connection()
+
+        if result:
+            # Log
+            msg = f"Auction with id '{result}' is already stored on database. Skipping this auction and continuing with next delegation..."
+            logger.info(f"{logger_config.build_id(delegation)}{msg}")
+        else:
+            # Log
+            msg = f"Auction with id '{result}' is NEW."
+            logger.info(f"{logger_config.build_id(delegation)}{msg}")
+        return result
+    else:
+        # Log
+        msg = f"Auction with id '{id_auction}' is NEW."
+        logger.info(f"{logger_config.build_id(delegation)}{msg}")
 
 
 def insert_land_data(land_data):

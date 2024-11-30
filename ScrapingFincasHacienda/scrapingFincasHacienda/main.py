@@ -4,7 +4,7 @@ import Hacienda.constants as const
 from Catastro.catastro import Catastro
 from Catastro.report import CatastroReport
 from Correos.correos import Correos
-from Database.models import insert_land_data, is_old
+from Database.models import insert_land_data, is_auction_id_old, is_old
 from GoogleMaps.GoogleMaps import GoogleMaps
 from Hacienda.auction_delegation import has_auction
 from Hacienda.data_pdf import get_auction_id, get_lotes_data
@@ -29,69 +29,67 @@ def main():
         if not (auction := has_auction(delegation)):
             continue
 
-        # 2) Get the pdf that contains the list of lands. Returns {"url":value, "path": value}
-        if not (auction_pdf := get_pliego(auction, delegation)):
+        # 2) Get the pdf that contains the list of lands. Returns url_pliego
+        if not (auction_pdf_url := get_pliego(auction, delegation)):
             continue
-
-        auction_pdf_url = auction_pdf.values()
 
         # 3) Get/build the auction unique identifier
         if not (id_auction := get_auction_id(auction_pdf_url, delegation, auction)):
             continue
 
         # 4) Check if id_auction is on db, if so continue
-        # Code here
+        if is_auction_id_old(delegation, id_auction):
+            continue
 
-        # 5) Download url_pliego pdf
+        # 5) Download pdf from auction_pdf_url
         if not (
             auction_pdf_path := download_url_pliego_pdf(
                 auction_pdf_url, delegation, auction
             )
         ):
             continue
-        auction_pdf_path = auction_pdf.values()
 
-        break
+        # 6) Extract ref_catastral and price.
+        #       - 'lotes' is a list of dictionaries.
+        #       - Each dictionary represents a lote with:
+        #         1) Id
+        #         2) Data (nested dictionary) with:
+        #             - refs: List of refs
+        #             - price: Price of the lote
+        #     Example:
+        #     [ {1, {[ref1, ref2], price}}, ...] """
 
+        if not (lotes := get_lotes_data(auction_pdf_url, delegation)):
+            continue
 
-#         """5) Extract ref_catastral and price.
-#               - 'lotes' is a list of dictionaries.
-#               - Each dictionary represents a lote with:
-#                 1) Id
-#                 2) Data (nested dictionary) with:
-#                     - refs: List of refs
-#                     - price: Price of the lote
-#             Example:
-#             [ {1, {[ref1, ref2], price}}, ...] """
+        for lote in lotes:
+            skip_outer = False  # To handle already stored auctions
+            i_lote = lote["id"]
+            data_lote = lote["data"]
+            sys.exit()
+            # for i_land, land in enumerate(data_lote["refs"], 1):
 
-#         if not (lotes := get_lotes_data(auction_pdf_url, delegation)):
-#             continue
+            #     # 7.0) CHECK FIRST LAND IS NEW
+            #     """Check if the FIRST land, it's stored on database.
+            #     - If so, auction is skipped, because its not new, its the second... round of an existing auction.
+            #     - Otherwise the auction is new."""
+            #     if i_land == 1:
+            #         is_auction_old = is_old(land)
+            #         if is_auction_old:
+            #             skip_outer = True  # To handle already stored auctions
+            #             break
 
-#         for lote in lotes:
-#             skip_outer = False  # To handle already stored auctions
-#             i_lote = lote["id"]
-#             data_lote = lote["data"]
-#             for i_land, land in enumerate(data_lote["refs"], 1):
+            #     # 7.1) CATASTRO CLASS
+            #     try:
+            #         land_object = Catastro(delegation, i_lote, i_land, land)
+            #         info_land = land_object.get_data()
+            #         data_land = info_land["data"]
+            #         coordinates_land = info_land["coordinates"]
+            #         path_ortofoto_land = info_land["ortofoto"]
+            #         path_kml_land = info_land["kml"]
+            #     except Exception:
+            #         continue
 
-#                 """Check if the FIRST land, it's stored on database.
-#                 - If so, auction is skipped, because its not new, its the second... round of an existing auction.
-#                 - Otherwise the auction is new."""
-#                 if i_land == 1:
-#                     is_auction_old = is_old(land)
-#                     if is_auction_old:
-#                         skip_outer = True  # To handle already stored auctions
-#                         break
-
-#                 # 5.1) CATASTRO CLASS
-#                 try:
-#                     land_object = Catastro(delegation, i_lote, i_land, land)
-#                     info_land = land_object.get_data()
-#                     data_land = info_land["data"]
-#                     coordinates_land = info_land["coordinates"]
-#                     path_ortofoto_land = info_land["ortofoto"]
-#                     path_kml_land = info_land["kml"]
-#                 except Exception:
-#                     continue
 
 #                 # 5.2) CORREOS_CLASS
 #                 correos = Correos(

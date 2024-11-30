@@ -1,0 +1,173 @@
+2024-11-30 15:23:17,776 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:23:18,174 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:23:18,589 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:23:18,892 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:23:19,291 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:23:19,682 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:23:20,226 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:23:20,613 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:23:21,048 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-11-30 15:23:21,560 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-11-30 15:23:22,073 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-11-30 15:23:24,500 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-11-30 15:23:25,223 - INFO     ->  10 -  .  -  .   - The auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-11-30 15:23:25,492 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-11-30_Delegation_10.pdf
+2024-11-30 15:27:20,023 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:27:20,589 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:27:21,170 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:27:21,284 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:27:21,791 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:27:22,958 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:27:23,543 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:27:24,361 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:27:24,791 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-11-30 15:27:25,516 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-11-30 15:27:25,991 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-11-30 15:27:28,448 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-11-30 15:27:28,997 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-11-30 15:27:29,315 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-11-30_Delegation_10.pdf
+2024-11-30 15:27:31,659 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-11-30 15:27:31,659 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-11-30 15:27:31,659 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-11-30 15:27:31,659 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-11-30 15:27:31,659 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-11-30 15:27:31,659 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-11-30 15:27:31,659 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-11-30 15:27:31,659 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2024-11-30 15:30:46,516 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:30:46,882 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:30:47,296 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:30:47,423 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:30:47,824 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:30:48,200 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:30:48,642 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:30:49,152 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:31:09,335 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:31:09,697 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:31:10,050 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:31:10,193 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:31:10,577 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:31:10,940 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:31:11,484 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:31:11,991 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:31:12,501 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-11-30 15:31:12,887 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-11-30 15:31:13,295 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-11-30 15:31:15,755 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-11-30 15:31:16,428 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-11-30 15:31:16,744 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-11-30_Delegation_10.pdf
+2024-11-30 15:31:18,996 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-11-30 15:31:18,996 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-11-30 15:31:18,996 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-11-30 15:31:18,996 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-11-30 15:31:18,996 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-11-30 15:31:18,997 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-11-30 15:31:18,997 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-11-30 15:31:18,997 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2024-11-30 15:31:53,079 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:31:53,486 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:31:54,074 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:31:54,246 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:31:54,954 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:31:55,506 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:31:56,326 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:31:56,978 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:31:57,566 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-11-30 15:31:57,961 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-11-30 15:31:58,587 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-11-30 15:32:01,011 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-11-30 15:32:02,775 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-11-30 15:32:03,062 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-11-30_Delegation_10.pdf
+2024-11-30 15:32:05,367 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-11-30 15:32:05,367 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-11-30 15:32:05,367 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-11-30 15:32:05,367 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-11-30 15:32:05,367 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-11-30 15:32:05,367 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-11-30 15:32:05,367 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-11-30 15:32:05,368 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2024-11-30 15:32:47,356 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:32:48,346 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:32:48,726 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:32:49,035 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:32:49,464 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:32:49,887 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:32:50,394 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:32:50,777 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:32:51,324 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-11-30 15:32:51,839 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-11-30 15:32:52,351 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-11-30 15:32:54,937 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-11-30 15:32:55,662 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-11-30 15:32:56,193 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-11-30_Delegation_10.pdf
+2024-11-30 15:32:58,602 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-11-30 15:32:58,602 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-11-30 15:32:58,602 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-11-30 15:32:58,602 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-11-30 15:32:58,602 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-11-30 15:32:58,602 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-11-30 15:32:58,602 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-11-30 15:32:58,602 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2024-11-30 15:34:01,852 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-11-30 15:34:02,243 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-11-30 15:34:02,607 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-11-30 15:34:02,722 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-11-30 15:34:03,055 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-11-30 15:34:03,411 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-11-30 15:34:03,854 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-11-30 15:34:04,205 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-11-30 15:34:04,736 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-11-30 15:34:05,124 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-11-30 15:34:05,491 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-11-30 15:34:07,994 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-11-30 15:34:08,643 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-11-30 15:34:08,929 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-11-30_Delegation_10.pdf
+2024-11-30 15:34:11,275 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-11-30 15:34:11,276 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-11-30 15:34:11,276 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-11-30 15:34:11,276 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-11-30 15:34:11,276 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-11-30 15:34:11,276 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-11-30 15:34:11,276 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-11-30 15:34:11,276 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03

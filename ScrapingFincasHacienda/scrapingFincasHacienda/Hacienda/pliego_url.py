@@ -38,7 +38,7 @@ def get_pliego(href: str, delegation: int) -> str:
         msg = f"List of lands: {url_pliego}."
         logger.info(f"{logger_config.build_id(delegation)}{msg}")
 
-        return {"url": url_pliego}
+        return url_pliego
 
     except Exception:
 
@@ -77,7 +77,7 @@ def download_url_pliego_pdf(url_pdf: str, delegation: int, auction: int) -> str:
         msg = f"Successfully downloaded url_pliego_pdf {url_pdf}.\n Saved on {filename}"
         logger.info(f"{logger_config.build_id(delegation)}{msg}")
 
-        return {"path": filename}
+        return filename
 
     except Exception:
 
