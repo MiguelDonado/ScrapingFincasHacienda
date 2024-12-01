@@ -946,11 +946,20 @@ class UsosSueloHilucs(BaseDatabase):  # Descripcion Usos del Suelo s/Hilucs
 
 
 # Returns Truthy value if its old, Falsy value if its new
-def is_old(referencia_catastral):
+def is_old(delegation, referencia_catastral):
     db = BaseDatabase()
     finca = Finca()
     finca_id = finca.get_finca_id(referencia_catastral)
     db.close_connection()
+
+    if finca_id:
+        # Log
+        msg = f"Auction that contains land '{referencia_catastral}' has already been processed. Skipping to the next auction..."
+        logger.info(f"{logger_config.build_id(delegation)}{msg}")
+    else:
+        # Log
+        msg = f"Corroborated that auction is NEW."
+        logger.info(f"{logger_config.build_id(delegation)}{msg}")
     return finca_id
 
 
@@ -966,11 +975,11 @@ def is_auction_id_old(delegation, id_auction):
 
         if result:
             # Log
-            msg = f"Auction with id '{result}' is already stored on database. Skipping this auction and continuing with next delegation..."
+            msg = f"Auction with id '{id_auction}' is already stored on database. Skipping this auction and continuing with next delegation..."
             logger.info(f"{logger_config.build_id(delegation)}{msg}")
         else:
             # Log
-            msg = f"Auction with id '{result}' is NEW."
+            msg = f"Auction with id '{id_auction}' is NEW."
             logger.info(f"{logger_config.build_id(delegation)}{msg}")
         return result
     else:

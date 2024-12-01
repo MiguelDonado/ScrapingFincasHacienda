@@ -66,74 +66,79 @@ def main():
             skip_outer = False  # To handle already stored auctions
             i_lote = lote["id"]
             data_lote = lote["data"]
-            sys.exit()
-            # for i_land, land in enumerate(data_lote["refs"], 1):
 
-            #     # 7.0) CHECK FIRST LAND IS NEW
-            #     """Check if the FIRST land, it's stored on database.
-            #     - If so, auction is skipped, because its not new, its the second... round of an existing auction.
-            #     - Otherwise the auction is new."""
-            #     if i_land == 1:
-            #         is_auction_old = is_old(land)
-            #         if is_auction_old:
-            #             skip_outer = True  # To handle already stored auctions
-            #             break
+            # If a lote of an auction couldnt be properly proccesed, continue
+            if not data_lote["refs"]:
+                continue
 
-            #     # 7.1) CATASTRO CLASS
-            #     try:
-            #         land_object = Catastro(delegation, i_lote, i_land, land)
-            #         info_land = land_object.get_data()
-            #         data_land = info_land["data"]
-            #         coordinates_land = info_land["coordinates"]
-            #         path_ortofoto_land = info_land["ortofoto"]
-            #         path_kml_land = info_land["kml"]
-            #     except Exception:
-            #         continue
+            for i_land, land in enumerate(data_lote["refs"], 1):
 
+                # 7.0) CHECK FIRST LAND IS NEW
+                """Check if the FIRST land, it's stored on database.
+                - If so, auction is skipped, because its not new, its the second... round of an existing auction.
+                - Otherwise the auction is new."""
+                if i_land == 1:
+                    is_auction_old = is_old(delegation, land)
+                    if is_auction_old:
+                        skip_outer = True  # To handle already stored auctions
+                        break
 
-#                 # 5.2) CORREOS_CLASS
-#                 correos = Correos(
-#                     delegation, i_lote, i_land, land, data_land["localizacion"]
-#                 )
-#                 data_correos = correos.get_data()
+                # 7.1) CATASTRO CLASS
+                try:
+                    land_object = Catastro(delegation, i_lote, i_land, land)
+                    info_land = land_object.get_data()
+                    data_land = info_land["data"]
+                    coordinates_land = info_land["coordinates"]
+                    path_ortofoto_land = info_land["ortofoto"]
+                    path_kml_land = info_land["kml"]
+                except Exception:
+                    continue
 
-#                 if not data_correos["cp"]:
-#                     continue
+                # 5.2) CORREOS_CLASS
+                correos = Correos(
+                    delegation, i_lote, i_land, land, data_land["localizacion"]
+                )
+                data_correos = correos.get_data()
 
-#                 # 5.3) GOOGLE_MAPS CLASS
-#                 one_direction = GoogleMaps(
-#                     delegation, i_lote, i_land, land, coordinates_land
-#                 )
-#                 path_googlemaps_land = one_direction.get_data_one_direction()
+                if not data_correos["cp"]:
+                    continue
 
-#                 # 5.4) CATASTRO_REPORT CLASS
-#                 report = CatastroReport(
-#                     delegation, i_lote, i_land, land, data_land["clase"]
-#                 )
-#                 info_report = report.get_data()
-#                 report_data_land = info_report["data"]
-#                 value_land = info_report["value"]
-#                 path_report_land = info_report["path"]
+                # 5.3) GOOGLE_MAPS CLASS
+                one_direction = GoogleMaps(
+                    delegation, i_lote, i_land, land, coordinates_land
+                )
+                path_googlemaps_land = one_direction.get_data_one_direction()
 
-#                 # 5.5) INE_POPULATION CLASS
-#                 ine_population = InePopulation(
-#                     delegation,
-#                     i_lote,
-#                     i_land,
-#                     land,
-#                     data_land["localizacion"],
-#                     data_correos["locality"],
-#                 )
-#                 data_ine_population = ine_population.get_data()
+                # 5.4) CATASTRO_REPORT CLASS
+                report = CatastroReport(
+                    delegation, i_lote, i_land, land, data_land["clase"]
+                )
+                info_report = report.get_data()
+                report_data_land = info_report["data"]
+                value_land = info_report["value"]
+                path_report_land = info_report["path"]
 
-#                 # 5.6) INE_NUMBER_TRANSMISIONES CLASS
-#                 data_ine_transmisiones = None
+                # 5.5) INE_POPULATION CLASS
+                ine_population = InePopulation(
+                    delegation,
+                    i_lote,
+                    i_land,
+                    land,
+                    data_land["localizacion"],
+                    data_correos["locality"],
+                )
+                data_ine_population = ine_population.get_data()
 
-#                 if data_land["clase"] == "Rústico":
-#                     ine_transmisiones = IneNumTransmisionesFincasRusticas(
-#                         delegation, i_lote, i_land, land, data_correos["cp"]
-#                     )
-#                     data_ine_transmisiones = ine_transmisiones.get_data()
+                # 5.6) INE_NUMBER_TRANSMISIONES CLASS
+                data_ine_transmisiones = None
+
+                if data_land["clase"] == "Rústico":
+                    ine_transmisiones = IneNumTransmisionesFincasRusticas(
+                        delegation, i_lote, i_land, land, data_correos["cp"]
+                    )
+                    data_ine_transmisiones = ine_transmisiones.get_data()
+                sys.exit()
+
 
 #                 # 5.7) IBERPIX CLASS
 #                 data_usos_suelo = None
