@@ -945,8 +945,11 @@ class UsosSueloHilucs(BaseDatabase):  # Descripcion Usos del Suelo s/Hilucs
     # def __update_data(self): Won't have a method for updating data because it has no sense for this dimension table
 
 
+# Check if the land, it's stored on database.
+# If so, auction is skipped, because its not new, its the second... round of an existing auction.
+# Otherwise the auction is new."""
 # Returns Truthy value if its old, Falsy value if its new
-def is_old(delegation, referencia_catastral):
+def is_auction_old_or_posterior_rounds(delegation, referencia_catastral):
     db = BaseDatabase()
     finca = Finca()
     finca_id = finca.get_finca_id(referencia_catastral)

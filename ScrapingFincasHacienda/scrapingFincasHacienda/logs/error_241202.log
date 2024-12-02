@@ -1,0 +1,6 @@
+2024-12-02 16:21:10,026 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'

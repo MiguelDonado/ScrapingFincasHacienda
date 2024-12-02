@@ -4,7 +4,7 @@ import Hacienda.constants as const
 from Catastro.catastro import Catastro
 from Catastro.report import CatastroReport
 from Correos.correos import Correos
-from Database.models import insert_land_data, is_auction_id_old, is_old
+from Database.models import insert_land_data, is_auction_id_old
 from GoogleMaps.GoogleMaps import GoogleMaps
 from Hacienda.auction_delegation import has_auction
 from Hacienda.data_pdf import get_auction_id, get_lotes_data
@@ -17,6 +17,7 @@ from utils import (
     convert_paths,
     full_get_data_two_directions,
     get_optional_values,
+    is_auction_old,
     read_python_object_from_file,
     save_python_object_to_file,
 )
@@ -62,6 +63,10 @@ def main():
         if not (lotes := get_lotes_data(auction_pdf_url, delegation)):
             continue
 
+        # Check for the first 'available' land of the auction if its already stored on DB.
+        if is_auction_old(delegation, lotes):
+            continue
+
         for lote in lotes:
             skip_outer = False  # To handle already stored auctions
             i_lote = lote["id"]
@@ -72,16 +77,6 @@ def main():
                 continue
 
             for i_land, land in enumerate(data_lote["refs"], 1):
-
-                # 7.0) CHECK FIRST LAND IS NEW
-                """Check if the FIRST land, it's stored on database.
-                - If so, auction is skipped, because its not new, its the second... round of an existing auction.
-                - Otherwise the auction is new."""
-                if i_land == 1:
-                    is_auction_old = is_old(delegation, land)
-                    if is_auction_old:
-                        skip_outer = True  # To handle already stored auctions
-                        break
 
                 # 7.1) CATASTRO CLASS
                 try:
@@ -94,7 +89,7 @@ def main():
                 except Exception:
                     continue
 
-                # 5.2) CORREOS_CLASS
+                # 7.2) CORREOS_CLASS
                 correos = Correos(
                     delegation, i_lote, i_land, land, data_land["localizacion"]
                 )
@@ -103,13 +98,13 @@ def main():
                 if not data_correos["cp"]:
                     continue
 
-                # 5.3) GOOGLE_MAPS CLASS
+                # 7.3) GOOGLE_MAPS CLASS
                 one_direction = GoogleMaps(
                     delegation, i_lote, i_land, land, coordinates_land
                 )
                 path_googlemaps_land = one_direction.get_data_one_direction()
 
-                # 5.4) CATASTRO_REPORT CLASS
+                # 7.4) CATASTRO_REPORT CLASS
                 report = CatastroReport(
                     delegation, i_lote, i_land, land, data_land["clase"]
                 )
@@ -118,7 +113,7 @@ def main():
                 value_land = info_report["value"]
                 path_report_land = info_report["path"]
 
-                # 5.5) INE_POPULATION CLASS
+                # 7.5) INE_POPULATION CLASS
                 ine_population = InePopulation(
                     delegation,
                     i_lote,
@@ -129,14 +124,16 @@ def main():
                 )
                 data_ine_population = ine_population.get_data()
 
-                # 5.6) INE_NUMBER_TRANSMISIONES CLASS
-                data_ine_transmisiones = None
-
-                if data_land["clase"] == "Rústico":
-                    ine_transmisiones = IneNumTransmisionesFincasRusticas(
-                        delegation, i_lote, i_land, land, data_correos["cp"]
-                    )
-                    data_ine_transmisiones = ine_transmisiones.get_data()
+                # 7.6) INE_NUMBER_TRANSMISIONES CLASS
+                ine_transmisiones = IneNumTransmisionesFincasRusticas(
+                    delegation,
+                    i_lote,
+                    i_land,
+                    land,
+                    data_correos["cp"],
+                    data_land["clase"],
+                )
+                data_ine_transmisiones = ine_transmisiones.get_data()
                 sys.exit()
 
 
