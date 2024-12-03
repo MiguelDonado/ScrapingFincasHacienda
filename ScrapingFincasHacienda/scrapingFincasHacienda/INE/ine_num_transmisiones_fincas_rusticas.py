@@ -49,7 +49,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
         IneNumTransmisionesFincasRusticas.all.append(self)
 
     def __repr__(self):
-        return f"IneNumTransmisionesFincasRusticas({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}')"
+        return f"IneNumTransmisionesFincasRusticas({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}', '{self.clase}')"
 
     def __str__(self):
         return (

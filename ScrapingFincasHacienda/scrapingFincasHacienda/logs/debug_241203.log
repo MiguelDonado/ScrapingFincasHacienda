@@ -1,0 +1,38 @@
+2024-12-03 12:31:30,579 - INFO     ->  1  -  .  -  .   - No auctions available
+2024-12-03 12:31:31,001 - INFO     ->  2  -  .  -  .   - No auctions available
+2024-12-03 12:31:31,388 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2024-12-03 12:31:31,513 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-12-03 12:31:32,029 - INFO     ->  4  -  .  -  .   - No auctions available
+2024-12-03 12:31:32,407 - INFO     ->  5  -  .  -  .   - No auctions available
+2024-12-03 12:31:32,745 - INFO     ->  6  -  .  -  .   - No auctions available
+2024-12-03 12:31:33,141 - INFO     ->  7  -  .  -  .   - No auctions available
+2024-12-03 12:31:33,648 - INFO     ->  8  -  .  -  .   - No auctions available
+2024-12-03 12:31:34,289 - INFO     ->  9  -  .  -  .   - No auctions available
+2024-12-03 12:31:34,793 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2024-12-03 12:31:37,453 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2024-12-03 12:31:38,132 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2024-12-03 12:31:38,632 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2024-12-03_Delegation_10.pdf
+2024-12-03 12:31:41,064 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2024-12-03 12:31:41,064 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2024-12-03 12:31:41,064 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2024-12-03 12:31:41,064 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2024-12-03 12:31:41,065 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2024-12-03 12:31:41,065 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2024-12-03 12:31:41,065 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2024-12-03 12:31:41,065 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2024-12-03 12:31:41,065 - INFO     ->  10 -  .  -  .   - Corroborated that auction is NEW.
+2024-12-03 12:32:05,961 - INFO     ->  10 -  2  -  1   - Successfully downloaded PDF and KML of the land '4226002QD2742E0021IE' with coordinates '39°28'23.6"N 6°23'41.4"W' and data: {'localizacion': 'CL VIVIENDAS DE CAMINEROS Ndup-U Bl:21 Es:1 Pl:02 Pt:DCH\n10005 CACERES (CÁCERES)', 'provincia': 'CÁCERES', 'municipio': 'CACERES ', 'clase': 'Urbano', 'uso': 'Residencial', 'cultivo': None}.
+2024-12-03 12:32:10,651 - INFO     ->  10 -  2  -  1   - Land '4226002QD2742E0021IE' is in 'CACERES' province. More precisely is on 'CÁCERES' locality with C.P. 10005
+2024-12-03 12:32:26,377 - INFO     ->  10 -  2  -  1   - Screenshot of the land '4226002QD2742E0021IE' has been taken successfully.
+2024-12-03 12:32:32,609 - INFO     ->  10 -  2  -  1   - The land '4226002QD2742E0021IE' has the next value 136320.44.
+The report PDF has not been downloaded, because it is 'Urbano' instead of 'Rústico'.
+2024-12-03 12:32:35,508 - INFO     ->  10 -  2  -  1   - Population info about land '4226002QD2742E0021IE' has been extracted successfully: Now -> 96215 /// Five years ago -> 96068
+2024-12-03 12:32:37,157 - INFO     ->  10 -  2  -  1   - Land 4226002QD2742E0021IE is 'Urbano' instead of 'Rústico', so the class IneNumTransmisionesFincasRusticas won't be used to scrape anything.
+2024-12-03 12:32:38,805 - INFO     ->  10 -  2  -  1   - Land 4226002QD2742E0021IE is 'Urbano' instead of 'Rústico', so the class Iberpix won't be used to scrape anything.
+2024-12-03 12:33:48,428 - INFO     ->  10 -  2  -  1   - Enterprises near land '4226002QD2742E0021IE' located on C.P. 10005 have been extracted successfully: ['Metka EGN Spain SL.', 'Catelsa Caceres SA', 'Pariente Carrasco Inversiones SL.', 'Ceres Motor SL', 'A D Grupo Felipe Pariente SL', 'AD Recambios Extremadura Siglo XXI SL.', 'Novomotor Caceres SL', 'Santano Automocion SA', 'Construcciones Sevilla Nevado SA', 'Alimentacion Conpe SL', 'Euro Electrodomesticos Extremadura SL', 'Codere Apuestas Extremadura SA.', 'Interlun SL', 'Cohidrex SL', 'Asfaltos Y Aglomerados Santano Sociedad Anonima', 'Almacenes Norba SL.', 'Sebastian Sevilla Nevado SL.', 'Rapid Doors SL', 'Covex Productos Zoosanitarios SL', 'Distribuciones Y Marketing Cacereños SL', 'Pebetero Servicios Y Formacion SL.', 'Gestion Global de Reparaciones de Inmuebles SL.', 'Fissa Seguridad Y Vigilancia SL', 'Distribucion Cervezas de Caceres SL', '']

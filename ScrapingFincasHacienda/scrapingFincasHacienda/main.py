@@ -134,35 +134,26 @@ def main():
                     data_land["clase"],
                 )
                 data_ine_transmisiones = ine_transmisiones.get_data()
+
+                # 5.7) IBERPIX CLASS
+                iberpix = Iberpix(
+                    delegation, i_lote, i_land, land, path_kml_land, data_land["clase"]
+                )
+                info_iberpix = iberpix.get_data()
+                data_usos_suelo, paths_iberpix = info_iberpix.values()
+                fullpath_mapa_curvas_nivel = paths_iberpix["curvas_nivel"]
+                fullpath_mapa_lidar = paths_iberpix["lidar"]
+                fullpath_usos_suelo = paths_iberpix["usos_suelo"]
+                fullpath_ortofoto_hidrografia = paths_iberpix["ortofoto_hidrografia"]
+
+                # 5.8) SABI CLASS
+                sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
+                # 'data_sabi' contains a df with 61 columns and up to 25 enterprises
+                data_sabi = sabi.get_data()
+                if data_sabi is None:
+                    continue
                 sys.exit()
 
-
-#                 # 5.7) IBERPIX CLASS
-#                 data_usos_suelo = None
-#                 fullpath_mapa_curvas_nivel = None
-#                 fullpath_mapa_lidar = None
-#                 fullpath_usos_suelo = None
-#                 fullpath_ortofoto_hidrografia = None
-
-#                 if data_land["clase"] == "Rústico":
-#                     iberpix = Iberpix(delegation, i_lote, i_land, land, path_kml_land)
-#                     info_iberpix = iberpix.get_data()
-#                     data_usos_suelo = info_iberpix["data"]
-
-#                     paths_iberpix = info_iberpix["paths"]
-#                     fullpath_mapa_curvas_nivel = paths_iberpix["curvas_nivel"]
-#                     fullpath_mapa_lidar = paths_iberpix["lidar"]
-#                     fullpath_usos_suelo = paths_iberpix["usos_suelo"]
-#                     fullpath_ortofoto_hidrografia = paths_iberpix[
-#                         "ortofoto_hidrografia"
-#                     ]
-
-#                 # 5.8) SABI CLASS
-#                 sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
-#                 # 'data_sabi' contains a df with 61 columns and up to 25 enterprises
-#                 data_sabi = sabi.get_data()
-#                 if data_sabi is None:
-#                     continue
 
 #                 # 5.9) GOOGLE MAPS CLASS
 #                 # 'full_data_two_directions' contain data for 25 enterprises given a land

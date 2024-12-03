@@ -950,20 +950,29 @@ class UsosSueloHilucs(BaseDatabase):  # Descripcion Usos del Suelo s/Hilucs
 # Otherwise the auction is new."""
 # Returns Truthy value if its old, Falsy value if its new
 def is_auction_old_or_posterior_rounds(delegation, referencia_catastral):
-    db = BaseDatabase()
-    finca = Finca()
-    finca_id = finca.get_finca_id(referencia_catastral)
-    db.close_connection()
+    db_path = Path(const.DB_NAME)
+    is_created_db = db_path.exists()
+    if is_created_db:
+        db = BaseDatabase()
+        finca = Finca()
+        finca_id = finca.get_finca_id(referencia_catastral)
+        db.close_connection()
 
-    if finca_id:
-        # Log
-        msg = f"Auction that contains land '{referencia_catastral}' has already been processed. Skipping to the next auction..."
-        logger.info(f"{logger_config.build_id(delegation)}{msg}")
+        if finca_id:
+            # Log
+            msg = f"Auction that contains land '{referencia_catastral}' has already been processed. Skipping to the next auction..."
+            logger.info(f"{logger_config.build_id(delegation)}{msg}")
+            return finca_id
+        else:
+            # Log
+            msg = f"Corroborated that auction is NEW."
+            logger.info(f"{logger_config.build_id(delegation)}{msg}")
+            return finca_id
     else:
         # Log
         msg = f"Corroborated that auction is NEW."
         logger.info(f"{logger_config.build_id(delegation)}{msg}")
-    return finca_id
+        return None
 
 
 # Returns Truthy value if its old, Falsy value if its new
@@ -989,6 +998,7 @@ def is_auction_id_old(delegation, id_auction):
         # Log
         msg = f"Auction with id '{id_auction}' is NEW."
         logger.info(f"{logger_config.build_id(delegation)}{msg}")
+        return None
 
 
 def insert_land_data(land_data):

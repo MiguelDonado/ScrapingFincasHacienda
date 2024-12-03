@@ -227,9 +227,7 @@ class Sabi(webdriver.Chrome):
             By.XPATH,
             "//input[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_LoadFromDisk_UploadedFile']",
         )
-        file_input.send_keys(
-            "/home/miguel/coding-projects/ScrapingFincasHacienda/analisis_sector.list"
-        )
+        file_input.send_keys(const.COLUMNAS_SABI)
 
         accept_btn = self.find_element(
             By.XPATH,

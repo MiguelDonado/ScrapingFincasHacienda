@@ -24,7 +24,9 @@ class Iberpix(webdriver.Chrome):
     # Class attribute to store all instances
     all = []
 
-    def __init__(self, delegation: int, lote: int, land: int, ref: str, kml_path: str):
+    def __init__(
+        self, delegation: int, lote: int, land: int, ref: str, kml_path: str, clase: str
+    ):
         # ref -> referencia catastral
 
         # Validate the data types of our arguments
@@ -33,6 +35,7 @@ class Iberpix(webdriver.Chrome):
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(kml_path, str), f"Kml_path {kml_path} must be a string!"
+        assert isinstance(clase, str), f"Clase {clase} must be a string!"
 
         options = webdriver.ChromeOptions()
         # Keep the browser open after the WebDriver session is terminated.
@@ -58,12 +61,13 @@ class Iberpix(webdriver.Chrome):
         self.land = land
         self.ref = ref
         self.kml_path = kml_path
+        self.clase = clase
 
         # Append new instance to the class attribute list
         Iberpix.all.append(self)
 
     def __repr__(self):
-        return f"Iberpix({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.kml_path}')"
+        return f"Iberpix({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.kml_path}', '{self.clase}')"
 
     def __str__(self):
         return (
@@ -73,6 +77,7 @@ class Iberpix(webdriver.Chrome):
             f"  Land: {self.land}\n"
             f"  Ref: {self.ref}"
             f"  Kml_path: {self.kml_path}"
+            f"  Clase: {self.clase}"
         )
 
     # Returns a dictionary with 2 keys
@@ -93,6 +98,23 @@ class Iberpix(webdriver.Chrome):
 
     def get_data(self) -> dict:
         try:
+            # Check if land is not 'Rústico'. If so, then dont proceed any further with this class,
+            # log and return None
+            if not self.clase == "Rústico":
+                # Log
+                msg = f"Land {self.ref} is '{self.clase}' instead of 'Rústico', so the class {self.__class__.__name__} won't be used to scrape anything."
+                logger.info(
+                    f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+                )
+                paths = {
+                    "curvas_nivel": None,
+                    "lidar": None,
+                    "usos_suelo": None,
+                    "ortofoto_hidrografia": None,
+                }
+                return {"data": None, "paths": paths}
+
+            # If is 'Rústico' proceed with the class.
             self.__land_first_page()
             self.__hide_menu()
 
