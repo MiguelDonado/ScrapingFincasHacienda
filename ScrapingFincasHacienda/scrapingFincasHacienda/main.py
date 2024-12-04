@@ -95,9 +95,6 @@ def main():
                 )
                 data_correos = correos.get_data()
 
-                if not data_correos["cp"]:
-                    continue
-
                 # 7.3) GOOGLE_MAPS CLASS
                 one_direction = GoogleMaps(
                     delegation, i_lote, i_land, land, coordinates_land

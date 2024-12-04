@@ -28,7 +28,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
         assert lote > 0, f"Lote {lote} is not greater than zero!"
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
-        assert isinstance(cp, str), f"C.P. {cp} must be a string!"
+        assert isinstance(cp, (str, type(None))), f"C.P. {cp} must be a string or None!"
         assert isinstance(clase, str), f"Clase {clase} must be a string!"
 
         options = webdriver.ChromeOptions()
@@ -65,14 +65,26 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
     def get_data(self) -> dict[str, Union[int, float]]:
         try:
             # Check if land is not 'Rústico'. If so, then dont proceed any further with this class,
-            # log and return None
+            # log and return dictionary with empty values
             if not self.clase == "Rústico":
                 # Log
                 msg = f"Land {self.ref} is '{self.clase}' instead of 'Rústico', so the class {self.__class__.__name__} won't be used to scrape anything."
                 logger.info(
                     f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
                 )
-                return None
+                data = {"transactions_now": None, "transactions_before": None}
+                return data
+
+            # Check if the data scraped from Correos work successfully or not
+            # If not, then dont proceed any further with this class, log and return None
+            if not self.cp:
+                # Log
+                msg = f"Scraping done with Correos class didn`t work succesfully for land '{self.ref}', the value of the argument data_correos['cp'] is {self.cp}, so the class {self.__class__.__name__} won't be used to scrape anything."
+                logger.info(
+                    f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+                )
+                data = {"transactions_now": None, "transactions_before": None}
+                return data
 
             # If is 'Rústico' proceed with the class.
             self.__land_first_page()
