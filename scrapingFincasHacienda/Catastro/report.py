@@ -91,7 +91,15 @@ class CatastroReport(webdriver.Chrome):
             report = self.__get_reference_value_report()
 
             if not report:
-                data_report = None
+                data_report = {
+                    "ath": None,
+                    "denominacion_ath": None,
+                    "agrupacion_cultivo": None,
+                    "agrupacion_municipio": None,
+                    "number_buildings": None,
+                    "slope": None,
+                    "fls": None,
+                }
             else:
                 data_report = self.__process_report(report)
 
@@ -99,9 +107,9 @@ class CatastroReport(webdriver.Chrome):
             dynamic_msg = (
                 f"The report PDF has been downloaded because it's 'Rústico'."
                 if data_report
-                else ""
+                else f"The report PDF has not been downloaded, because it is '{self.clase}' instead of 'Rústico'."
             )
-            msg = f"The land '{self.ref}' has the next value {reference_value}. {dynamic_msg}"
+            msg = f"The land '{self.ref}' has the next value {reference_value}.\n{dynamic_msg}"
             logger.info(
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
             )
@@ -115,6 +123,16 @@ class CatastroReport(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
+            data_report = {
+                "ath": None,
+                "denominacion_ath": None,
+                "agrupacion_cultivo": None,
+                "agrupacion_municipio": None,
+                "number_buildings": None,
+                "slope": None,
+                "fls": None,
+            }
+            return {"value": None, "data": data_report, "path": None}
         finally:
             self.quit()
             time.sleep(1)

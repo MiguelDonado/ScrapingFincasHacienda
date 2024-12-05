@@ -31,7 +31,9 @@ class InePopulation(webdriver.Chrome):
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(place, str), f"Place {place} must be a string!"
-        assert isinstance(locality, str), f"Locality {locality} must be a string!"
+        assert isinstance(
+            locality, (str, type(None))
+        ), f"Locality {locality} must be a string or None!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -66,6 +68,21 @@ class InePopulation(webdriver.Chrome):
 
     def get_data(self) -> dict[str, Union[int, float]]:
         try:
+            # Check if the data scraped from Correos work successfully or not
+            # If not, then dont proceed any further with this class, log and return a dictionary with empty keys
+            if not self.locality:
+                # Log
+                msg = f"Scraping done with Correos class didn`t work succesfully for land '{self.ref}', the value of the argument data_correos['locality'] is {self.locality}, so the class {self.__class__.__name__} won't be used to scrape anything."
+                logger.info(
+                    f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+                )
+                data = {
+                    "population_now": None,
+                    "population_before": None,
+                }
+                return data
+
+            # If we have available data from Correos Class
             self.__land_first_page()
             self.__search_population()
             data = self.__get_population()
@@ -85,6 +102,11 @@ class InePopulation(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
+            data = {
+                "population_now": None,
+                "population_before": None,
+            }
+            return data
 
         finally:
             self.quit()

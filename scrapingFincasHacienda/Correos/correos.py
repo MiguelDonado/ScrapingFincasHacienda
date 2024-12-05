@@ -1,13 +1,13 @@
 # Class that inherits from a Selenium class. Given the direction of a land,
 # it returns the postal code, the province and the locality
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import logging
 import time
 
 import Correos.constants as const
 import logger_config
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +55,8 @@ class Correos(webdriver.Chrome):
             f"  Direction: {self.direction}"
         )
 
+    # If it works returns a dictionary containing keys with truthy values
+    # If it doesnt works returns a dictionary containing keys with falsy values
     def get_data(self) -> dict[str, str]:
         try:
             self.__land_first_page()
@@ -77,6 +79,12 @@ class Correos(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
+            data = {
+                "cp": None,
+                "province": None,
+                "locality": None,
+            }
+            return data
         finally:
             self.quit()
             time.sleep(1)

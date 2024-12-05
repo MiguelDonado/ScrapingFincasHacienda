@@ -32,17 +32,13 @@ def get_pliego(href: str, delegation: int) -> str:
         if not has_ref_catastral(url_pliego):
             anexo = soup.find("a", href=const.ANEXO_PATTERN).get("href")
             url_anexo = const.BASE_URL_HACIENDA + anexo
-
-            # Log
-            msg = f"List of lands: {url_anexo}"
-            logger.info(f"{logger_config.build_id(delegation)}{msg}")
             url_pliego = url_anexo
-        else:
-            # Log
-            msg = f"List of lands: {url_pliego}"
-            logger.info(f"{logger_config.build_id(delegation)}{msg}")
-        filename = download_pdf(url_pliego, delegation)
-        return {"url": url_pliego, "path": filename}
+
+        # Log
+        msg = f"List of lands: {url_pliego}."
+        logger.info(f"{logger_config.build_id(delegation)}{msg}")
+
+        return url_pliego
 
     except Exception:
 
@@ -64,15 +60,29 @@ def has_ref_catastral(url_pdf: str):
     return regex.search(const.REF_CATASTRAL_PATTERN, text_pdf)
 
 
-def download_pdf(url_pdf: str, delegation: int) -> str:
+def download_url_pliego_pdf(url_pdf: str, delegation: int, auction: int) -> str:
     # Returns the current local date
     today = date.today()
     # Create the filename that will be used for the downloaded auction pdf
     filename = const.DOWNLOAD_DIR / f"{today}_Delegation_{delegation}.pdf"
 
-    response = requests.get(url_pdf)
+    try:
+        response = requests.get(url_pdf)
 
-    # Write the content to a file
-    with open(filename, "wb") as file:
-        file.write(response.content)
-    return filename
+        # Write the content to a file
+        with open(filename, "wb") as file:
+            file.write(response.content)
+
+        # Log
+        msg = f"Successfully downloaded url_pliego_pdf {url_pdf}.\n Saved on {filename}"
+        logger.info(f"{logger_config.build_id(delegation)}{msg}")
+
+        return filename
+
+    except Exception:
+
+        # Log
+        msg = f"Failed to download url_pliego_pdf."
+        logger.error(f"{logger_config.build_id(delegation)}{msg}", exc_info=True)
+
+        return None

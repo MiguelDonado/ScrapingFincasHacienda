@@ -114,6 +114,7 @@ class GoogleMaps(webdriver.Chrome):
             logger.info(
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
             )
+            return path
 
         except Exception:
 
@@ -123,11 +124,11 @@ class GoogleMaps(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
+            return None
 
         finally:
             self.quit()
             time.sleep(1)
-        return path
 
     # Given two directions ('to' and 'from'), it returns a dictionary with 2 keys.
     #   1) car (nested dictionary with two keys)

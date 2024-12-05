@@ -1,6 +1,21 @@
 import pickle
 
+from Database.models import is_auction_old_or_posterior_rounds
 from GoogleMaps.GoogleMaps import GoogleMaps
+
+
+def is_auction_old(delegation, lotes):
+    # Get the first lote of the auction with non-empty data
+    for lote in lotes:
+        lands = lote["data"]["refs"]
+        if lands:
+            first_non_empty_lote = lands
+            break
+    for land in first_non_empty_lote:
+        if land:
+            old_auction = is_auction_old_or_posterior_rounds(delegation, land)
+            break
+    return old_auction
 
 
 def get_value(object, key=None):

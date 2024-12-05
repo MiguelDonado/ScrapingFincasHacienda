@@ -31,7 +31,7 @@ class Sabi(webdriver.Chrome):
         assert lote > 0, f"Lote {lote} is not greater than zero!"
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
-        assert isinstance(cp, str), f"C.P. {cp} must be a string!"
+        assert isinstance(cp, (str, type(None))), f"C.P. {cp} must be a string or None!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -64,6 +64,17 @@ class Sabi(webdriver.Chrome):
 
     def get_data(self) -> pd.DataFrame:
         try:
+
+            # Check if the data scraped from Correos work successfully or not
+            # If not, then dont proceed any further with this class, log and return None
+            if not self.cp:
+                # Log
+                msg = f"Scraping done with Correos class didn`t work succesfully for land '{self.ref}', the value of the argument data_correos['cp'] is {self.cp}, so the class {self.__class__.__name__} won't be used to scrape anything."
+                logger.info(
+                    f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
+                )
+                return None
+
             self.__land_first_page()
             self.__login()
             self.__filter_cp()
@@ -108,7 +119,7 @@ class Sabi(webdriver.Chrome):
     #
     # Lands on Sabi UPC main webpage
     def __land_first_page(self) -> None:
-        self.get(const.BASE_URL)
+        self.get(config["BASE_URL_SABI_UPC"])
 
     # Login in Sabi website
     def __login(self) -> None:
@@ -227,9 +238,7 @@ class Sabi(webdriver.Chrome):
             By.XPATH,
             "//input[@id='ContentContainer1_ctl00_Content_ListFormatsCollection_LoadFromDisk_UploadedFile']",
         )
-        file_input.send_keys(
-            "/home/miguel/coding-projects/ScrapingFincasHacienda/analisis_sector.list"
-        )
+        file_input.send_keys(const.COLUMNAS_SABI)
 
         accept_btn = self.find_element(
             By.XPATH,
