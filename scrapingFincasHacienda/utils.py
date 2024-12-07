@@ -1,7 +1,11 @@
+import logging
 import pickle
 
+import logger_config
 from Database.models import is_auction_old_or_posterior_rounds
 from GoogleMaps.GoogleMaps import GoogleMaps
+
+logger = logging.getLogger(__name__)
 
 
 def is_auction_old(delegation, lotes):
@@ -38,6 +42,13 @@ def convert_path_to_str(path):
 def full_get_data_two_directions(
     delegation, i_lote, i_land, land, coordinates_land, data_sabi
 ):
+    # Check if sabi info has not been scraped
+    if data_sabi is None:
+        # Log
+        msg = f"Scraping done with Sabi class didn`t work succesfully for land '{land}', the value of the argument data_sabi is None, so the class 'GoogleMaps' won't be used to scrape info between two directions."
+        logger.info(f"{logger_config.build_id(delegation, i_lote, i_land)}{msg}")
+        return None
+
     full_data_two_directions = []
     for _, enterprise in data_sabi.iterrows():
         # Check enterprise has the coordinates right in Sabi
@@ -62,26 +73,6 @@ def full_get_data_two_directions(
                 {"cif": enterprise["Código NIF"], "data": data_two_directions}
             )
     return full_data_two_directions
-
-
-def get_optional_values(report_data_land, data_ine_population, data_ine_transmisiones):
-    return {
-        "ath_number": get_value(report_data_land, "ath"),
-        "ath_name": get_value(report_data_land, "denominacion_ath"),
-        "agrupacion_cultivo": get_value(report_data_land, "agrupacion_cultivo"),
-        "agrupacion_municipio": get_value(report_data_land, "agrupacion_municipio"),
-        "number_buildings": get_value(report_data_land, "number_buildings"),
-        "slope": get_value(report_data_land, "slope"),
-        "fls": get_value(report_data_land, "fls"),
-        "population_now": get_value(data_ine_population, "population_now"),
-        "population_before": get_value(data_ine_population, "population_before"),
-        "rusticas_transactions_now": get_value(
-            data_ine_transmisiones, "transactions_now"
-        ),
-        "rusticas_transactions_before": get_value(
-            data_ine_transmisiones, "transactions_before"
-        ),
-    }
 
 
 def convert_paths(

@@ -1180,44 +1180,45 @@ def insert_land_data(land_data):
 
     finca_id = finca.get_finca_id(land_data["referencia_catastral"])
 
-    for empresa_finca_maps in land_data["empresas_fincas"]:
+    if land_data["empresas_fincas"]:
+        for empresa_finca_maps in land_data["empresas_fincas"]:
 
-        empresa_finca_cif = empresa_finca_maps["cif"]
-        empresa_finca_data = empresa_finca_maps["data"]
+            empresa_finca_cif = empresa_finca_maps["cif"]
+            empresa_finca_data = empresa_finca_maps["data"]
 
-        # Get ID of enterprise
-        empresa_id = empresa.get_empresa_id(empresa_finca_cif)
+            # Get ID of enterprise
+            empresa_id = empresa.get_empresa_id(empresa_finca_cif)
 
-        # Get relevant data
-        distance_on_car = empresa_finca_data["car"]["distance_on_car"]
-        time_on_car = empresa_finca_data["car"]["time_on_car"]
-        distance_on_foot = empresa_finca_data["foot"]["distance_on_foot"]
-        time_on_foot = empresa_finca_data["foot"]["time_on_foot"]
+            # Get relevant data
+            distance_on_car = empresa_finca_data["car"]["distance_on_car"]
+            time_on_car = empresa_finca_data["car"]["time_on_car"]
+            distance_on_foot = empresa_finca_data["foot"]["distance_on_foot"]
+            time_on_foot = empresa_finca_data["foot"]["time_on_foot"]
 
-        # Read binary file to insert on BLOB field in table
-        path_route = empresa_finca_data["path"]
-        binary_content = read_binary(path_route)
+            # Read binary file to insert on BLOB field in table
+            path_route = empresa_finca_data["path"]
+            binary_content = read_binary(path_route)
 
-        data_to_insert = {
-            "empresa_id": empresa_id,
-            "finca_id": finca_id,
-            "distance_on_car": distance_on_car,
-            "time_on_car": time_on_car,
-            "distance_on_foot": distance_on_foot,
-            "time_on_foot": time_on_foot,
-            "route_screenshot": binary_content,
-        }
-        empresa_finca.insert_data(data_to_insert)
+            data_to_insert = {
+                "empresa_id": empresa_id,
+                "finca_id": finca_id,
+                "distance_on_car": distance_on_car,
+                "time_on_car": time_on_car,
+                "distance_on_foot": distance_on_foot,
+                "time_on_foot": time_on_foot,
+                "route_screenshot": binary_content,
+            }
+            empresa_finca.insert_data(data_to_insert)
 
-    remove_file_from_filesystem(land_data["auction_pdf_path"])
-    remove_file_from_filesystem(land_data["path_ortofoto_land"])
-    remove_file_from_filesystem(land_data["path_kml_land"])
-    remove_file_from_filesystem(land_data["path_googlemaps_land"])
-    remove_file_from_filesystem(empresa_finca_data["path"])
-    remove_file_from_filesystem(land_data["fullpath_mapa_curvas_nivel"])
-    remove_file_from_filesystem(land_data["fullpath_mapa_lidar"])
-    remove_file_from_filesystem(land_data["fullpath_usos_suelo"])
-    remove_file_from_filesystem(land_data["fullpath_ortofoto_hidrografia"])
-    remove_file_from_filesystem(land_data["path_report_land"])
+        remove_file_from_filesystem(land_data["auction_pdf_path"])
+        remove_file_from_filesystem(land_data["path_ortofoto_land"])
+        remove_file_from_filesystem(land_data["path_kml_land"])
+        remove_file_from_filesystem(land_data["path_googlemaps_land"])
+        remove_file_from_filesystem(empresa_finca_data["path"])
+        remove_file_from_filesystem(land_data["fullpath_mapa_curvas_nivel"])
+        remove_file_from_filesystem(land_data["fullpath_mapa_lidar"])
+        remove_file_from_filesystem(land_data["fullpath_usos_suelo"])
+        remove_file_from_filesystem(land_data["fullpath_ortofoto_hidrografia"])
+        remove_file_from_filesystem(land_data["path_report_land"])
 
     db.close_connection()

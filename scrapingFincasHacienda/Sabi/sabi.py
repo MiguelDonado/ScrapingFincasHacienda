@@ -97,6 +97,7 @@ class Sabi(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
+            return None
 
         finally:
             self.quit()

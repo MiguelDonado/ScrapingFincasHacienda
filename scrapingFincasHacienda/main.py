@@ -16,7 +16,6 @@ from Sabi.sabi import Sabi
 from utils import (
     convert_paths,
     full_get_data_two_directions,
-    get_optional_values,
     is_auction_old,
     read_python_object_from_file,
     save_python_object_to_file,
@@ -148,58 +147,70 @@ def main():
                 # 'data_sabi' contains a df with 61 columns and up to 25 enterprises
                 data_sabi = sabi.get_data()
 
-                # # 5.9) GOOGLE MAPS CLASS
-                # # 'full_data_two_directions' contain data for 25 enterprises given a land
-                # full_data_two_directions = full_get_data_two_directions(
-                #     delegation, i_lote, i_land, land, coordinates_land, data_sabi
-                # )
+                ######## For debugging purposes ########
+                save_python_object_to_file(data_sabi)
+                sys.exit()
 
-                # sys.exit()
+                # 5.9) GOOGLE MAPS CLASS
+                # 'full_data_two_directions' contain data for 25 enterprises given a land
+                full_data_two_directions = full_get_data_two_directions(
+                    delegation, i_lote, i_land, land, coordinates_land, data_sabi
+                )
 
+                # This is the info that I'll introduce in the db for each land.
+                full_data_land = {
+                    ############### MANDATORY ############
+                    "electronical_id": id_auction,
+                    "delegation": delegation,
+                    "lote_number": i_lote,
+                    "referencia_catastral": land,
+                    "price": data_lote["price"],
+                    "localizacion": data_land["localizacion"],
+                    "municipio": data_land["municipio"],
+                    "clase": data_land["clase"],
+                    "uso": data_land["uso"],
+                    "aprovechamiento": data_land["cultivo"],
+                    "coordenadas": coordinates_land,
+                    "codigo_postal": data_correos["cp"],
+                    "province": data_correos["province"],
+                    "locality": data_correos["locality"],
+                    ############### OPTIONAL ##############
+                    # '**' This notation is used to expand a dictionary
+                    "ath_number": report_data_land["ath"],
+                    "ath_name": report_data_land["denominacion_ath"],
+                    "agrupacion_cultivo": report_data_land["agrupacion_cultivo"],
+                    "agrupacion_municipio": report_data_land["agrupacion_municipio"],
+                    "number_buildings": report_data_land["number_buildings"],
+                    "slope": report_data_land["slope"],
+                    "fls": report_data_land["fls"],
+                    "population_now": data_ine_population["population_now"],
+                    "population_before": data_ine_population["population_before"],
+                    "rusticas_transactions_now": data_ine_transmisiones[
+                        "transactions_now"
+                    ],
+                    "rusticas_transactions_before": data_ine_transmisiones[
+                        "transactions_before"
+                    ],
+                    "catastro_value": value_land,
+                    "empresas": data_sabi,
+                    "empresas_fincas": full_data_two_directions,
+                    "usos_suelo": data_usos_suelo,
+                    ############### FILES ##############
+                    **convert_paths(
+                        auction_pdf_path,
+                        path_ortofoto_land,
+                        path_kml_land,
+                        path_googlemaps_land,
+                        path_report_land,
+                        fullpath_mapa_curvas_nivel,
+                        fullpath_mapa_lidar,
+                        fullpath_usos_suelo,
+                        fullpath_ortofoto_hidrografia,
+                    ),
+                }
+                insert_land_data(full_data_land)
+                sys.exit()
 
-#                 # This is the info that I'll introduce in the db for each land.
-#                 full_data_land = {
-#                     ############### MANDATORY ############
-#                     "electronical_id": id_auction,
-#                     "delegation": delegation,
-#                     "lote_number": i_lote,
-#                     "referencia_catastral": land,
-#                     "price": data_lote["price"],
-#                     "localizacion": data_land["localizacion"],
-#                     "municipio": data_land["municipio"],
-#                     "clase": data_land["clase"],
-#                     "uso": data_land["uso"],
-#                     "aprovechamiento": data_land["cultivo"],
-#                     "coordenadas": coordinates_land,
-#                     "codigo_postal": data_correos["cp"],
-#                     "province": data_correos["province"],
-#                     "locality": data_correos["locality"],
-#                     ############### OPTIONAL ##############
-#                     # '**' This notation is used to expand a dictionary
-#                     **get_optional_values(
-#                         report_data_land, data_ine_population, data_ine_transmisiones
-#                     ),
-#                     "catastro_value": value_land,
-#                     "empresas": data_sabi,
-#                     "empresas_fincas": full_data_two_directions,
-#                     "usos_suelo": data_usos_suelo,
-#                     ############### FILES ##############
-#                     **convert_paths(
-#                         auction_pdf_path,
-#                         path_ortofoto_land,
-#                         path_kml_land,
-#                         path_googlemaps_land,
-#                         path_report_land,
-#                         fullpath_mapa_curvas_nivel,
-#                         fullpath_mapa_lidar,
-#                         fullpath_usos_suelo,
-#                         fullpath_ortofoto_hidrografia,
-#                     ),
-#                 }
-#                 save_python_object_to_file(full_data_land)
-#                 insert_land_data(full_data_land)
-#             if skip_outer:
-#                 break  # To handle already stored auctions
 
 if __name__ == "__main__":
     main()

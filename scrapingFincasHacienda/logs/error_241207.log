@@ -1,0 +1,83 @@
+2024-12-07 15:21:43,200 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2024-12-07 15:25:44,519 - ERROR    ->  16 -  1  -  1   - Failed to extract car and foot distance and time from '4226002QD2742E0021IE' - 'METKA EGN SPAIN SL.'.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/GoogleMaps/GoogleMaps.py", line 148, in get_data_two_directions
+    data_car = self.__get_distance_time_on_car()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/GoogleMaps/GoogleMaps.py", line 272, in __get_distance_time_on_car
+    on_car_btn = self.find_element(
+                 ^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 770, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//button[.//img[@aria-label='En coche']]"}
+  (Session info: chrome=131.0.6778.108); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+#0 0x60a639e2134a <unknown>
+#1 0x60a6399376e0 <unknown>
+#2 0x60a6399863e6 <unknown>
+#3 0x60a639986681 <unknown>
+#4 0x60a6399cbb04 <unknown>
+#5 0x60a6399aa48d <unknown>
+#6 0x60a6399c8ed7 <unknown>
+#7 0x60a6399aa203 <unknown>
+#8 0x60a639978cc0 <unknown>
+#9 0x60a639979c9e <unknown>
+#10 0x60a639deed3b <unknown>
+#11 0x60a639df2cc2 <unknown>
+#12 0x60a639ddbb6c <unknown>
+#13 0x60a639df3837 <unknown>
+#14 0x60a639dc110f <unknown>
+#15 0x60a639e105a8 <unknown>
+#16 0x60a639e10770 <unknown>
+#17 0x60a639e201c6 <unknown>
+#18 0x77d7d909ca94 <unknown>
+#19 0x77d7d9129c3c <unknown>
+
+2024-12-07 15:25:47,615 - ERROR    ->  16 -  1  -  1   - Failed to extract car and foot distance and time from '4226002QD2742E0021IE' - 'CATELSA CACERES SA'.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/GoogleMaps/GoogleMaps.py", line 145, in get_data_two_directions
+    self.__search_to()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/GoogleMaps/GoogleMaps.py", line 207, in __search_to
+    to_input.clear()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 117, in clear
+    self._execute(Command.CLEAR_ELEMENT)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 402, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=131.0.6778.108)
+Stacktrace:
+#0 0x5a803a14b34a <unknown>
+#1 0x5a8039c616e0 <unknown>
+#2 0x5a8039c3738f <unknown>
+#3 0x5a8039cdc89d <unknown>
+#4 0x5a8039cf288c <unknown>
+#5 0x5a8039cd4203 <unknown>
+#6 0x5a8039ca2cc0 <unknown>
+#7 0x5a8039ca3c9e <unknown>
+#8 0x5a803a118d3b <unknown>
+#9 0x5a803a11ccc2 <unknown>
+#10 0x5a803a105b6c <unknown>
+#11 0x5a803a11d837 <unknown>
+#12 0x5a803a0eb10f <unknown>
+#13 0x5a803a13a5a8 <unknown>
+#14 0x5a803a13a770 <unknown>
+#15 0x5a803a14a1c6 <unknown>
+#16 0x7e8ffc29ca94 <unknown>
+#17 0x7e8ffc329c3c <unknown>
+
