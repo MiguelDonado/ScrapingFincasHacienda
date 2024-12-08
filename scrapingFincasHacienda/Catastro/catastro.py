@@ -23,7 +23,7 @@ class Catastro(webdriver.Chrome):
     all = []
 
     def __init__(
-        self, delegation: int, lote: int, land: int, ref: str
+        self, delegation: int, lote: int, land: int, ref: str, debug=False
     ):  # ref -> referencia catastral
 
         # Validate the data types of our arguments
@@ -31,6 +31,7 @@ class Catastro(webdriver.Chrome):
         assert lote > 0, f"Lote {lote} is not greater than zero!"
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -52,12 +53,13 @@ class Catastro(webdriver.Chrome):
         self.lote = lote
         self.land = land
         self.ref = ref
+        self.debug = debug
 
         # Append new instance to the class attribute list
         Catastro.all.append(self)
 
     def __repr__(self):
-        return f"Catastro({self.delegation}, {self.lote}, {self.land}, '{self.ref}')"
+        return f"Catastro({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.debug}')"
 
     def __str__(self):
         return (
@@ -65,7 +67,8 @@ class Catastro(webdriver.Chrome):
             f"  Delegation: {self.delegation}\n"
             f"  Lote: {self.lote}\n"
             f"  Land: {self.land}\n"
-            f"  Ref: {self.ref}"
+            f"  Ref: {self.ref}\n"
+            f"  Debug: {self.debug}"
         )
 
     # Returns a dictionary with 2 keys
@@ -104,8 +107,9 @@ class Catastro(webdriver.Chrome):
                 exc_info=True,
             )
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #

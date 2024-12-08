@@ -25,7 +25,14 @@ class Iberpix(webdriver.Chrome):
     all = []
 
     def __init__(
-        self, delegation: int, lote: int, land: int, ref: str, kml_path: str, clase: str
+        self,
+        delegation: int,
+        lote: int,
+        land: int,
+        ref: str,
+        kml_path: str,
+        clase: str,
+        debug=False,
     ):
         # ref -> referencia catastral
 
@@ -36,6 +43,7 @@ class Iberpix(webdriver.Chrome):
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(kml_path, str), f"Kml_path {kml_path} must be a string!"
         assert isinstance(clase, str), f"Clase {clase} must be a string!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         # Keep the browser open after the WebDriver session is terminated.
@@ -62,12 +70,13 @@ class Iberpix(webdriver.Chrome):
         self.ref = ref
         self.kml_path = kml_path
         self.clase = clase
+        self.debug = debug
 
         # Append new instance to the class attribute list
         Iberpix.all.append(self)
 
     def __repr__(self):
-        return f"Iberpix({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.kml_path}', '{self.clase}')"
+        return f"Iberpix({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.kml_path}', '{self.clase}', '{self.debug}')"
 
     def __str__(self):
         return (
@@ -75,9 +84,10 @@ class Iberpix(webdriver.Chrome):
             f"  Delegation: {self.delegation}\n"
             f"  Lote: {self.lote}\n"
             f"  Land: {self.land}\n"
-            f"  Ref: {self.ref}"
-            f"  Kml_path: {self.kml_path}"
-            f"  Clase: {self.clase}"
+            f"  Ref: {self.ref}\n"
+            f"  Kml_path: {self.kml_path}\n"
+            f"  Clase: {self.clase}\n"
+            f"  Debug: {self.debug}"
         )
 
     # Returns a dictionary with 2 keys
@@ -177,10 +187,9 @@ class Iberpix(webdriver.Chrome):
             }
             return {"data": None, "paths": paths}
         finally:
-            self.quit()
-            time.sleep(1)
-
-            #
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #

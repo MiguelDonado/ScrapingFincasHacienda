@@ -47,6 +47,7 @@ class GoogleMaps(webdriver.Chrome):
         to: str,
         from_: str = None,
         enterprise: str = None,
+        debug=False,
     ):
 
         # Validate the data types of our arguments
@@ -61,6 +62,7 @@ class GoogleMaps(webdriver.Chrome):
         assert enterprise == None or isinstance(
             enterprise, str
         ), f"Enterprise {enterprise} must be a string!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -82,12 +84,13 @@ class GoogleMaps(webdriver.Chrome):
         self.to = to
         self.from_ = from_
         self.enterprise = enterprise
+        self.debug = debug
 
         # Append new instance to the class attribute list
         GoogleMaps.all.append(self)
 
     def __repr__(self):
-        return f"GoogleMaps({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.to}', '{self.from_}', '{self.enterprise}')"
+        return f"GoogleMaps({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.to}', '{self.from_}', '{self.enterprise}', '{self.debug}')"
 
     def __str__(self):
         return (
@@ -98,7 +101,8 @@ class GoogleMaps(webdriver.Chrome):
             f"  Ref: {self.ref}\n"
             f"  To: {self.to}\n"
             f"  From: {self.from_}\n"
-            f"  Enterprise: {self.enterprise}"
+            f"  Enterprise: {self.enterprise}\n"
+            f"  Debug: {self.debug}"
         )
 
     # Given a direction ('to'), it takes a screenshot of the land and the nearby interest points
@@ -127,8 +131,9 @@ class GoogleMaps(webdriver.Chrome):
             return None
 
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     # Given two directions ('to' and 'from'), it returns a dictionary with 2 keys.
     #   1) car (nested dictionary with two keys)
@@ -170,8 +175,9 @@ class GoogleMaps(webdriver.Chrome):
             )
 
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #
@@ -269,9 +275,7 @@ class GoogleMaps(webdriver.Chrome):
     #   1) Time on car
     #   2) Distance on car
     def __get_distance_time_on_car(self) -> dict[str, str]:
-        on_car_btn = self.find_element(
-            By.XPATH, "//button[.//img[@aria-label='En coche']]"
-        )
+        on_car_btn = self.find_element(By.XPATH, "//button[@data-tooltip='En coche']")
         on_car_btn.click()
 
         WebDriverWait(self, 30).until(
@@ -294,7 +298,7 @@ class GoogleMaps(webdriver.Chrome):
     #   1) Time on foot
     #   2) Distance on foot
     def __get_distance_time_on_foot(self) -> dict[str, str]:
-        on_foot_btn = self.find_element(By.XPATH, "//img[@aria-label='A pie']")
+        on_foot_btn = self.find_element(By.XPATH, "//button[@data-tooltip='A pie']")
         on_foot_btn.click()
 
         WebDriverWait(self, 30).until(

@@ -20,7 +20,14 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
     all = []
 
     def __init__(
-        self, delegation: int, lote: int, land: int, ref: str, cp: str, clase: str
+        self,
+        delegation: int,
+        lote: int,
+        land: int,
+        ref: str,
+        cp: str,
+        clase: str,
+        debug=False,
     ):
 
         # Validate the data types of our arguments
@@ -30,6 +37,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(cp, (str, type(None))), f"C.P. {cp} must be a string or None!"
         assert isinstance(clase, str), f"Clase {clase} must be a string!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -44,12 +52,13 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
         self.ref = ref
         self.cp = str(cp)[0:2]
         self.clase = clase
+        self.debug = debug
 
         # Append new instance to the class attribute list
         IneNumTransmisionesFincasRusticas.all.append(self)
 
     def __repr__(self):
-        return f"IneNumTransmisionesFincasRusticas({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}', '{self.clase}')"
+        return f"IneNumTransmisionesFincasRusticas({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}', '{self.clase}', '{self.debug}')"
 
     def __str__(self):
         return (
@@ -59,7 +68,8 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
             f"  Land: {self.land}\n"
             f"  Ref: {self.ref}\n"
             f"  C.P.: {self.cp}\n"
-            f"  Clase: {self.clase}"
+            f"  Clase: {self.clase}\n"
+            f"  Debug: {self.debug}"
         )
 
     def get_data(self) -> dict[str, Union[int, float]]:
@@ -114,8 +124,9 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
             return data
 
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #

@@ -17,7 +17,15 @@ class Correos(webdriver.Chrome):
     # Class attribute to store all instances
     all = []
 
-    def __init__(self, delegation: int, lote: int, land: int, ref: str, direction: str):
+    def __init__(
+        self,
+        delegation: int,
+        lote: int,
+        land: int,
+        ref: str,
+        direction: str,
+        debug=False,
+    ):
 
         # Validate the data types of our arguments
         assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
@@ -25,6 +33,7 @@ class Correos(webdriver.Chrome):
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(direction, str), f"Direction {direction} must be a string!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -38,12 +47,13 @@ class Correos(webdriver.Chrome):
         self.land = land
         self.ref = ref
         self.direction = direction
+        self.debug = debug
 
         # Append new instance to the class attribute list
         Correos.all.append(self)
 
     def __repr__(self):
-        return f"Correos({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.direction}')"
+        return f"Correos({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.direction}', '{self.debug}')"
 
     def __str__(self):
         return (
@@ -52,7 +62,8 @@ class Correos(webdriver.Chrome):
             f"  Lote: {self.lote}\n"
             f"  Land: {self.land}\n"
             f"  Ref: {self.ref}\n"
-            f"  Direction: {self.direction}"
+            f"  Direction: {self.direction}\n"
+            f"  Debug: {self.debug}"
         )
 
     # If it works returns a dictionary containing keys with truthy values
@@ -86,8 +97,9 @@ class Correos(webdriver.Chrome):
             }
             return data
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #

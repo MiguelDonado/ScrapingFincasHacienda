@@ -24,7 +24,9 @@ class Sabi(webdriver.Chrome):
     # Class attribute to store all instances
     all = []
 
-    def __init__(self, delegation: int, lote: int, land: int, ref: str, cp: str):
+    def __init__(
+        self, delegation: int, lote: int, land: int, ref: str, cp: str, debug=False
+    ):
 
         # Validate the data types of our arguments
         assert delegation > 0, f"Delegation {delegation} is not greater than zero!"
@@ -32,6 +34,7 @@ class Sabi(webdriver.Chrome):
         assert land > 0, f"Land {land} is not greater than zero!"
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(cp, (str, type(None))), f"C.P. {cp} must be a string or None!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -45,12 +48,13 @@ class Sabi(webdriver.Chrome):
         self.land = land
         self.ref = ref
         self.cp = cp
+        self.debug = debug
 
         # Append new instance to the class attribute list
         Sabi.all.append(self)
 
     def __repr__(self):
-        return f"Sabi({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}')"
+        return f"Sabi({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}', '{self.debug}')"
 
     def __str__(self):
         return (
@@ -59,7 +63,8 @@ class Sabi(webdriver.Chrome):
             f"  Lote: {self.lote}\n"
             f"  Land: {self.land}\n"
             f"  Reference: {self.ref}\n"
-            f"  C.P.: {self.cp}"
+            f"  C.P.: {self.cp}\n"
+            f"  Debug: {self.debug}"
         )
 
     def get_data(self) -> pd.DataFrame:
@@ -100,8 +105,9 @@ class Sabi(webdriver.Chrome):
             return None
 
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #

@@ -22,7 +22,14 @@ class InePopulation(webdriver.Chrome):
     all = []
 
     def __init__(
-        self, delegation: int, lote: int, land: int, ref: str, place: str, locality: str
+        self,
+        delegation: int,
+        lote: int,
+        land: int,
+        ref: str,
+        place: str,
+        locality: str,
+        debug=False,
     ):
 
         # Validate the data types of our arguments
@@ -34,6 +41,7 @@ class InePopulation(webdriver.Chrome):
         assert isinstance(
             locality, (str, type(None))
         ), f"Locality {locality} must be a string or None!"
+        assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
         options.add_experimental_option("detach", True)
@@ -48,12 +56,13 @@ class InePopulation(webdriver.Chrome):
         self.ref = ref
         self.place = unidecode(place.lower())
         self.locality = locality
+        self.debug = debug
 
         # Append new instance to the class attribute list
         InePopulation.all.append(self)
 
     def __repr__(self):
-        return f"InePopulation({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.place}', '{self.locality}')"
+        return f"InePopulation({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.place}', '{self.locality}','{self.debug}')"
 
     def __str__(self):
         return (
@@ -63,7 +72,8 @@ class InePopulation(webdriver.Chrome):
             f"  Land: {self.land}\n"
             f"  Ref: {self.ref}\n"
             f"  Place: {self.place}\n"
-            f"  Locality: {self.locality}"
+            f"  Locality: {self.locality}\n"
+            f"  Debug: {self.debug}"
         )
 
     def get_data(self) -> dict[str, Union[int, float]]:
@@ -109,8 +119,9 @@ class InePopulation(webdriver.Chrome):
             return data
 
         finally:
-            self.quit()
-            time.sleep(1)
+            if self.debug == False:
+                self.quit()
+                time.sleep(1)
 
     #
     #
