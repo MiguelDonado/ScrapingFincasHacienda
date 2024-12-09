@@ -82,8 +82,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
                 logger.info(
                     f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
                 )
-                data = {"transactions_now": None, "transactions_before": None}
-                return data
+                return const.EMPTY_DICTIONARY_FINCAS
 
             # Check if the data scraped from Correos work successfully or not
             # If not, then dont proceed any further with this class, log and return a dictionary with empty values
@@ -93,8 +92,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
                 logger.info(
                     f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
                 )
-                data = {"transactions_now": None, "transactions_before": None}
-                return data
+                return const.EMPTY_DICTIONARY_FINCAS
 
             # If is 'Rústico' proceed with the class.
             self.__land_first_page()
@@ -120,8 +118,7 @@ class IneNumTransmisionesFincasRusticas(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
-            data = {"transactions_now": None, "transactions_before": None}
-            return data
+            return const.EMPTY_DICTIONARY_FINCAS
 
         finally:
             if self.debug == False:

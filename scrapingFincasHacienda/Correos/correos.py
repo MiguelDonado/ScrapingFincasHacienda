@@ -90,12 +90,7 @@ class Correos(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
-            data = {
-                "cp": None,
-                "province": None,
-                "locality": None,
-            }
-            return data
+            return const.EMPTY_DICTIONARY
         finally:
             if self.debug == False:
                 self.quit()

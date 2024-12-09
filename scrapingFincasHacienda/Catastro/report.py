@@ -96,15 +96,7 @@ class CatastroReport(webdriver.Chrome):
             report = self.__get_reference_value_report()
 
             if not report:
-                data_report = {
-                    "ath": None,
-                    "denominacion_ath": None,
-                    "agrupacion_cultivo": None,
-                    "agrupacion_municipio": None,
-                    "number_buildings": None,
-                    "slope": None,
-                    "fls": None,
-                }
+                data_report = const.EMPTY_DICTIONARY
             else:
                 data_report = self.__process_report(report)
 
@@ -128,16 +120,7 @@ class CatastroReport(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
-            data_report = {
-                "ath": None,
-                "denominacion_ath": None,
-                "agrupacion_cultivo": None,
-                "agrupacion_municipio": None,
-                "number_buildings": None,
-                "slope": None,
-                "fls": None,
-            }
-            return {"value": None, "data": data_report, "path": None}
+            return {"value": None, "data": const.EMPTY_DICTIONARY, "path": None}
         finally:
             if self.debug == False:
                 self.quit()

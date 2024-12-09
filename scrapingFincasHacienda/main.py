@@ -67,7 +67,6 @@ def main():
             continue
 
         for lote in lotes:
-            skip_outer = False  # To handle already stored auctions
             i_lote = lote["id"]
             data_lote = lote["data"]
 
@@ -143,16 +142,19 @@ def main():
                 fullpath_ortofoto_hidrografia = paths_iberpix["ortofoto_hidrografia"]
 
                 # 5.8) SABI CLASS
-                sabi = Sabi(delegation, i_lote, i_land, land, data_correos["cp"])
+                sabi = Sabi(
+                    delegation,
+                    i_lote,
+                    i_land,
+                    land,
+                    data_correos["cp"],
+                    number_enterprises=1,
+                )
                 # 'data_sabi' contains a df with 61 columns and up to 25 enterprises
                 data_sabi = sabi.get_data()
 
-                ######## For debugging purposes ########
-                save_python_object_to_file(data_sabi)
-                sys.exit()
-
                 # 5.9) GOOGLE MAPS CLASS
-                # 'full_data_two_directions' contain data for 25 enterprises given a land
+                # 'full_data_two_directions' contain data up to 25 enterprises given a land
                 full_data_two_directions = full_get_data_two_directions(
                     delegation, i_lote, i_land, land, coordinates_land, data_sabi
                 )
@@ -209,6 +211,8 @@ def main():
                     ),
                 }
                 insert_land_data(full_data_land)
+                # ######## For debugging purposes ########
+                # save_python_object_to_file(data_sabi)
                 sys.exit()
 
 

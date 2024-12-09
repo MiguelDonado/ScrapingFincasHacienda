@@ -7,3 +7,12 @@ BASE_URL_SEARCH_CATASTRO = (
 BASE_URL_REPORT_CATASTRO = "https://www1.sedecatastro.gob.es/Accesos/SECAccvr.aspx"
 DOWNLOAD_DIR = Path("../data/catastro").resolve()
 DOWNLOAD_DIR_REPORT = Path("../data/report").resolve()
+EMPTY_DICTIONARY = {
+    "ath": None,
+    "denominacion_ath": None,
+    "agrupacion_cultivo": None,
+    "agrupacion_municipio": None,
+    "number_buildings": None,
+    "slope": None,
+    "fls": None,
+}

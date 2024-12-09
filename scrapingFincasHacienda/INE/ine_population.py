@@ -86,11 +86,7 @@ class InePopulation(webdriver.Chrome):
                 logger.info(
                     f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
                 )
-                data = {
-                    "population_now": None,
-                    "population_before": None,
-                }
-                return data
+                return const.EMPTY_DICTIONARY_POPULATION
 
             # If we have available data from Correos Class
             self.__land_first_page()
@@ -112,11 +108,7 @@ class InePopulation(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
-            data = {
-                "population_now": None,
-                "population_before": None,
-            }
-            return data
+            return const.EMPTY_DICTIONARY_POPULATION
 
         finally:
             if self.debug == False:

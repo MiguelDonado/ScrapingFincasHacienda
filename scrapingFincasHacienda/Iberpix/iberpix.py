@@ -122,7 +122,16 @@ class Iberpix(webdriver.Chrome):
                     "usos_suelo": None,
                     "ortofoto_hidrografia": None,
                 }
-                return {"data": None, "paths": paths}
+                data = {
+                    "ID": None,
+                    "Código iberpix": None,
+                    "Cubierta terrestre iberpix": None,
+                    "Cubierta terrestre CODIIGE": None,
+                    "Código Uso de suelo": None,
+                    "Uso del suelo HILUCS": None,
+                    "Superficie (Ha)": None,
+                }
+                return {"data": data, "paths": paths}
 
             # If is 'Rústico' proceed with the class.
             self.__land_first_page()
@@ -185,7 +194,16 @@ class Iberpix(webdriver.Chrome):
                 "usos_suelo": None,
                 "ortofoto_hidrografia": None,
             }
-            return {"data": None, "paths": paths}
+            data = {
+                "ID": None,
+                "Código iberpix": None,
+                "Cubierta terrestre iberpix": None,
+                "Cubierta terrestre CODIIGE": None,
+                "Código Uso de suelo": None,
+                "Uso del suelo HILUCS": None,
+                "Superficie (Ha)": None,
+            }
+            return {"data": data, "paths": paths}
         finally:
             if self.debug == False:
                 self.quit()
