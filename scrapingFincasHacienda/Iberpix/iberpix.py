@@ -3,8 +3,8 @@
 # This class will only be used for the rústicas fincas, since it doesn't have a lot of sense
 # to download the LIDAR, usos suelo, curvas nivel, hidrografia and usos suelos data, for an
 # apartment that is on the middle of a city
-
 import logging
+import sys
 import time
 from pathlib import Path
 
@@ -116,22 +116,8 @@ class Iberpix(webdriver.Chrome):
                 logger.info(
                     f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}"
                 )
-                paths = {
-                    "curvas_nivel": None,
-                    "lidar": None,
-                    "usos_suelo": None,
-                    "ortofoto_hidrografia": None,
-                }
-                data = {
-                    "ID": None,
-                    "Código iberpix": None,
-                    "Cubierta terrestre iberpix": None,
-                    "Cubierta terrestre CODIIGE": None,
-                    "Código Uso de suelo": None,
-                    "Uso del suelo HILUCS": None,
-                    "Superficie (Ha)": None,
-                }
-                return {"data": data, "paths": paths}
+
+                return const.EMPTY_DICTIONARY
 
             # If is 'Rústico' proceed with the class.
             self.__land_first_page()
@@ -188,22 +174,7 @@ class Iberpix(webdriver.Chrome):
                 f"{logger_config.build_id(self.delegation, self.lote, self.land)}{msg}",
                 exc_info=True,
             )
-            paths = {
-                "curvas_nivel": None,
-                "lidar": None,
-                "usos_suelo": None,
-                "ortofoto_hidrografia": None,
-            }
-            data = {
-                "ID": None,
-                "Código iberpix": None,
-                "Cubierta terrestre iberpix": None,
-                "Cubierta terrestre CODIIGE": None,
-                "Código Uso de suelo": None,
-                "Uso del suelo HILUCS": None,
-                "Superficie (Ha)": None,
-            }
-            return {"data": data, "paths": paths}
+            return const.EMPTY_DICTIONARY
         finally:
             if self.debug == False:
                 self.quit()
@@ -264,9 +235,10 @@ class Iberpix(webdriver.Chrome):
             By.XPATH, '//button[contains(@aria-label,"BackImgLayer")]'
         )
         choose_background_layer.click()
-
         lidar_btn = self.find_element(By.XPATH, '//img[@alt="LiDAR (Relieve)"]')
         lidar_btn.click()
+
+        self._close_error_popup()
 
         close_side_panel = self.find_element(
             By.XPATH, '//button[@aria-label="Plugin BackImgLayer"]'
@@ -284,6 +256,8 @@ class Iberpix(webdriver.Chrome):
             By.XPATH, '//img[@alt="Ocupación del suelo (CORINE)"]'
         )
         usos_suelo_btn.click()
+
+        self._close_error_popup()
 
         close_side_panel = self.find_element(
             By.XPATH, '//button[@aria-label="Plugin BackImgLayer"]'
@@ -365,6 +339,8 @@ class Iberpix(webdriver.Chrome):
         )
         select_ortofoto_layer.click()
 
+        self._close_error_popup()
+
         close_side_panel = self.find_element(
             By.XPATH, '//button[@aria-label="Plugin BackImgLayer"]'
         )
@@ -443,3 +419,14 @@ class Iberpix(webdriver.Chrome):
         self.get_screenshot_as_file(path)
 
         return path
+
+    def _close_error_popup(self):
+        # Sometimes it pops up an error
+        # Despite the error the layer is loaded, so we ignore the error
+        try:
+            button_error = self.find_element(
+                By.XPATH, "//div[@class='m-dialog error']//button"
+            )
+            button_error.click()
+        except:
+            return None

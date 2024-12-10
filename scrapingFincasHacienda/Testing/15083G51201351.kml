@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>15083G512013510000TH</name>
+      <Style id="sn_ICONO_OVC">
+		<IconStyle>
+			<color>ffb2c0ff</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://ovc.catastro.meh.es/Cartografia/WMS/ICONO_OVC.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0.7</scale>
+		</LabelStyle>
+	  </Style>
+      <Style id="sh_ICONO_OVC">
+		<IconStyle>
+			<color>ffb2c0ff</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://ovc.catastro.meh.es/Cartografia/WMS/ICONO_OVC.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<scale>0.8</scale>
+		</LabelStyle>
+	  </Style>
+<StyleMap id="msn_ICONO_OVC">
+	<Pair>
+		<key>normal</key>
+		<styleUrl>#sn_ICONO_OVC</styleUrl>
+	</Pair>
+	<Pair>
+		<key>highlight</key>
+		<styleUrl>#sh_ICONO_OVC</styleUrl>
+	</Pair>
+</StyleMap>
+<Visible>1</Visible>
+<LookAt>
+<longitude>-8.56247417993313</longitude>
+<latitude>42.7490046478093</latitude>
+<range>147.771175131364</range>
+<tilt>0</tilt>
+<heading>0</heading>
+</LookAt>
+<Placemark>
+<name>Polígono 512 Parcela 1351, TEO (A CORUÑA)</name>
+<Snippet>15083G512013510000TH</Snippet>
+<description><![CDATA[<font size=+1>Consultar en la Sede Electrónica<br>del Catastro la parcela:</font><br><font size=+2><A href="https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCListaBienes.aspx?del=15&muni=83&rc1=15083G5&rc2=1201351">15083G512013510000TH</a></font>]]></description>
+<styleUrl>#msn_ICONO_OVC</styleUrl>
+<Point>
+<extrude>1</extrude>
+<altitudeMode>relativeToGround</altitudeMode>
+<coordinates>-8.56247417993313,42.7490046478093,1</coordinates>
+</Point>
+</Placemark>
+</Document>
+</kml>

@@ -736,6 +736,11 @@ class Finca(BaseDatabase):
                 report_catastro,
             )
 
+            # Ensure the number of placeholders matches the number of values
+            assert len(self.placeholders_sql.split(",")) == len(
+                values
+            ), f"Expected {len(self.placeholders_sql.split(','))} values, but got {len(values)}.\nPlaceholders: {self.placeholders_sql.split(',')}\n\nValues: {values}"
+
             self.execute_query(sql, values)
 
     def get_finca_id(self, ref):
@@ -1163,11 +1168,11 @@ def insert_land_data(land_data):
         land_data["path_ortofoto_land"],
         land_data["path_kml_land"],
         land_data["path_googlemaps_land"],
+        land_data["path_report_land"],
         land_data["fullpath_mapa_curvas_nivel"],
         land_data["fullpath_mapa_lidar"],
         land_data["fullpath_usos_suelo"],
         land_data["fullpath_ortofoto_hidrografia"],
-        land_data["path_report_land"],
     )
 
     # 2.4. Table 'EmpresaFinca'
