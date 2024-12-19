@@ -15,7 +15,6 @@ class Auction(Db.BaseDatabase):
             CREATE TABLE IF NOT EXISTS "auctions" (
                 "id" INTEGER,
                 "electronical_id" TEXT UNIQUE,   
-                "path_pdf" TEXT,
                 "pliego_pdf" BLOB,
                 PRIMARY KEY ("id")
             )
@@ -35,12 +34,11 @@ class Auction(Db.BaseDatabase):
 
             sql = """
                     INSERT INTO "auctions"
-                    ("electronical_id","path_pdf","pliego_pdf")
-                    VALUES (:electronical_id,:path_pdf,:pliego_pdf)
+                    ("electronical_id","pliego_pdf")
+                    VALUES (:electronical_id,:pliego_pdf)
                     """
             params = {
                 "electronical_id": electronical_id,
-                "path_pdf": path_pdf,
                 "pliego_pdf": pliego_pdf,
             }
             self.execute_query(sql, params)

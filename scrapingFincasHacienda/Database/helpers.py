@@ -221,38 +221,39 @@ def insert_land_data(land_data):
         land_data["usos_suelo"]["Uso del suelo HILUCS"]
     )
     ###### 4. FINCA INSERTION ######
-    finca.insert_data(
-        {
-            "referencia_catastral": land_data["referencia_catastral"],
-            "localizacion": land_data["localizacion"],
-            "catastro_value": land_data["catastro_value"],
-            "delegation_id": land_data["delegation"],
-            "agrupacion_cultivo_id": agrupacion_cultivo_id,
-            "locality_id": locality_id,
-            "lote_id": lote_id,
-            "clase_id": clase_id,
-            "uso_id": uso_id,
-            "aprovechamiento_id": aprovechamiento_id,
-            "codigo_postal_id": codigo_postal_id,
-            "ath_id": ath_id,
-            "cubierta_terrestre_iberpix_id": cubierta_terrestre_iberpix_id,
-            "cubierta_terrestre_codigee_id": cubierta_terrestre_codigee_id,
-            "uso_suelo_hilucs_id": usos_suelo_hilucs_id,
-            "coordenadas": land_data["coordenadas"],
-            "agrupacion_municipio": land_data["agrupacion_municipio"],
-            "number_buildings": land_data["number_buildings"],
-            "slope": land_data["slope"],
-            "fls": land_data["fls"],
-        },
-        land_data["path_ortofoto_land"],
-        land_data["path_kml_land"],
-        land_data["path_googlemaps_land"],
-        land_data["path_report_land"],
-        land_data["fullpath_mapa_curvas_nivel"],
-        land_data["fullpath_mapa_lidar"],
-        land_data["fullpath_usos_suelo"],
-        land_data["fullpath_ortofoto_hidrografia"],
-    )
+    data_finca_to_insert = {
+        "referencia_catastral": land_data["referencia_catastral"],
+        "localizacion": land_data["localizacion"],
+        "catastro_value": land_data["catastro_value"],
+        "delegation_id": land_data["delegation"],
+        "agrupacion_cultivo_id": agrupacion_cultivo_id,
+        "locality_id": locality_id,
+        "lote_id": lote_id,
+        "clase_id": clase_id,
+        "uso_id": uso_id,
+        "aprovechamiento_id": aprovechamiento_id,
+        "codigo_postal_id": codigo_postal_id,
+        "ath_id": ath_id,
+        "cubierta_terrestre_iberpix_id": cubierta_terrestre_iberpix_id,
+        "cubierta_terrestre_codigee_id": cubierta_terrestre_codigee_id,
+        "uso_suelo_hilucs_id": usos_suelo_hilucs_id,
+        "coordenadas": land_data["coordenadas"],
+        "agrupacion_municipio": land_data["agrupacion_municipio"],
+        "number_buildings": land_data["number_buildings"],
+        "slope": land_data["slope"],
+        "fls": land_data["fls"],
+    }
+    media_finca_to_insert = {
+        "ortofoto": land_data["path_ortofoto_land"],
+        "kml": land_data["path_kml_land"],
+        "google_maps": land_data["path_googlemaps_land"],
+        "curvas_nivel": land_data["fullpath_mapa_curvas_nivel"],
+        "lidar": land_data["fullpath_mapa_lidar"],
+        "usos_suelo": land_data["fullpath_usos_suelo"],
+        "hidrografia": land_data["fullpath_ortofoto_hidrografia"],
+        "report_catastro": land_data["path_report_land"],
+    }
+    finca.insert_data(data_finca_to_insert, media_finca_to_insert)
 
     ###### 5. INSERTION OF EMPRESA FINCA ######
     # 5.0. Table 'EmpresaFinca'

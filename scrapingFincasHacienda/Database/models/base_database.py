@@ -67,39 +67,59 @@ class BaseDatabase:
         else:
             return None
 
-    @staticmethod
-    def get_columns_and_placeholders_sql():
-        # 1) In some classes ("Finca","EmpresaFinca") I create two class attributes.
-        # 2) This class attributtes are called "columns_sql" and "placeholders_sql".
-        # 3) "columns_sql": Will hold the values for
-        # 4)
-        # sql = f'INSERT INTO "fincas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
-        # Get the columns names to dynamically create the SQL statements
-        # Drop last element, because the datetime would be inserted
-        # by default, no need for a placeholder on sql statement
-        list_columns_names = regex.findall(const.COLUMNS_PATTERN, const.FINCA_HEADERS)[
-            :-1
-        ]
-        list_columns_names = [column.strip() for column in list_columns_names]
-        column_names_sql = ", ".join(list_columns_names)
-        # Get the placeholders to dynamically create the SQL statements
-        placeholders_sql = ", ".join(["?"] * len(list_columns_names))
-        return column_names_sql, placeholders_sql
-
-        # Get the columns names to dynamically create the SQL statements
-        list_columns_names = regex.findall(
-            const.COLUMNS_PATTERN, const.EMPRESAS_FINCAS_HEADERS
-        )
-        list_columns_names = [column.strip() for column in list_columns_names]
-        column_names_sql = ", ".join(list_columns_names)
-        # Get the placeholders to dynamically create the SQL statements
-        placeholders_sql = ", ".join(["?"] * len(list_columns_names))
-        return column_names_sql, placeholders_sql
+    # ================= Used by 'EmpresaFinca', 'Finca' and 'Empresa' classes =================
+    # ================== to dinamically generate INSERT statements =================
+    #
+    # Because the number of columns of this classes is big, instead of doing it manually,
+    # its better they are generated dinamically, and insert statements are more maintainable.
 
     @staticmethod
-    def is_len_placeholders_equals_len_values(placeholders, values):
-        pass
-        # # Ensure the number of placeholders matches the number of values
-        # assert len(self.placeholders_sql.split(",")) == len(
-        #     values
-        # ), f"Expected {len(self.placeholders_sql.split(','))} values, but got {len(values)}.\nPlaceholders: {self.placeholders_sql.split(',')}\n\nValues: {values}"
+    def generate_insert_statement_columns(caller_class_name: str):
+        assert caller_class_name in [
+            "EmpresaFinca",
+            "Finca",
+            "Empresa",
+        ], "caller_class_name must be 'EmpresaFinca', 'Finca' or 'Empresa'"
+        columns_names_list = BaseDatabase.get_columns_names_list(caller_class_name)
+        column_names_insert_statement = ", ".join(columns_names_list)
+        return column_names_insert_statement
+
+    @staticmethod
+    def generate_insert_statement_values_placeholders(caller_class_name: str):
+        assert caller_class_name in [
+            "EmpresaFinca",
+            "Finca",
+            "Empresa",
+        ], "caller_class_name must be 'EmpresaFinca', 'Finca' or 'Empresa'"
+        # Get values placeholders to dynamically create the SQL statements
+        columns_names_list = BaseDatabase.get_columns_names_list(caller_class_name)
+        values_placeholders_list = [":" + column for column in columns_names_list]
+        values_placeholders = ", ".join(values_placeholders_list)
+        return values_placeholders
+
+    #### Helper method used by 'generate_insert_statement_columns' and 'generate_insert_statement_values_placeholders'
+    @staticmethod
+    def get_columns_names_list(caller_class_name: str):
+        assert caller_class_name in [
+            "EmpresaFinca",
+            "Finca",
+            "Empresa",
+        ], "caller_class_name must be 'EmpresaFinca', 'Finca' or 'Empresa'"
+
+        if caller_class_name == "EmpresaFinca":
+            headers = const.EMPRESAS_FINCAS_HEADERS
+        elif caller_class_name == "Finca":
+            headers = const.FINCA_HEADERS
+        elif caller_class_name == "Empresa":
+            headers = const.EMPRESAS_HEADERS
+
+        # Get columns names to dynamically create SQL statement
+        columns_names_list = regex.findall(const.COLUMNS_PATTERN, headers)
+        columns_names_list = [column.strip() for column in columns_names_list]
+
+        # Because the last column in Finca table is the timestamp
+        # I dont neet to include it on the insert statement
+        if caller_class_name == "Finca":
+            return columns_names_list[:-1]
+        elif caller_class_name in ["EmpresaFinca", "Empresa"]:
+            return columns_names_list

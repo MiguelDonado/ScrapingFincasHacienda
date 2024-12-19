@@ -9,7 +9,12 @@ import regex
 class EmpresaFinca(Db.BaseDatabase):
 
     # Class attributes
-    columns_sql, placeholders_sql = Db.BaseDatabase.get_columns_placeholders_sql()
+    columns_names_insert_sql = Db.BaseDatabase.generate_insert_statement_columns(
+        "EmpresaFinca"
+    )
+    values_placeholders_sql = (
+        Db.BaseDatabase.generate_insert_statement_values_placeholders("EmpresaFinca")
+    )
 
     def __init__(self):
         self.__create_table()  # If the table is already created, it does nothing
@@ -33,9 +38,8 @@ class EmpresaFinca(Db.BaseDatabase):
         # Before inserting the data, check if already exists on the table
         # If it doesn't exists, then proceed to insert it
         if not self.get_empresa_finca_id(data["empresa_id"], data["finca_id"]):
-            sql = f'INSERT INTO "empresas_fincas" ({self.columns_sql}) VALUES ({self.placeholders_sql})'
-            values = tuple(data.values())
-            self.execute_query(sql, values)
+            sql = f'INSERT INTO "empresas_fincas" ({self.columns_names_insert_sql}) VALUES ({self.values_placeholders_sql})'
+            self.execute_query(sql, data)
 
     def get_empresa_finca_id(self, empresa_id, finca_id):
         sql = 'SELECT "id" FROM empresas_fincas WHERE empresa_id=:empresa_id AND finca_id=:finca_id'
@@ -46,15 +50,3 @@ class EmpresaFinca(Db.BaseDatabase):
 
     # def delete_data(self): Won't have a method for deleting data because it has no sense for this joint table
     # def update_data(self): Won't have a method for updating data because it has no sense for this dimension table
-
-    @staticmethod
-    def get_columns_placeholders_sql():
-        # Get the columns names to dynamically create the SQL statements
-        list_columns_names = regex.findall(
-            const.COLUMNS_PATTERN, const.EMPRESAS_FINCAS_HEADERS
-        )
-        list_columns_names = [column.strip() for column in list_columns_names]
-        column_names_sql = ", ".join(list_columns_names)
-        # Get the placeholders to dynamically create the SQL statements
-        placeholders_sql = ", ".join(["?"] * len(list_columns_names))
-        return column_names_sql, placeholders_sql
