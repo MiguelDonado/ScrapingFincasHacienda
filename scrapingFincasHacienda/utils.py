@@ -2,7 +2,7 @@ import logging
 import pickle
 
 import logger_config
-from Database.models import is_auction_old_or_posterior_rounds
+from Database.helpers import is_auction_old_or_posterior_rounds
 from GoogleMaps.GoogleMaps import GoogleMaps
 
 logger = logging.getLogger(__name__)

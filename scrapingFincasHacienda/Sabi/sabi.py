@@ -31,7 +31,7 @@ class Sabi(webdriver.Chrome):
         land: int,
         ref: str,
         cp: str,
-        number_enterprises=25,
+        n_emp=25,  # Number of enterprises
         debug=False,
     ):
 
@@ -42,8 +42,8 @@ class Sabi(webdriver.Chrome):
         assert isinstance(ref, str), f"Ref {ref} must be a string!"
         assert isinstance(cp, (str, type(None))), f"C.P. {cp} must be a string or None!"
         assert (
-            0 < number_enterprises < 26
-        ), f"El número de empresas scrapeadas {number_enterprises} debe ser mayor que 0 y menor que 25."
+            0 < n_emp < 26
+        ), f"El número de empresas scrapeadas {n_emp} debe ser mayor que 0 y menor que 25."
         assert isinstance(debug, bool), f"Debug {debug} must be a boolean!"
 
         options = webdriver.ChromeOptions()
@@ -58,14 +58,14 @@ class Sabi(webdriver.Chrome):
         self.land = land
         self.ref = ref
         self.cp = cp
-        self.number_enterprises = number_enterprises
+        self.n_emp = n_emp
         self.debug = debug
 
         # Append new instance to the class attribute list
         Sabi.all.append(self)
 
     def __repr__(self):
-        return f"Sabi({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}', '{self.number_enterprises}','{self.debug}')"
+        return f"Sabi({self.delegation}, {self.lote}, {self.land}, '{self.ref}', '{self.cp}', '{self.n_emp}','{self.debug}')"
 
     def __str__(self):
         return (
@@ -75,7 +75,7 @@ class Sabi(webdriver.Chrome):
             f"  Land: {self.land}\n"
             f"  Reference: {self.ref}\n"
             f"  C.P.: {self.cp}\n"
-            f"  Number of enterprises: {self.number_enterprises}\n"
+            f"  Number of enterprises: {self.n_emp}\n"
             f"  Debug: {self.debug}"
         )
 
@@ -239,7 +239,7 @@ class Sabi(webdriver.Chrome):
 
         df = self.__sabi_results_to_df(headers, names, data)
 
-        # Return first {self.number_enterprises} enterprises
+        # Return first {self.n_emp} enterprises
         return df
 
     def __apply_competence_analysis_columns(self) -> None:
@@ -299,7 +299,7 @@ class Sabi(webdriver.Chrome):
         names_enterprises = table_first_25_elements_first_part.find_elements(
             By.XPATH,
             ".//a[@href='#']",
-        )[: self.number_enterprises]
+        )[: self.n_emp]
         names_enterprises = [name.text for name in names_enterprises]
         return names_enterprises
 
@@ -315,7 +315,7 @@ class Sabi(webdriver.Chrome):
         )
         rows = table_first_25_elements_second_part.find_elements(
             By.XPATH, "./tr[not(@id)]"
-        )[: self.number_enterprises]
+        )[: self.n_emp]
         for row in rows:
             row_data = row.find_elements(
                 By.XPATH, "./td[contains(@class, 'resultsItems')]"

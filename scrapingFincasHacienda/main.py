@@ -4,7 +4,7 @@ import Hacienda.constants as const
 from Catastro.catastro import Catastro
 from Catastro.report import CatastroReport
 from Correos.correos import Correos
-from Database.models import insert_land_data, is_auction_id_old
+from Database.helpers import insert_land_data, is_auction_id_old
 from GoogleMaps.GoogleMaps import GoogleMaps
 from Hacienda.auction_delegation import has_auction
 from Hacienda.data_pdf import get_auction_id, get_lotes_data
@@ -76,87 +76,68 @@ def main():
 
             for i_land, land in enumerate(data_lote["refs"], 1):
 
+                # Tuple containing key arguments
+                # *id_land = to unpack the tuple into separate arguments
+                id_land = (delegation, i_lote, i_land, land)
+
                 # 7.1) CATASTRO CLASS
                 try:
-                    land_object = Catastro(delegation, i_lote, i_land, land)
-                    info_land = land_object.get_data()
-                    data_land = info_land["data"]
-                    coordinates_land = info_land["coordinates"]
-                    path_ortofoto_land = info_land["ortofoto"]
-                    path_kml_land = info_land["kml"]
+                    info_land = Catastro(*id_land).get_data()
+                    keys = ["data", "coordinates", "ortofoto", "kml"]
+                    data_land, coordinates_land, path_ortofoto_land, path_kml_land = [
+                        info_land[key] for key in keys
+                    ]
                 except Exception:
                     continue
 
                 # 7.2) CORREOS_CLASS
-                correos = Correos(
-                    delegation, i_lote, i_land, land, data_land["localizacion"]
-                )
-                data_correos = correos.get_data()
+                data_correos = Correos(*id_land, data_land["localizacion"]).get_data()
 
                 # 7.3) GOOGLE_MAPS CLASS
-                one_direction = GoogleMaps(
-                    delegation, i_lote, i_land, land, coordinates_land
-                )
-                path_googlemaps_land = one_direction.get_data_one_direction()
+                path_googlemaps_land = GoogleMaps(
+                    *id_land, coordinates_land
+                ).get_data_one_direction()
 
                 # 7.4) CATASTRO_REPORT CLASS
-                report = CatastroReport(
-                    delegation, i_lote, i_land, land, data_land["clase"]
-                )
-                info_report = report.get_data()
-                report_data_land = info_report["data"]
-                value_land = info_report["value"]
-                path_report_land = info_report["path"]
+                info_report = CatastroReport(*id_land, data_land["clase"]).get_data()
+                keys = ["data", "value", "path"]
+                report_data_land, value_land, path_report_land = [
+                    info_report[key] for key in keys
+                ]
 
                 # 7.5) INE_POPULATION CLASS
-                ine_population = InePopulation(
-                    delegation,
-                    i_lote,
-                    i_land,
-                    land,
-                    data_land["localizacion"],
-                    data_correos["locality"],
-                )
-                data_ine_population = ine_population.get_data()
+                data_ine_population = InePopulation(
+                    *id_land, data_land["localizacion"], data_correos["locality"]
+                ).get_data()
 
                 # 7.6) INE_NUMBER_TRANSMISIONES CLASS
-                ine_transmisiones = IneNumTransmisionesFincasRusticas(
-                    delegation,
-                    i_lote,
-                    i_land,
-                    land,
+                data_ine_transmisiones = IneNumTransmisionesFincasRusticas(
+                    *id_land,
                     data_correos["cp"],
                     data_land["clase"],
-                )
-                data_ine_transmisiones = ine_transmisiones.get_data()
+                ).get_data()
 
-                # 5.7) IBERPIX CLASS
-                iberpix = Iberpix(
-                    delegation, i_lote, i_land, land, path_kml_land, data_land["clase"]
-                )
-                info_iberpix = iberpix.get_data()
+                # 7.7) IBERPIX CLASS
+                info_iberpix = Iberpix(
+                    *id_land, path_kml_land, data_land["clase"]
+                ).get_data()
                 data_usos_suelo, paths_iberpix = info_iberpix.values()
-                fullpath_mapa_curvas_nivel = paths_iberpix["curvas_nivel"]
-                fullpath_mapa_lidar = paths_iberpix["lidar"]
-                fullpath_usos_suelo = paths_iberpix["usos_suelo"]
-                fullpath_ortofoto_hidrografia = paths_iberpix["ortofoto_hidrografia"]
+                keys = ["curvas_nivel", "lidar", "usos_suelo", "ortofoto_hidrografia"]
+                (
+                    fullpath_mapa_curvas_nivel,
+                    fullpath_mapa_lidar,
+                    fullpath_usos_suelo,
+                    fullpath_ortofoto_hidrografia,
+                ) = [paths_iberpix[key] for key in keys]
 
-                # 5.8) SABI CLASS
-                sabi = Sabi(
-                    delegation,
-                    i_lote,
-                    i_land,
-                    land,
-                    data_correos["cp"],
-                    number_enterprises=1,
-                )
-                # 'data_sabi' contains a df with 61 columns and up to 25 enterprises
-                data_sabi = sabi.get_data()
+                # 7.8) SABI CLASS
+                # 'data_sabi' contains a df with 61 columns and up to <n> enterprises
+                data_sabi = Sabi(*id_land, data_correos["cp"], n_emp=1).get_data()
 
-                # 5.9) GOOGLE MAPS CLASS
-                # 'full_data_two_directions' contain data up to 25 enterprises given a land
+                # 7.9) GOOGLE MAPS CLASS
+                # 'full_data_two_directions' contain data up to <n> enterprises given a land
                 full_data_two_directions = full_get_data_two_directions(
-                    delegation, i_lote, i_land, land, coordinates_land, data_sabi
+                    *id_land, coordinates_land, data_sabi
                 )
 
                 # This is the info that I'll introduce in the db for each land.

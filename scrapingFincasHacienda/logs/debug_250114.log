@@ -1,0 +1,77 @@
+2025-01-14 16:08:17,886 - INFO     ->  1  -  .  -  .   - No auctions available
+2025-01-14 16:08:18,365 - INFO     ->  2  -  .  -  .   - No auctions available
+2025-01-14 16:08:18,801 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2025-01-14 16:08:19,253 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2025-01-14 16:08:19,709 - INFO     ->  4  -  .  -  .   - No auctions available
+2025-01-14 16:08:20,091 - INFO     ->  5  -  .  -  .   - No auctions available
+2025-01-14 16:08:20,491 - INFO     ->  6  -  .  -  .   - No auctions available
+2025-01-14 16:08:20,920 - INFO     ->  7  -  .  -  .   - No auctions available
+2025-01-14 16:08:21,467 - INFO     ->  8  -  .  -  .   - No auctions available
+2025-01-14 16:08:21,835 - INFO     ->  9  -  .  -  .   - No auctions available
+2025-01-14 16:08:22,232 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2025-01-14 16:08:25,107 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2025-01-14 16:08:25,847 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2025-01-14 16:08:26,355 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2025-01-14_Delegation_10.pdf
+2025-01-14 16:08:28,924 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2025-01-14 16:08:28,924 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2025-01-14 16:08:28,924 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2025-01-14 16:08:28,924 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2025-01-14 16:08:28,924 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2025-01-14 16:08:28,924 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2025-01-14 16:08:28,924 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2025-01-14 16:08:28,924 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2025-01-14 16:08:28,924 - INFO     ->  10 -  .  -  .   - Corroborated that auction is NEW.
+2025-01-14 16:09:00,085 - INFO     ->  10 -  2  -  1   - Successfully downloaded PDF and KML of the land '4226002QD2742E0021IE' with coordinates '39°28'23.6"N 6°23'41.4"W' and data: {'localizacion': 'CL VIVIENDAS DE CAMINEROS Ndup-U Bl:21 Es:1 Pl:02 Pt:DCH\n10005 CACERES (CÁCERES)', 'provincia': 'CÁCERES', 'municipio': 'CACERES ', 'clase': 'Urbano', 'uso': 'Residencial', 'cultivo': None}.
+2025-01-14 16:09:08,469 - INFO     ->  10 -  2  -  1   - Land '4226002QD2742E0021IE' is in 'CACERES' province. More precisely is on 'CÁCERES' locality with C.P. 10005
+2025-01-14 16:09:25,584 - INFO     ->  10 -  2  -  1   - Screenshot of the land '4226002QD2742E0021IE' has been taken successfully.
+2025-01-14 16:09:43,028 - ERROR    ->  10 -  2  -  1   - Failed to get the reference value and the 'Report PDF' of the land '4226002QD2742E0021IE'
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 92, in get_data
+    self.__access_query_value_page()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 161, in __access_query_value_page
+    query_value_button.click()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 402, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=131.0.6778.264)
+Stacktrace:
+#0 0x60f666f201fa <unknown>
+#1 0x60f666a3066d <unknown>
+#2 0x60f666a8066c <unknown>
+#3 0x60f666a741f5 <unknown>
+#4 0x60f666aa3582 <unknown>
+#5 0x60f666a73b38 <unknown>
+#6 0x60f666aa374e <unknown>
+#7 0x60f666ac2007 <unknown>
+#8 0x60f666aa3323 <unknown>
+#9 0x60f666a71de0 <unknown>
+#10 0x60f666a72dbe <unknown>
+#11 0x60f666eec12b <unknown>
+#12 0x60f666ef00c7 <unknown>
+#13 0x60f666ed96cc <unknown>
+#14 0x60f666ef0c47 <unknown>
+#15 0x60f666ebe67f <unknown>
+#16 0x60f666f0f288 <unknown>
+#17 0x60f666f0f450 <unknown>
+#18 0x60f666f1f076 <unknown>
+#19 0x750b7009ca94 <unknown>
+#20 0x750b70129c3c <unknown>
+
+2025-01-14 16:09:45,981 - INFO     ->  10 -  2  -  1   - Population info about land '4226002QD2742E0021IE' has been extracted successfully: Now -> 96215 /// Five years ago -> 96068
+2025-01-14 16:09:47,624 - INFO     ->  10 -  2  -  1   - Land 4226002QD2742E0021IE is 'Urbano' instead of 'Rústico', so the class IneNumTransmisionesFincasRusticas won't be used to scrape anything.
+2025-01-14 16:09:49,265 - INFO     ->  10 -  2  -  1   - Land 4226002QD2742E0021IE is 'Urbano' instead of 'Rústico', so the class Iberpix won't be used to scrape anything.
+2025-01-14 16:10:34,702 - INFO     ->  10 -  2  -  1   - Enterprises near land '4226002QD2742E0021IE' located on C.P. 10005 have been extracted successfully: ['CATELSA CACERES SA']
+2025-01-14 16:10:53,135 - INFO     ->  10 -  2  -  1   - Car and foot distance and time from '4226002QD2742E0021IE' - 'CATELSA CACERES SA' has been extracted successfully.
