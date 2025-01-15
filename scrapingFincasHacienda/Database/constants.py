@@ -1,5 +1,6 @@
 import regex
 
+DEBUG_COLUMNS_PATTERN = regex.compile(r".+?\((.+)\)\s+VALUES\s", regex.DOTALL)
 DB_NAME = "FincasProject.db"
 # Search line by line, and take everything before data type
 COLUMNS_PATTERN = regex.compile(r".+\"\s")

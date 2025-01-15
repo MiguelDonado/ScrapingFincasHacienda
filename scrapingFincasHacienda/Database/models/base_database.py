@@ -25,6 +25,21 @@ class BaseDatabase:
             if not params:
                 self.cursor.execute(query)
             else:
+                if "INSERT INTO" in query:
+                    columns_list = (
+                        regex.search(const.DEBUG_COLUMNS_PATTERN, query)
+                        .group(1)
+                        .replace('"', "")
+                    )
+                    columns_list = regex.split(",\s*", columns_list)
+                    print(columns_list)
+                    params_list = params.keys()
+
+                    assert len(columns_list) == len(params_list), (
+                        f"Mismatch between columns and parameters: "
+                        f"{len(columns_list)} columns vs {len(params_list)} parameters"
+                        f"\nThe differences are the next: {set(columns_list).symmetric_difference(params)}."
+                    )
                 self.cursor.execute(query, params)
 
     def close_connection(self):
