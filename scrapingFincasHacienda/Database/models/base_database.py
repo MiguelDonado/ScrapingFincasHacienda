@@ -32,13 +32,11 @@ class BaseDatabase:
                         .replace('"', "")
                     )
                     columns_list = regex.split(",\s*", columns_list)
-                    print(columns_list)
                     params_list = params.keys()
-
                     assert len(columns_list) == len(params_list), (
                         f"Mismatch between columns and parameters: "
                         f"{len(columns_list)} columns vs {len(params_list)} parameters"
-                        f"\nThe differences are the next: {set(columns_list).symmetric_difference(params)}."
+                        # f"\nThe differences are the next: {set(columns_list).symmetric_difference(params)}."
                     )
                 self.cursor.execute(query, params)
 
@@ -109,7 +107,7 @@ class BaseDatabase:
         # Get values placeholders to dynamically create the SQL statements
         columns_names_list = BaseDatabase.get_columns_names_list(caller_class_name)
         values_placeholders_list = [":" + column for column in columns_names_list]
-        values_placeholders = ", ".join(values_placeholders_list)
+        values_placeholders = ", ".join(values_placeholders_list).replace('"', "")
         return values_placeholders
 
     #### Helper method used by 'generate_insert_statement_columns' and 'generate_insert_statement_values_placeholders'

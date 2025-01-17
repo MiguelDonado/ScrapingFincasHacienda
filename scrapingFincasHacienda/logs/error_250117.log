@@ -1,0 +1,46 @@
+2025-01-17 17:03:36,093 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2025-01-17 17:04:55,888 - ERROR    ->  10 -  2  -  1   - Failed to get the reference value and the 'Report PDF' of the land '4226002QD2742E0021IE'
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 92, in get_data
+    self.__access_query_value_page()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Catastro/report.py", line 161, in __access_query_value_page
+    query_value_button.click()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 94, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 402, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementNotInteractableException: Message: element not interactable
+  (Session info: chrome=131.0.6778.264)
+Stacktrace:
+#0 0x5b826cfb11fa <unknown>
+#1 0x5b826cac166d <unknown>
+#2 0x5b826cb1166c <unknown>
+#3 0x5b826cb051f5 <unknown>
+#4 0x5b826cb34582 <unknown>
+#5 0x5b826cb04b38 <unknown>
+#6 0x5b826cb3474e <unknown>
+#7 0x5b826cb53007 <unknown>
+#8 0x5b826cb34323 <unknown>
+#9 0x5b826cb02de0 <unknown>
+#10 0x5b826cb03dbe <unknown>
+#11 0x5b826cf7d12b <unknown>
+#12 0x5b826cf810c7 <unknown>
+#13 0x5b826cf6a6cc <unknown>
+#14 0x5b826cf81c47 <unknown>
+#15 0x5b826cf4f67f <unknown>
+#16 0x5b826cfa0288 <unknown>
+#17 0x5b826cfa0450 <unknown>
+#18 0x5b826cfb0076 <unknown>
+#19 0x7f41dcc9ca94 <unknown>
+#20 0x7f41dcd29c3c <unknown>
+

@@ -1,4 +1,5 @@
 import sqlite3
+import sys
 from pathlib import Path
 
 import Database.constants as const
@@ -38,11 +39,17 @@ class Empresa(Db.BaseDatabase):
         # The for loop iterates over the rows of the DataFrame using itertuples
         # (index=False, name=None), which returns each row as a tuple
         # without the index
+        headers = self.get_columns_names_list(
+            "Empresa"
+        )  # Get the headers from the dataframe
+        headers = [header.replace('"', "") for header in headers]
         for row in df.itertuples(index=False, name=None):
             # Before inserting the data, check if already exists on the table
             # If it doesn't exists, then proceed to insert it
             if not self.get_empresa_id(row[1]):
-                self.execute_query(sql, row)
+                # Create a dictionary where keys are headers and values are row data
+                row_dict = dict(zip(headers, row))
+                self.execute_query(sql, row_dict)
 
     def get_empresa_id(self, nif):
         sql = 'SELECT "id" FROM empresas WHERE "Código NIF"=:nif'

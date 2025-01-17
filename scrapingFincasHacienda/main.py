@@ -132,7 +132,7 @@ def main():
                 ) = [paths_iberpix[key] for key in keys]
 
                 # 7.8) SABI CLASS
-                # 'data_sabi' contains a df with 61 columns and up to <n> enterprises
+                # 'data_sabi' contains a df with 23 columns and up to <n> enterprises
                 data_sabi = Sabi(*id_land, data_correos["cp"], n_emp=1).get_data()
 
                 # 7.9) GOOGLE MAPS CLASS
