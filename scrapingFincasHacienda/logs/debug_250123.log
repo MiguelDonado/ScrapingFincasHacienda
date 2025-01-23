@@ -75,3 +75,55 @@ Stacktrace:
 #16 0x7ca6b9c9ca94 <unknown>
 #17 0x7ca6b9d29c3c <unknown>
 
+2025-01-23 15:33:01,614 - INFO     -> Url 'https://www.google.com/maps' has been requested. Get back status code 200.
+2025-01-23 15:33:25,467 - INFO     -> URL 'https://www.google.com/maps' has been requested. Get back status code 200.
+2025-01-23 15:33:38,778 - INFO     -> URL: 'https://www.google.com/maps' has been requested. Get back status code 200.
+2025-01-23 15:36:09,309 - INFO     -> URL: 'https://www.google.com/maps' has been requested. Get back status code 200.
+2025-01-23 15:36:09,644 - INFO     -> URL: 'https://www.ine.es/jaxiT3/Tabla.htm?t=6152' has been requested. Get back status code 200.
+2025-01-23 15:36:09,774 - INFO     -> URL: 'https://www.ine.es/nomen2/index.do' has been requested. Get back status code 200.
+2025-01-23 15:36:10,160 - INFO     ->  1  -  .  -  .   - No auctions available
+2025-01-23 15:36:10,469 - INFO     ->  2  -  .  -  .   - No auctions available
+2025-01-23 15:36:10,773 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2025-01-23 15:36:11,370 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2025-01-23 15:36:11,738 - INFO     ->  4  -  .  -  .   - No auctions available
+2025-01-23 15:36:12,060 - INFO     ->  5  -  .  -  .   - No auctions available
+2025-01-23 15:36:12,351 - INFO     ->  6  -  .  -  .   - No auctions available
+2025-01-23 15:43:59,767 - INFO     -> URL: 'https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=12&UrbRus=R&RefC=15012B514003380000LQ&Apenom=&esBice=&RCBice1=&RCBice2=&DenoBice=&from=nuevoVisor&ZV=NO&anyoZV=' has been requested. Get back status code 200.
+2025-01-23 15:43:59,919 - INFO     -> URL: 'https://www1.sedecatastro.gob.es/Cartografia/mapa.aspx?buscar=S' has been requested. Get back status code 200.
+2025-01-23 15:44:00,180 - INFO     -> URL: 'https://www1.sedecatastro.gob.es/Accesos/SECAccvr.aspx' has been requested. Get back status code 200.
+2025-01-23 15:44:00,246 - INFO     -> URL: 'https://www.correos.es/es/es/herramientas/codigos-postales/detalle' has been requested. Get back status code 200.
+2025-01-23 15:44:01,023 - INFO     -> URL: 'https://www.google.com/maps' has been requested. Get back status code 200.
+2025-01-23 15:44:01,358 - INFO     -> URL: 'https://www.hacienda.gob.es' has been requested. Get back status code 200.
+2025-01-23 15:44:01,881 - INFO     -> URL: 'https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/ListadoSubastasConcursos.aspx?den=&nat=&dels=15%3B' has been requested. Get back status code 200.
+2025-01-23 15:44:01,952 - INFO     -> URL: 'https://www.ign.es/iberpix/' has been requested. Get back status code 200.
+2025-01-23 15:44:02,485 - INFO     -> URL: 'https://www.ine.es/jaxiT3/Tabla.htm?t=6152' has been requested. Get back status code 200.
+2025-01-23 15:44:02,604 - INFO     -> URL: 'https://www.ine.es/nomen2/index.do' has been requested. Get back status code 200.
+2025-01-23 15:44:02,875 - INFO     ->  1  -  .  -  .   - No auctions available
+2025-01-23 15:44:03,195 - INFO     ->  2  -  .  -  .   - No auctions available
+2025-01-23 15:44:03,506 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2025-01-23 15:44:03,630 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2025-01-23 15:44:03,928 - INFO     ->  4  -  .  -  .   - No auctions available
+2025-01-23 15:44:04,234 - INFO     ->  5  -  .  -  .   - No auctions available
+2025-01-23 15:44:04,649 - INFO     ->  6  -  .  -  .   - No auctions available
+2025-01-23 15:46:33,580 - INFO     -> ################## SAD PATH CHECKING ##################
+2025-01-23 15:46:33,803 - INFO     -> URL: 'https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?del=15&mun=12&UrbRus=R&RefC=15012B514003380000LQ&Apenom=&esBice=&RCBice1=&RCBice2=&DenoBice=&from=nuevoVisor&ZV=NO&anyoZV=' has been requested. Get back status code 200.
+2025-01-23 15:46:33,958 - INFO     -> URL: 'https://www1.sedecatastro.gob.es/Cartografia/mapa.aspx?buscar=S' has been requested. Get back status code 200.
+2025-01-23 15:46:34,158 - INFO     -> URL: 'https://www1.sedecatastro.gob.es/Accesos/SECAccvr.aspx' has been requested. Get back status code 200.
+2025-01-23 15:46:34,231 - INFO     -> URL: 'https://www.correos.es/es/es/herramientas/codigos-postales/detalle' has been requested. Get back status code 200.
+2025-01-23 15:46:35,082 - INFO     -> URL: 'https://www.google.com/maps' has been requested. Get back status code 200.
+2025-01-23 15:46:35,418 - INFO     -> URL: 'https://www.hacienda.gob.es' has been requested. Get back status code 200.
+2025-01-23 15:46:35,702 - INFO     -> URL: 'https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/ListadoSubastasConcursos.aspx?den=&nat=&dels=15%3B' has been requested. Get back status code 200.
+2025-01-23 15:46:35,836 - INFO     -> URL: 'https://www.ign.es/iberpix/' has been requested. Get back status code 200.
+2025-01-23 15:46:36,211 - INFO     -> URL: 'https://www.ine.es/jaxiT3/Tabla.htm?t=6152' has been requested. Get back status code 200.
+2025-01-23 15:46:36,378 - INFO     -> URL: 'https://www.ine.es/nomen2/index.do' has been requested. Get back status code 200.
+2025-01-23 15:46:36,779 - INFO     ->  1  -  .  -  .   - No auctions available

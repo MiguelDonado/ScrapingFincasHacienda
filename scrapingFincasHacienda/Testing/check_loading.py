@@ -1,53 +1,58 @@
+import contextlib
 import pickle
 import pprint
 
 
-def imprimir_datos_bonito(datos):
+def imprimir_datos_bonito(datos, file):
     # Utiliza pprint para manejar estructuras anidadas de manera legible
-    pp = pprint.PrettyPrinter(indent=4, width=80)
+    pp = pprint.PrettyPrinter(indent=4, width=80, stream=file)
 
     # Formatea los campos principales
-    print("\n--- Información Principal ---")
-    print(f"ID Electrónico: {datos.get('electronical_id', 'No disponible')}")
-    print(f"Delegación: {datos.get('delegation', 'No disponible')}")
-    print(f"Número de Lote: {datos.get('lote_number', 'No disponible')}")
-    print(f"Referencia Catastral: {datos.get('referencia_catastral', 'No disponible')}")
-    print(f"Precio: {datos.get('price', 'No disponible')} €")
-    print(f"Localización: {datos.get('localizacion', 'No disponible')}")
-    print(f"Municipio: {datos.get('municipio', 'No disponible')}")
-    print(f"Clase: {datos.get('clase', 'No disponible')}")
-    print(f"Uso: {datos.get('uso', 'No disponible')}")
-    print(f"Coordenadas: {datos.get('coordenadas', 'No disponible')}")
-    print(f"Código Postal: {datos.get('codigo_postal', 'No disponible')}")
-    print(f"Provincia: {datos.get('province', 'No disponible')}")
+    file.write("\n--- Información Principal ---\n")
+    file.write(f"ID Electrónico: {datos.get('electronical_id', 'No disponible')}\n")
+    file.write(f"Delegación: {datos.get('delegation', 'No disponible')}\n")
+    file.write(f"Número de Lote: {datos.get('lote_number', 'No disponible')}\n")
+    file.write(
+        f"Referencia Catastral: {datos.get('referencia_catastral', 'No disponible')}\n"
+    )
+    file.write(f"Precio: {datos.get('price', 'No disponible')} €\n")
+    file.write(f"Localización: {datos.get('localizacion', 'No disponible')}\n")
+    file.write(f"Municipio: {datos.get('municipio', 'No disponible')}\n")
+    file.write(f"Clase: {datos.get('clase', 'No disponible')}\n")
+    file.write(f"Uso: {datos.get('uso', 'No disponible')}\n")
+    file.write(f"Coordenadas: {datos.get('coordenadas', 'No disponible')}\n")
+    file.write(f"Código Postal: {datos.get('codigo_postal', 'No disponible')}\n")
+    file.write(f"Provincia: {datos.get('province', 'No disponible')}\n")
 
     # Imprime detalles de la población
-    print("\n--- Población ---")
-    print(f"Población actual: {datos.get('population_now', 'No disponible')}")
-    print(f"Población anterior: {datos.get('population_before', 'No disponible')}")
+    file.write("\n--- Población ---\n")
+    file.write(f"Población actual: {datos.get('population_now', 'No disponible')}\n")
+    file.write(
+        f"Población anterior: {datos.get('population_before', 'No disponible')}\n"
+    )
 
     # Imprime información de empresas
-    print("\n--- Empresas ---")
+    file.write("\n--- Empresas ---\n")
     empresas = datos.get("empresas")
     if empresas is not None:
-        print(empresas)
+        file.write(f"{empresas}\n")
     else:
-        print("No disponible")
+        file.write("No disponible\n")
 
     # Imprime detalles de empresas asociadas a fincas
-    print("\n--- Empresas Fincas ---")
+    file.write("\n--- Empresas Fincas ---\n")
     empresas_fincas = datos.get("empresas_fincas", [])
     for empresa in empresas_fincas:
-        print(f"CIF: {empresa.get('cif', 'No disponible')}")
-        print("Datos:")
+        file.write(f"CIF: {empresa.get('cif', 'No disponible')}\n")
+        file.write("Datos:\n")
         pp.pprint(empresa.get("data", "No disponible"))
 
     # Imprime detalles de usos de suelo
-    print("\n--- Usos del Suelo ---")
+    file.write("\n--- Usos del Suelo ---\n")
     pp.pprint(datos.get("usos_suelo", "No disponible"))
 
     # Imprime las rutas de archivos
-    print("\n--- Rutas de Archivos ---")
+    file.write("\n--- Rutas de Archivos ---\n")
     rutas = {
         "PDF de Subasta": datos.get("auction_pdf_path"),
         "Ortofoto": datos.get("path_ortofoto_land"),
@@ -55,15 +60,14 @@ def imprimir_datos_bonito(datos):
         "Google Maps": datos.get("path_googlemaps_land"),
     }
     for nombre, ruta in rutas.items():
-        print(f"{nombre}: {ruta if ruta else 'No disponible'}")
+        file.write(f"{nombre}: {ruta if ruta else 'No disponible'}\n")
 
-
-# Supongamos que la variable 'datos' contiene el JSON proporcionado
-# Puedes usar la función así:
 
 ###### LOADING TESTING DATA ######
-#  Load it later
+# Load it later
 with open("Testing/data.pkl", "rb") as pkl_file:
     loaded_data = pickle.load(pkl_file)
 
-imprimir_datos_bonito(loaded_data)
+# Save print things to a file
+with open("output.txt", "w") as file:
+    imprimir_datos_bonito(loaded_data, file)
