@@ -312,5 +312,4 @@ def insert_land_data(land_data):
             land_data["fullpath_ortofoto_hidrografia"]
         )
         BaseDatabase.remove_file_from_filesystem(land_data["path_report_land"])
-
     db.close_connection()

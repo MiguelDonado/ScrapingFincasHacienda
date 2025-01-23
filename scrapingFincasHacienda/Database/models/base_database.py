@@ -20,6 +20,13 @@ class BaseDatabase:
         self.connection.row_factory = sqlite3.Row  # Enable named tuple access
         self.cursor = self.connection.cursor()
 
+    # Two main variables:
+    # 1) "columns": Refers to the columns specified on the query (a method is used get the columns from the query into a list)
+    # 2) "params": Refers to the dictionary that is passed as the second argument of a prepared SQL statement.
+    #              Example: sql = 'INSERT INTO "aprovechamientos" ("aprovechamiento") VALUES (:aprovechamiento)'
+    #                       params = {"aprovechamiento": aprovechamiento} # Esto de aqui
+    #                       self.execute_query(sql, params)
+
     def execute_query(self, query, params=None):
         with self.connection:
             if not params:
@@ -36,7 +43,7 @@ class BaseDatabase:
                     assert len(columns_list) == len(params_list), (
                         f"Mismatch between columns and parameters: "
                         f"{len(columns_list)} columns vs {len(params_list)} parameters"
-                        # f"\nThe differences are the next: {set(columns_list).symmetric_difference(params)}."
+                        f"{self.explain_differences_prepared_sql_statement(columns_list, list(params_list))}"
                     )
                 self.cursor.execute(query, params)
 
@@ -57,6 +64,24 @@ class BaseDatabase:
     ############# HELPER FUNCTIONS (USED BY THE CHILD CLASSES)
     ########
     #####
+    @staticmethod
+    def explain_differences_prepared_sql_statement(columns, params):
+        diffs = set(columns).symmetric_difference(list(params))
+
+        columns_diffs = []
+        params_diffs = []
+
+        for diff in diffs:
+            if diff in columns:
+                columns_diffs.append(diff)
+            else:
+                params_diffs.append(diff)
+
+        msg = (
+            f"\n> The 'columns' in the query have the next extra values {columns_diffs}"
+            f"\n> The 'params' have the next extra values {params_diffs}"
+        )
+        return msg
 
     @staticmethod
     def read_binary(path_binary_file):

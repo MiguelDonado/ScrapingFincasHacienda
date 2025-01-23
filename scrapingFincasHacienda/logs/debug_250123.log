@@ -1,0 +1,77 @@
+2025-01-23 14:21:59,475 - INFO     ->  1  -  .  -  .   - No auctions available
+2025-01-23 14:21:59,766 - INFO     ->  2  -  .  -  .   - No auctions available
+2025-01-23 14:22:00,097 - INFO     ->  3  -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-Alicante/Subasta-DEH-Alicante-2024-2.aspx
+2025-01-23 14:22:00,445 - ERROR    ->  3  -  .  -  .   - Failed to find list of lands on Pliego or Anexo.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Hacienda/pliego_url.py", line 28, in get_pliego
+    pliego = soup.find("a", href=const.PLIEGO_PATTERN).get("href")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2025-01-23 14:22:00,751 - INFO     ->  4  -  .  -  .   - No auctions available
+2025-01-23 14:22:01,038 - INFO     ->  5  -  .  -  .   - No auctions available
+2025-01-23 14:22:01,337 - INFO     ->  6  -  .  -  .   - No auctions available
+2025-01-23 14:22:01,680 - INFO     ->  7  -  .  -  .   - No auctions available
+2025-01-23 14:22:01,994 - INFO     ->  8  -  .  -  .   - No auctions available
+2025-01-23 14:22:02,298 - INFO     ->  9  -  .  -  .   - No auctions available
+2025-01-23 14:22:02,603 - INFO     ->  10 -  .  -  .   - Auction retrieved: https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Patrimonio%20del%20Estado/Gestion%20Patrimonial%20del%20Estado/Paginas/Subastas/DEH-CACERES/Subasta-bienes-inmuebles.aspx
+2025-01-23 14:22:07,230 - INFO     ->  10 -  .  -  .   - List of lands: https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+2025-01-23 14:22:08,158 - INFO     ->  10 -  .  -  .   - Auction with id 'OIP_KYYY2CC6COTD4E5269GYQ6NUOE39' is NEW.
+2025-01-23 14:22:08,440 - INFO     ->  10 -  .  -  .   - Successfully downloaded url_pliego_pdf https://www.hacienda.gob.es/DGPatrimonio/Gestión%20Patrimonial/subastas/DEH-CACERES/Pliego.pdf.xsig.pdf.
+ Saved on /home/miguel/CodingProjects/ScrapingFincasHacienda/data/auction/2025-01-23_Delegation_10.pdf
+2025-01-23 14:22:12,647 - WARNING  ->  10 -  1  -  .   - Failed to process the lote 1
+2025-01-23 14:22:12,647 - INFO     ->  10 -  2  -  .   - ['4226002QD2742E0021IE'], 58292.0
+2025-01-23 14:22:12,647 - INFO     ->  10 -  3  -  .   - ['8669202TJ4586N0001HZ'], 2006.0
+2025-01-23 14:22:12,647 - INFO     ->  10 -  4  -  .   - ['0676014TJ4507N0001TY'], 2322.0
+2025-01-23 14:22:12,647 - INFO     ->  10 -  5  -  .   - ['0676013TJ4507N0001LY'], 1609.05
+2025-01-23 14:22:12,647 - WARNING  ->  10 -  6  -  .   - Failed to process the lote 6
+2025-01-23 14:22:12,647 - INFO     ->  10 -  7  -  .   - ['5724008QD2752D0017QB'], 220957.12
+2025-01-23 14:22:12,647 - INFO     ->  10 -  8  -  .   - ['10115A014090180000ZM'], 14088.03
+2025-01-23 14:22:12,647 - INFO     ->  10 -  .  -  .   - Corroborated that auction is NEW.
+2025-01-23 14:22:41,731 - INFO     ->  10 -  2  -  1   - Successfully downloaded PDF and KML of the land '4226002QD2742E0021IE' with coordinates '39°28'23.6"N 6°23'41.4"W' and data: {'localizacion': 'CL VIVIENDAS DE CAMINEROS Ndup-U Bl:21 Es:1 Pl:02 Pt:DCH\n10005 CACERES (CÁCERES)', 'provincia': 'CÁCERES', 'municipio': 'CACERES ', 'clase': 'Urbano', 'uso': 'Residencial', 'cultivo': None}.
+2025-01-23 14:23:01,509 - ERROR    ->  10 -  2  -  1   - Failed to get 'cp, province, locality'.
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 76, in get_data
+    data = self.__get_info_about_search()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/Correos/correos.py", line 137, in __get_info_about_search
+    cp, province, locality = self.find_elements(
+    ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 3, got 0)
+2025-01-23 14:23:05,490 - ERROR    ->  10 -  2  -  1   - Failed to take screenshot of the land '4226002QD2742E0021IE'
+Traceback (most recent call last):
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/GoogleMaps/GoogleMaps.py", line 113, in get_data_one_direction
+    self.__search_to()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/scrapingFincasHacienda/GoogleMaps/GoogleMaps.py", line 213, in __search_to
+    to_input.clear()
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 117, in clear
+    self._execute(Command.CLEAR_ELEMENT)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webelement.py", line 402, in _execute
+    return self._parent.execute(command, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/webdriver.py", line 384, in execute
+    self.error_handler.check_response(response)
+  File "/home/miguel/CodingProjects/ScrapingFincasHacienda/venv/lib/python3.12/site-packages/selenium/webdriver/remote/errorhandler.py", line 232, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=132.0.6834.83)
+Stacktrace:
+#0 0x63e3f5394dca <unknown>
+#1 0x63e3f4e8b3f0 <unknown>
+#2 0x63e3f4e610bf <unknown>
+#3 0x63e3f4f07e4d <unknown>
+#4 0x63e3f4f1de55 <unknown>
+#5 0x63e3f4eff833 <unknown>
+#6 0x63e3f4ecc5a0 <unknown>
+#7 0x63e3f4ecdece <unknown>
+#8 0x63e3f535ebdb <unknown>
+#9 0x63e3f5362b67 <unknown>
+#10 0x63e3f534a3bc <unknown>
+#11 0x63e3f5363727 <unknown>
+#12 0x63e3f532e74f <unknown>
+#13 0x63e3f5383938 <unknown>
+#14 0x63e3f5383b00 <unknown>
+#15 0x63e3f5393c46 <unknown>
+#16 0x7ca6b9c9ca94 <unknown>
+#17 0x7ca6b9d29c3c <unknown>
+

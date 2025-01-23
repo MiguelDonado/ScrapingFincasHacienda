@@ -193,14 +193,13 @@ def main():
                     ),
                 }
 
-                # Save to a pickle file
-                with open("data.pkl", "wb") as pkl_file:
-                    pickle.dump(full_data_land, pkl_file)
-
-                sys.exit()
                 insert_land_data(full_data_land)
+
                 # ######## For debugging purposes ########
-                # save_python_object_to_file(data_sabi)
+                # Save to a pickle file
+                # with open("data.pkl", "wb") as pkl_file:
+                # pickle.dump(full_data_land, pkl_file)
+                # sys.exit()
 
 
 if __name__ == "__main__":
