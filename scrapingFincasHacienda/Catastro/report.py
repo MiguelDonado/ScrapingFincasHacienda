@@ -1,9 +1,9 @@
 # Class that uses Selenium to extract the reference value
 # and downloads the price report PDF for a land
-
 import datetime
 import logging
 import os
+import sys
 import time
 from typing import Union
 
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 config = dotenv_values()
 
 # Get the current date
-current_date = datetime.datetime.now() - datetime.timedelta(days=1)
+current_date = datetime.datetime.now() - datetime.timedelta(days=365)
 
 # Format the date as dd/mm/yyyy
 formatted_date = current_date.strftime("%d/%m/%Y")
@@ -156,7 +156,8 @@ class CatastroReport(webdriver.Chrome):
         )
         button_collapse.click()
         query_value_button = self.find_element(
-            By.XPATH, "//a[contains(text(),'Consulta de valor de referencia')]"
+            By.XPATH,
+            "//div[@id='accordion2024']//div[@role='tab']/following-sibling::div//a[contains(text(),'Consulta de valor de referencia')]",
         )
         query_value_button.click()
 

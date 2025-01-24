@@ -14,7 +14,7 @@ from Iberpix.iberpix import Iberpix
 from INE.ine_num_transmisiones_fincas_rusticas import IneNumTransmisionesFincasRusticas
 from INE.ine_population import InePopulation
 from Sabi.sabi import Sabi
-from SadPath.sadpath import check_webpages_work
+from SadPath.sadpath import check_internet_connection, check_webpages_work
 from utils import (
     convert_paths,
     full_get_data_two_directions,
@@ -26,6 +26,7 @@ from utils import (
 
 def main():
     # SadPath
+    check_internet_connection()
     check_webpages_work()
 
     for delegation in const.DELEGATIONS:

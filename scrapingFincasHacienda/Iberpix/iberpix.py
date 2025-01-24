@@ -251,9 +251,8 @@ class Iberpix(webdriver.Chrome):
             By.XPATH, '//button[contains(@aria-label,"BackImgLayer")]'
         )
         choose_background_layer.click()
-
         usos_suelo_btn = self.find_element(
-            By.XPATH, '//img[@alt="Ocupación del suelo (CORINE)"]'
+            By.XPATH, '//img[@alt="Ocupación del suelo"]'
         )
         usos_suelo_btn.click()
 
@@ -285,9 +284,8 @@ class Iberpix(webdriver.Chrome):
             By.XPATH, "//div[contains(@class, 'm-has-tabs')]/div/div[@data-index=1]"
         )
         info_section.click()
-
         expand_data_land_usos_suelo = self.find_element(
-            By.XPATH, '//div[p[strong[contains(text(), "CORINE")]]]'
+            By.XPATH, '//div[p[strong[contains(text(), "del suelo")]]]'
         )
         expand_data_land_usos_suelo.click()
 
